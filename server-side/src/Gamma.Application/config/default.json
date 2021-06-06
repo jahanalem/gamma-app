@@ -1,0 +1,17 @@
+{
+    "domain": "http://localhost:3000",
+    "database": {
+        "client": "mysql",
+        "connection": {
+            "host": "",
+            "user": "",
+            "password": "",
+            "port": "3306",
+            "database": ""
+        },
+        "pool": {
+            "min": 0,
+            "max": 10
+        }
+    }
+}

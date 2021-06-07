@@ -1,3 +1,4 @@
+import { User } from "./user";
 import { Entity } from "./Entity";
 
 export interface IPost {
@@ -7,6 +8,8 @@ export interface IPost {
   IsActive: boolean;
   IsPublished: boolean;
   IsActiveNewComment: boolean;
+  Author?: User;
+  AuthorId: number;
 }
 
 export class Post extends Entity implements IPost {
@@ -16,6 +19,8 @@ export class Post extends Entity implements IPost {
   IsActive: boolean;
   IsPublished: boolean;
   IsActiveNewComment: boolean;
+  AuthorId: number;
+  Author?: User;
 
   constructor(
     title: string,
@@ -23,7 +28,8 @@ export class Post extends Entity implements IPost {
     description: string,
     isActive: boolean,
     isPublished: boolean,
-    isActiveNewComment: boolean
+    isActiveNewComment: boolean,
+    authorId: number
   ) {
     super();
     this.Title = title;
@@ -32,5 +38,6 @@ export class Post extends Entity implements IPost {
     this.IsActive = isActive;
     this.IsPublished = isPublished;
     this.IsActiveNewComment = isActiveNewComment;
+    this.AuthorId = authorId;
   }
 }

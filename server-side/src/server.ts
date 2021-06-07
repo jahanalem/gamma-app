@@ -21,10 +21,10 @@ const port = process.env.PORT || 3000 ;
 
 const configFn = (app: express.Application) => {
   var logger = morgan("combined");
-  app.use(logger);
+  app.use(logger as express.RequestHandler);
   app.use(cors());
-  app.use(express.json());
-  app.use(express.urlencoded({ extended: true }));
+  app.use(express.json() as express.RequestHandler);
+  app.use(express.urlencoded({ extended: true }) as express.RequestHandler);
   app.use(express.static("assets"));
   app.use(express.static(__dirname + "/"));
 };

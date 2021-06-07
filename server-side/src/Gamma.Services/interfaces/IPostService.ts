@@ -1,8 +1,8 @@
-import { IPost } from "../../Gamma.Models/post";
+import { IPost, Post } from "../../Gamma.Models/post";
 
 export interface IPostService {
-    GetAll: () => any;
-    GetById: (id: number) => any;
-    Create: (post: IPost) => any;
-    Delete: (id: number) => any;
-  }
+  GetAll: () => Promise<Post[]>;
+  GetById: (id: number) => Promise<Post>;
+  Create: (post: IPost) => any;
+  Delete: (id: number) => any;
+}

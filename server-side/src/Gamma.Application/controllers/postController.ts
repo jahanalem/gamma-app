@@ -36,6 +36,7 @@ export class PostController extends BaseController {
       isActive,
       isPublished,
       isActiveNewComment,
+      authorId,
     } = req.body;
     let x = new Post(
       title,
@@ -43,7 +44,8 @@ export class PostController extends BaseController {
       description,
       isActive,
       isPublished,
-      isActiveNewComment
+      isActiveNewComment,
+      authorId
     );
 
     await this.pService.Create(x);

@@ -11,10 +11,10 @@ generator client {
 }
 
 model Category {
-  Id           Int      @id @default(autoincrement())
-  CreatedDate  DateTime @default(now())
-  ModifiedDate DateTime @updatedAt
-  Title        String   @db.VarChar(50)
+  Id           Int       @id @default(autoincrement())
+  CreatedDate  DateTime  @default(now())
+  ModifiedDate DateTime? @updatedAt
+  Title        String    @db.VarChar(50)
   IsActive     Boolean
   Posts        Post[]
 }
@@ -22,9 +22,10 @@ model Category {
 model Post {
   Id                 Int       @id @default(autoincrement())
   CreatedDate        DateTime  @default(now())
-  ModifiedDate       DateTime  @updatedAt
+  ModifiedDate       DateTime? @updatedAt
   Title              String    @db.VarChar(255)
   Description        String?
+  Summary            String?   @db.VarChar(255)
   IsPublished        Boolean   @default(false)
   IsActive           Boolean   @default(true)
   IsActiveNewComment Boolean   @default(true)
@@ -33,14 +34,14 @@ model Post {
   Comment            Comment[]
   Tag                Tag[]     @relation("TagToPost", fields: [tagId], references: [Id])
   tagId              Int?
-  Category           Category  @relation(fields: [CategoryId], references: [Id])
-  CategoryId         Int
+  Category           Category? @relation(fields: [CategoryId], references: [Id])
+  CategoryId         Int?
 }
 
 model User {
   Id           Int       @id @default(autoincrement())
   CreatedDate  DateTime  @default(now())
-  ModifiedDate DateTime  @updatedAt
+  ModifiedDate DateTime? @updatedAt
   Email        String    @unique
   Name         String?
   Posts        Post[]
@@ -49,29 +50,29 @@ model User {
 }
 
 model Profile {
-  Id           Int      @id @default(autoincrement())
-  CreatedDate  DateTime @default(now())
-  ModifiedDate DateTime @updatedAt
+  Id           Int       @id @default(autoincrement())
+  CreatedDate  DateTime  @default(now())
+  ModifiedDate DateTime? @updatedAt
   Bio          String?
-  User         User     @relation(fields: [UserId], references: [Id])
-  UserId       Int      @unique
+  User         User      @relation(fields: [UserId], references: [Id])
+  UserId       Int       @unique
 }
 
 model Comment {
-  Id           Int      @id @default(autoincrement())
-  CreatedDate  DateTime @default(now())
-  ModifiedDate DateTime @updatedAt
+  Id           Int       @id @default(autoincrement())
+  CreatedDate  DateTime  @default(now())
+  ModifiedDate DateTime? @updatedAt
   Comment      String
-  WrittenBy    User     @relation(fields: [WrittenById], references: [Id])
+  WrittenBy    User      @relation(fields: [WrittenById], references: [Id])
   WrittenById  Int
-  Post         Post     @relation(fields: [PostId], references: [Id])
+  Post         Post      @relation(fields: [PostId], references: [Id])
   PostId       Int
 }
 
 model Tag {
-  Id           Int      @id @default(autoincrement())
-  CreatedDate  DateTime @default(now())
-  ModifiedDate DateTime @updatedAt
-  Title        String   @unique
-  Posts        Post[]   @relation("TagToPost")
+  Id           Int       @id @default(autoincrement())
+  CreatedDate  DateTime  @default(now())
+  ModifiedDate DateTime? @updatedAt
+  Title        String    @unique
+  Posts        Post[]    @relation("TagToPost")
 }

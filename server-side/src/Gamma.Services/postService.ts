@@ -1,7 +1,7 @@
 import { inject, injectable } from "inversify";
 import TYPES from "../Gamma.Constants/types";
 import { IPostRepository } from "../Gamma.DataAccess/postRepository";
-import { IPost } from "../Gamma.Models/post";
+import { IPost, Post } from "../Gamma.Models/post";
 import { IPostService } from "./interfaces/IPostService";
 
 @injectable()
@@ -10,11 +10,11 @@ export class PostService implements IPostService {
     @inject(TYPES.IPostRepository) private postRepository: IPostRepository
   ) {}
 
-  public GetAll() {
+  public async GetAll(): Promise<Post[]> {
     return this.postRepository.GetAll();
   }
 
-  public async GetById(id: number) {
+  public async GetById(id: number):Promise<Post> {
     return this.postRepository.GetById(id);
   }
 

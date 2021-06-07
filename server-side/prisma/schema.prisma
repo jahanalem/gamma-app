@@ -1,0 +1,77 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+datasource db {
+  provider = "mysql"
+  url      = env("DATABASE_URL")
+}
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+model Category {
+  Id           Int      @id @default(autoincrement())
+  CreatedDate  DateTime @default(now())
+  ModifiedDate DateTime @updatedAt
+  Title        String   @db.VarChar(50)
+  IsActive     Boolean
+  Posts        Post[]
+}
+
+model Post {
+  Id                 Int       @id @default(autoincrement())
+  CreatedDate        DateTime  @default(now())
+  ModifiedDate       DateTime  @updatedAt
+  Title              String    @db.VarChar(255)
+  Description        String?
+  IsPublished        Boolean   @default(false)
+  IsActive           Boolean   @default(true)
+  IsActiveNewComment Boolean   @default(true)
+  Author             User      @relation(fields: [AuthorId], references: [Id])
+  AuthorId           Int
+  Comment            Comment[]
+  Tag                Tag[]     @relation("TagToPost", fields: [tagId], references: [Id])
+  tagId              Int?
+  Category           Category  @relation(fields: [CategoryId], references: [Id])
+  CategoryId         Int
+}
+
+model User {
+  Id           Int       @id @default(autoincrement())
+  CreatedDate  DateTime  @default(now())
+  ModifiedDate DateTime  @updatedAt
+  Email        String    @unique
+  Name         String?
+  Posts        Post[]
+  Profile      Profile?
+  Comments     Comment[]
+}
+
+model Profile {
+  Id           Int      @id @default(autoincrement())
+  CreatedDate  DateTime @default(now())
+  ModifiedDate DateTime @updatedAt
+  Bio          String?
+  User         User     @relation(fields: [UserId], references: [Id])
+  UserId       Int      @unique
+}
+
+model Comment {
+  Id           Int      @id @default(autoincrement())
+  CreatedDate  DateTime @default(now())
+  ModifiedDate DateTime @updatedAt
+  Comment      String
+  WrittenBy    User     @relation(fields: [WrittenById], references: [Id])
+  WrittenById  Int
+  Post         Post     @relation(fields: [PostId], references: [Id])
+  PostId       Int
+}
+
+model Tag {
+  Id           Int      @id @default(autoincrement())
+  CreatedDate  DateTime @default(now())
+  ModifiedDate DateTime @updatedAt
+  Title        String   @unique
+  Posts        Post[]   @relation("TagToPost")
+}

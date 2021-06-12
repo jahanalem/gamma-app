@@ -1,6 +1,7 @@
 import { injectable } from "inversify";
 import { IPost, Post } from "../Gamma.Models/post";
 import { ApplicationDbContext } from "./applicationDbContext";
+import { BaseRepository } from "./baseRepository";
 
 export interface IPostRepository {
   Create: (post: IPost) => Promise<void>;
@@ -11,8 +12,10 @@ export interface IPostRepository {
 }
 
 @injectable()
-export class PostRepository implements IPostRepository {
-  constructor() {}
+export class PostRepository extends BaseRepository implements IPostRepository {
+  constructor() {
+    super();
+  }
 
   public async Create(post: IPost) {
     const result = await ApplicationDbContext.Prisma.post

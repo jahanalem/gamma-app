@@ -25,6 +25,7 @@ export class PostController extends BaseController {
   private async deletePost(@request() req: Request, @response() res: Response) {
     const id = req.params.id;
     await this.pService.Delete(+id);
+
     res.status(204).json();
   }
 
@@ -58,6 +59,7 @@ export class PostController extends BaseController {
   private async getById(@request() req: Request, @response() res: Response) {
     const id = req.params.id;
     const data = await this.pService.GetById(+id);
+
     res.status(200).json(data);
   }
 
@@ -65,6 +67,7 @@ export class PostController extends BaseController {
   private async getAll(@request() req: Request, @response() res: Response) {
     let data = await this.pService.GetAll();
     console.log(data[0]);
+
     res.status(200).json(data);
   }
 
@@ -90,6 +93,7 @@ export class PostController extends BaseController {
       authorId
     );
     const result = await this.pService.Update(+id, p);
-    return res.status(200).json(result);
+
+    res.status(200).json(result);
   }
 }

@@ -9,15 +9,15 @@ import { ErrorRequestHandler, NextFunction, Request, Response } from "express";
 import { container } from "./inversify.config";
 
 import "./Gamma.Application/controllers/postController";
+import "./Gamma.Application/controllers/tagController";
 
-const port = process.env.PORT || 3000 ;
+const port = process.env.PORT || 3000;
 
 // config sessions
 
 // config routes
 
 // error handling
-
 
 const configFn = (app: express.Application) => {
   var logger = morgan("combined");
@@ -38,7 +38,7 @@ const errorConfigFn = (app: express.Application) => {
       next: NextFunction
     ) => {
       console.error(err);
-      res.status(500).send("Something broke!");
+      res.status(500).send(err);
     }
   );
 };

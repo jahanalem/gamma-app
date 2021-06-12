@@ -5,4 +5,5 @@ export interface IPostService {
   GetById: (id: number) => Promise<Post>;
   Create: (post: IPost) => any;
   Delete: (id: number) => any;
+  Update: (id: number, post: IPost) => Promise<Post>;
 }

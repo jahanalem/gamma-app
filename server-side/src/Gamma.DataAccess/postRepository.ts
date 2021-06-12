@@ -7,6 +7,7 @@ export interface IPostRepository {
   GetAll: () => Promise<Post[]>;
   GetById: (id: number) => Promise<Post>;
   Delete: (id: number) => Promise<any>;
+  Update: (id: number, post: IPost) => Promise<Post>;
 }
 
 @injectable()
@@ -30,24 +31,7 @@ export class PostRepository implements IPostRepository {
         await ApplicationDbContext.Prisma.$disconnect();
       });
 
-    console.log("<<< DataAccess Layer  start>>>");
-    /*
-    await ApplicationDbContext.db.execute(
-      `INSERT INTO post (Title, Summary, Description, IsActive, IsPublished, IsActiveNewComment) 
-                  VALUES (?,?,?,?,?,?)`,
-      [
-        post.Title,
-        post.Summary,
-        post.Description,
-        post.IsActive,
-        post.IsPublished,
-        post.IsActiveNewComment,
-      ]
-    );
-    */
-
-    console.log("<<< DataAccess Layer  finish>>>");
-    //return id;
+    // await ApplicationDbContext.db.execute(`INSERT INTO post (Title, Summary, Description, IsActive, IsPublished, IsActiveNewComment) VALUES (?,?,?,?,?,?)`, [ post.Title, post.Summary, post.Description, post.IsActive, post.IsPublished, post.IsActiveNewComment,]);
   }
 
   public async GetAll(): Promise<Post[]> {
@@ -64,7 +48,6 @@ export class PostRepository implements IPostRepository {
 
     return allUsers;
     //let data = await ApplicationDbContext.db.execute("SELECT * FROM post");
-    //return data[0];
   }
 
   public async GetById(id: number): Promise<Post> {
@@ -79,7 +62,6 @@ export class PostRepository implements IPostRepository {
 
     return data;
     //const data = await ApplicationDbContext.db.execute("SELECT * FROM post WHERE Id = ?",[id]);
-    //return data[0];
   }
 
   public async Delete(id: number) {
@@ -94,5 +76,26 @@ export class PostRepository implements IPostRepository {
     //const data = await ApplicationDbContext.db.execute("DELETE FROM post WHERE id = ?",[id]);
 
     return data;
+  }
+
+  public async Update(id: number, post: IPost) {
+    const result = await ApplicationDbContext.Prisma.post
+      .update({
+        where: { Id: id },
+        data: {
+          Title: post.Title,
+          Summary: post.Summary,
+          Description: post.Description,
+          IsActive: post.IsActive,
+          IsPublished: post.IsPublished,
+          IsActiveNewComment: post.IsActiveNewComment,
+          AuthorId: post.AuthorId,
+        },
+      })
+      .finally(async () => {
+        await ApplicationDbContext.Prisma.$disconnect();
+      });
+
+    return result;
   }
 }

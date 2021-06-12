@@ -10,6 +10,7 @@ import {
   httpDelete,
   httpGet,
   httpPost,
+  httpPut,
   request,
   response,
 } from "inversify-express-utils";
@@ -65,5 +66,30 @@ export class PostController extends BaseController {
     let data = await this.pService.GetAll();
     console.log(data[0]);
     res.status(200).json(data);
+  }
+
+  @httpPut("/update/:id")
+  private async update(@request() req: Request, @response() res: Response) {
+    const id = req.params.id;
+    const {
+      title,
+      summary,
+      description,
+      isActive,
+      isPublished,
+      isActiveNewComment,
+      authorId,
+    } = req.body;
+    let p = new Post(
+      title,
+      summary,
+      description,
+      isActive,
+      isPublished,
+      isActiveNewComment,
+      authorId
+    );
+    const result = await this.pService.Update(+id, p);
+    return res.status(200).json(result);
   }
 }

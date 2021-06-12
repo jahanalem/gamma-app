@@ -14,7 +14,7 @@ export class PostService implements IPostService {
     return this.postRepository.GetAll();
   }
 
-  public async GetById(id: number):Promise<Post> {
+  public async GetById(id: number): Promise<Post> {
     return this.postRepository.GetById(id);
   }
 
@@ -25,5 +25,9 @@ export class PostService implements IPostService {
 
   public async Delete(id: number) {
     return this.postRepository.Delete(id);
+  }
+
+  public async Update(id: number, post: IPost) {
+    return this.postRepository.Update(id, post);
   }
 }

@@ -14,7 +14,7 @@ model Category {
   Id           Int        @id @default(autoincrement())
   ParentId     Int?
   Parent       Category?  @relation("CategoryToParent", fields: [ParentId], references: [Id])
-  Category     Category[] @relation("CategoryToParent")
+  Categories   Category[] @relation("CategoryToParent")
   Title        String     @db.VarChar(50)
   IsActive     Boolean
   Posts        Post[]
@@ -42,7 +42,7 @@ model Post {
   IsPublished        Boolean          @default(false)
   IsActive           Boolean          @default(true)
   IsActiveNewComment Boolean          @default(true)
-  Comment            Comment[]
+  Comments           Comment[]
   Tags               TagPostMapping[]
   CreatedDate        DateTime         @default(now())
   ModifiedDate       DateTime?        @updatedAt
@@ -81,11 +81,14 @@ model Profile {
 
 model Comment {
   Id           Int       @id @default(autoincrement())
+  ParentId     Int?
+  Parent       Comment?  @relation("CommentToParent", fields: [ParentId], references: [Id])
+  Comments     Comment[] @relation("CommentToParent")
   PostId       Int
   Post         Post      @relation(fields: [PostId], references: [Id])
   WrittenById  Int
   WrittenBy    User      @relation(fields: [WrittenById], references: [Id])
-  Comment      String
+  Description  String
   CreatedDate  DateTime  @default(now())
   ModifiedDate DateTime? @updatedAt
 }

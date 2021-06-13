@@ -11,6 +11,7 @@ import { container } from "./inversify.config";
 import "./Gamma.Application/controllers/postController";
 import "./Gamma.Application/controllers/tagController";
 import "./Gamma.Application/controllers/categoryController";
+import "./Gamma.Application/controllers/commentController";
 
 const port = process.env.PORT || 3000;
 

@@ -41,7 +41,7 @@ export class PostRepository extends BaseRepository implements IPostRepository {
     const allUsers = await ApplicationDbContext.Prisma.post
       .findMany({
         include: {
-          Comment: true,
+          Comments: true,
         },
       })
       .finally(async () => {
@@ -57,7 +57,7 @@ export class PostRepository extends BaseRepository implements IPostRepository {
     const data = await ApplicationDbContext.Prisma.post
       .findUnique({
         where: { Id: id },
-        include: { Comment: true },
+        include: { Comments: true },
       })
       .finally(async () => {
         await ApplicationDbContext.Prisma.$disconnect();

@@ -3,6 +3,8 @@ const TYPES = {
   IPostService: Symbol.for("IPostService"),
   ITagRepository: Symbol.for("ITagRepository"),
   ITagService: Symbol.for("ITagService"),
+  ICategoryRepository: Symbol.for("ICategoryRepository"),
+  ICategoryService: Symbol.for("ICategoryService"),
 };
 
 export default TYPES;

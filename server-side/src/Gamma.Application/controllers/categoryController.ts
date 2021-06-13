@@ -1,4 +1,6 @@
-import { Tag } from "./../../Gamma.Models/tag";
+import { inject, injectable } from "inversify";
+import TYPES from "../../Gamma.Constants/types";
+import { ICategoryService } from "../../Gamma.Services/interfaces/ICategoryService";
 import { BaseController } from "./baseController";
 import { Request, Response } from "express";
 
@@ -11,23 +13,27 @@ import {
   request,
   response,
 } from "inversify-express-utils";
-import { inject } from "inversify";
-import TYPES from "../../Gamma.Constants/types";
-import { ITagService } from "../../Gamma.Services/interfaces/ITagService";
+import { Category } from "../../Gamma.Models/category";
 
-@controller("/tags")
-export class TagController extends BaseController {
-  constructor(@inject(TYPES.ITagService) private tagService: ITagService) {
+@controller("/categories")
+export class CategoryController extends BaseController {
+  constructor(
+    @inject(TYPES.ICategoryService) private categoryService: ICategoryService
+  ) {
     super();
   }
 
   //#region CREATE OPERATION
 
   @httpPost("/create")
-  private async createTag(@request() req: Request, @response() res: Response) {
-    const { title } = req.body;
-    const newTag = new Tag(title);
-    const result = await this.tagService.Create(newTag);
+  private async createCategory(
+    @request() req: Request,
+    @response() res: Response
+  ) {
+    console.log("CategoryController");
+    const { title, isActive, parentId } = req.body;
+    const newCategory = new Category(title, isActive, parentId);
+    const result = await this.categoryService.Create(newCategory);
     res.status(200).json(result);
   }
 
@@ -37,7 +43,7 @@ export class TagController extends BaseController {
 
   @httpGet("/")
   private async getAll(@request() req: Request, @response() res: Response) {
-    const result = await this.tagService.GetAll();
+    const result = await this.categoryService.GetAll();
 
     res.status(200).json(result);
   }
@@ -45,7 +51,7 @@ export class TagController extends BaseController {
   @httpGet("/:id")
   private async getById(@request() req: Request, @response() res: Response) {
     const id = req.params.id;
-    const result = await this.tagService.GetById(+id);
+    const result = await this.categoryService.GetById(+id);
 
     res.status(200).json(result);
   }
@@ -57,9 +63,10 @@ export class TagController extends BaseController {
   @httpPut("/update/:id")
   private async update(@request() req: Request, @response() res: Response) {
     const id = req.params.id;
-    const { title } = req.body;
-    let uTag = new Tag(title);
-    const result = await this.tagService.Update(+id, uTag);
+    const { title, isActive, parentId } = req.body;
+    let uCategory = new Category(title, isActive, parentId);
+
+    const result = await this.categoryService.Update(+id, uCategory);
 
     res.status(200).json(result);
   }
@@ -71,11 +78,10 @@ export class TagController extends BaseController {
   @httpDelete("/delete/:id")
   private async deletePost(@request() req: Request, @response() res: Response) {
     const id = req.params.id;
-    const result = await this.tagService.Delete(+id);
+    const result = await this.categoryService.Delete(+id);
 
     res.status(204).json(result);
   }
 
   //#endregion
-
 }

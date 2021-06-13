@@ -10,6 +10,7 @@ import { container } from "./inversify.config";
 
 import "./Gamma.Application/controllers/postController";
 import "./Gamma.Application/controllers/tagController";
+import "./Gamma.Application/controllers/categoryController";
 
 const port = process.env.PORT || 3000;
 

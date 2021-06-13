@@ -4,18 +4,18 @@ import { Entity } from "./Entity";
 export interface IComment {
   Description: string;
   //ParentId: Nullable<number>;
-  UserId: Nullable<number>;
-  PostId: Nullable<number>;
-  //Parent: Nullable<IComment>;
-  //Replies: Nullable<IComment[]>;
+  UserId: number;
+  PostId: number;
+  //Parent: IComment>;
+  //Replies: IComment[]>;
 }
 
 export class Comment extends Entity implements IComment {
-  //ParentId: Nullable<number> = null;
-  //Parent: Nullable<IComment> = null;
-  //Replies: Nullable<IComment[]> = [];
-  PostId: Nullable<number> = null;
-  UserId: Nullable<number> = null;
+  //ParentId: number> = null;
+  //Parent: IComment> = null;
+  //Replies: IComment[]> = [];
+  PostId: number = null;
+  UserId: number = null;
   Description: string;
   constructor(description: string, postId: number, userId: number) {
     super();

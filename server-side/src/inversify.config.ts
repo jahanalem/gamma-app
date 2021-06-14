@@ -16,7 +16,7 @@ import {
   ITagRepository,
   TagRepository,
 } from "./Gamma.DataAccess/tagRepository";
-import { CategoryService } from "./Gamma.Services/categoryService";
+import { CategoryService } from "./Gamma.Services/CategoryService";
 import { ICategoryService } from "./Gamma.Services/interfaces/ICategoryService";
 import { ICommentService } from "./Gamma.Services/interfaces/ICommentService";
 import { CommentService } from "./Gamma.Services/commentService";

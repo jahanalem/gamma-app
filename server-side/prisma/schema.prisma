@@ -23,11 +23,11 @@ model Category {
 }
 
 model Tag {
-  Id           Int              @id @default(autoincrement())
-  Title        String           @unique
-  Posts        TagPostMapping[]
-  CreatedDate  DateTime         @default(now())
-  ModifiedDate DateTime?        @updatedAt
+  Id             Int              @id @default(autoincrement())
+  Title          String           @unique
+  TagPostMapping TagPostMapping[]
+  CreatedDate    DateTime         @default(now())
+  ModifiedDate   DateTime?        @updatedAt
 }
 
 model Post {
@@ -43,7 +43,7 @@ model Post {
   IsActive           Boolean          @default(true)
   IsActiveNewComment Boolean          @default(true)
   Comments           Comment[]
-  Tags               TagPostMapping[]
+  TagPostMapping     TagPostMapping[]
   CreatedDate        DateTime         @default(now())
   ModifiedDate       DateTime?        @updatedAt
 }
@@ -59,13 +59,16 @@ model TagPostMapping {
   @@id([PostId, TagId])
 }
 
-model User {
+model Comment {
   Id           Int       @id @default(autoincrement())
-  Email        String    @unique
-  Name         String?   @db.VarChar(50)
-  Posts        Post[]
-  Profile      Profile?
-  Comments     Comment[]
+  ParentId     Int?
+  Parent       Comment?  @relation("CommentToParent", fields: [ParentId], references: [Id])
+  Comments     Comment[] @relation("CommentToParent")
+  PostId       Int
+  Post         Post      @relation(fields: [PostId], references: [Id])
+  WrittenById  Int
+  WrittenBy    User      @relation(fields: [WrittenById], references: [Id])
+  Description  String
   CreatedDate  DateTime  @default(now())
   ModifiedDate DateTime? @updatedAt
 }
@@ -79,16 +82,52 @@ model Profile {
   ModifiedDate DateTime? @updatedAt
 }
 
-model Comment {
-  Id           Int       @id @default(autoincrement())
-  ParentId     Int?
-  Parent       Comment?  @relation("CommentToParent", fields: [ParentId], references: [Id])
-  Comments     Comment[] @relation("CommentToParent")
-  PostId       Int
-  Post         Post      @relation(fields: [PostId], references: [Id])
-  WrittenById  Int
-  WrittenBy    User      @relation(fields: [WrittenById], references: [Id])
-  Description  String
+model User {
+  Id                   Int               @id @default(autoincrement())
+  Email                String            @unique @db.VarChar(64)
+  NormalizedEmail      String            @unique @db.VarChar(64)
+  UserName             String            @unique @db.VarChar(64)
+  NormalizedUserName   String            @unique @db.VarChar(64)
+  EmailConfirmed       Boolean           @default(true)
+  PasswordHash         String            @db.VarChar(1024)
+  PhoneNumber          String?           @db.VarChar(32)
+  PhoneNumberConfirmed Boolean           @default(true)
+  LockoutEnd           DateTime
+  LockoutEnabled       Boolean           @default(false)
+  AccessFailedCount    Int
+  FirstName            String?           @db.VarChar(32)
+  LastName             String?           @db.VarChar(32)
+  BirthDate            DateTime?
+  IsEmailPublic        Boolean           @default(false)
+  Location             String?           @db.VarChar(128)
+  IpAddress            String?           @db.VarChar(256)
+  LoginProvider        String?           @db.VarChar(256)
+  IsActive             Boolean           @default(true)
+  Posts                Post[]
+  Profile              Profile?
+  Comments             Comment[]
+  CreatedDate          DateTime          @default(now())
+  ModifiedDate         DateTime?         @updatedAt
+  UserRoleMapping      UserRoleMapping[]
+}
+
+model Role {
+  Id              Int               @id @default(autoincrement())
+  Name            String            @unique @db.VarChar(64)
+  NormalizedName  String            @unique @db.VarChar(64)
+  Description     String?           @db.VarChar(512)
+  CreatedDate     DateTime          @default(now())
+  ModifiedDate    DateTime?         @updatedAt
+  UserRoleMapping UserRoleMapping[]
+}
+
+model UserRoleMapping {
+  Role         Role      @relation(fields: [RoleId], references: [Id])
+  RoleId       Int
+  User         User      @relation(fields: [UserId], references: [Id])
+  UserId       Int
   CreatedDate  DateTime  @default(now())
   ModifiedDate DateTime? @updatedAt
+
+  @@id([RoleId, UserId])
 }

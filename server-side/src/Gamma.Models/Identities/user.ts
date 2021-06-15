@@ -1,3 +1,4 @@
+import { timeStamp } from "console";
 import { Entity } from "../Entity";
 import { Post } from "../post";
 import { Profile } from "../profile";
@@ -23,18 +24,18 @@ export interface IUser {
   IpAddress: string;
   LoginProvider: string;
   IsActive: boolean;
-  Roles: Role[];
-  Posts: Post[];
-  Profile: Profile;
-  Comments: Comment[];
+  Roles?: Role[];
+  Posts?: Post[];
+  Profile?: Profile;
+  Comments?: Comment[];
 }
 
 export class User extends Entity implements IUser {
-  constructor(email: string, username: string) {
+  constructor(user: Partial<User> = {}) {
     super();
-    this.Email = email;
+    Object.assign(this, user);
+
     this.NormalizedEmail = this.Email.toUpperCase();
-    this.UserName = username;
     this.NormalizedUserName = this.UserName.toUpperCase();
   }
   NormalizedEmail: string;
@@ -47,17 +48,17 @@ export class User extends Entity implements IUser {
   LockoutEnd: Date;
   LockoutEnabled: boolean;
   AccessFailedCount: number;
-  FirstName: string;
-  LastName: string;
+  FirstName: string = null;
+  LastName: string = null;
   BirthDate: Date;
   IsEmailPublic: boolean;
   Location: string;
   IpAddress: string;
   LoginProvider: string;
-  IsActive: boolean;
-  Roles: Role[];
+  IsActive: boolean = true;
+  Roles?: Role[];
   Email: string;
-  Posts: Post[];
-  Profile: Profile;
-  Comments: Comment[];
+  Posts?: Post[];
+  Profile?: Profile;
+  Comments?: Comment[];
 }

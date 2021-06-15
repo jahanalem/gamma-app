@@ -1,6 +1,6 @@
 import { BaseController } from "./baseController";
-import { Request, Response } from "express";
-
+import { NextFunction, Request, Response } from "express";
+const { body, validationResult } = require("express-validator");
 import {
   controller,
   httpDelete,
@@ -14,7 +14,8 @@ import { inject } from "inversify";
 import TYPES from "../../Gamma.Constants/types";
 import { IUserService } from "../../Gamma.Services/interfaces/IUserService";
 import { SignUpUserViewModel } from "../../Gamma.Models/ViewModels/signUpUserViewModel";
-import { LoginUserViewModel } from "../../Gamma.Models/ViewModels/LoginUserViewModel";
+import { LoginUserViewModel } from "../../Gamma.Models/ViewModels/loginUserViewModel";
+import { HttpError } from "../../Gamma.Common/models/httpError";
 
 @controller("/users")
 export class UserController extends BaseController {
@@ -23,10 +24,14 @@ export class UserController extends BaseController {
   }
 
   @httpPost("/signup")
-  private async signup(@request() req: Request, @response() res: Response) {
-    const { firstName, lastName, userName, email, password, confirmPassword } =
-      req.body;
-    const newUser = new SignUpUserViewModel(
+  private async signup(@request() req: Request, @response() res: Response, next: NextFunction) {
+    const errors = validationResult(req);
+    if (!errors.isEmpty()) {
+      return next(new HttpError("Invalid inputs passed, please check your data.", 422));
+    }
+    const { firstName, lastName, userName, email, password, confirmPassword } = req.body;
+
+    const candidateUser = new SignUpUserViewModel(
       firstName,
       lastName,
       userName,
@@ -34,7 +39,8 @@ export class UserController extends BaseController {
       password,
       confirmPassword
     );
-    const result = this.userService.Signup(newUser);
+    const result = await this.userService.Signup(candidateUser);
+
     res.status(200).json(result);
   }
 

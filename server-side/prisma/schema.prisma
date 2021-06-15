@@ -88,13 +88,13 @@ model User {
   NormalizedEmail      String            @unique @db.VarChar(64)
   UserName             String            @unique @db.VarChar(64)
   NormalizedUserName   String            @unique @db.VarChar(64)
-  EmailConfirmed       Boolean           @default(true)
+  EmailConfirmed       Boolean           @default(false)
   PasswordHash         String            @db.VarChar(1024)
   PhoneNumber          String?           @db.VarChar(32)
-  PhoneNumberConfirmed Boolean           @default(true)
-  LockoutEnd           DateTime
+  PhoneNumberConfirmed Boolean           @default(false)
+  LockoutEnd           DateTime?         
   LockoutEnabled       Boolean           @default(false)
-  AccessFailedCount    Int
+  AccessFailedCount    Int?
   FirstName            String?           @db.VarChar(32)
   LastName             String?           @db.VarChar(32)
   BirthDate            DateTime?

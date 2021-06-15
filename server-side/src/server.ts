@@ -1,3 +1,4 @@
+import { UserController } from './Gamma.Application/controllers/userController';
 import * as express from "express";
 const cors = require("cors");
 import morgan from "morgan";
@@ -12,6 +13,8 @@ import "./Gamma.Application/controllers/postController";
 import "./Gamma.Application/controllers/tagController";
 import "./Gamma.Application/controllers/categoryController";
 import "./Gamma.Application/controllers/commentController";
+import "./Gamma.Application/controllers/userController";
+
 
 const port = process.env.PORT || 3000;
 

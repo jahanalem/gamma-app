@@ -1,4 +1,4 @@
-import { IUser } from "./user";
+import { IUser } from "./Identities/user";
 import { Nullable } from "./../global.d";
 import { Entity } from "./Entity";
 import { IPost } from "./post";

@@ -1,4 +1,4 @@
-import { User } from "./user";
+import { User } from "./Identities/user";
 import { Entity } from "./Entity";
 
 export interface IPost {

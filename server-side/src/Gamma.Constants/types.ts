@@ -10,6 +10,9 @@ const TYPES = {
 
   ICommentRepository: Symbol.for("ICommentRepository"),
   ICommentService: Symbol.for("ICommentService"),
+
+  IUserRepository: Symbol.for("IUserRepository"),
+  IUserService: Symbol.for("IUserService"),
 };
 
 export default TYPES;

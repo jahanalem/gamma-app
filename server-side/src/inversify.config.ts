@@ -1,4 +1,8 @@
 import {
+  IUserRepository,
+  UserRepository,
+} from "./Gamma.DataAccess/userRepository";
+import {
   CategoryRepository,
   ICategoryRepository,
 } from "./Gamma.DataAccess/categoryRepository";
@@ -16,7 +20,7 @@ import {
   ITagRepository,
   TagRepository,
 } from "./Gamma.DataAccess/tagRepository";
-import { CategoryService } from "./Gamma.Services/CategoryService";
+import { CategoryService } from "./Gamma.Services/categoryService";
 import { ICategoryService } from "./Gamma.Services/interfaces/ICategoryService";
 import { ICommentService } from "./Gamma.Services/interfaces/ICommentService";
 import { CommentService } from "./Gamma.Services/commentService";
@@ -24,6 +28,8 @@ import {
   CommentRepository,
   ICommentRepository,
 } from "./Gamma.DataAccess/commentRepository";
+import { IUserService } from "./Gamma.Services/interfaces/IUserService";
+import { UserService } from "./Gamma.Services/userService";
 
 let container = new Container();
 
@@ -42,5 +48,8 @@ container
   .bind<ICommentRepository>(TYPES.ICommentRepository)
   .to(CommentRepository);
 container.bind<ICommentService>(TYPES.ICommentService).to(CommentService);
+
+container.bind<IUserRepository>(TYPES.IUserRepository).to(UserRepository);
+container.bind<IUserService>(TYPES.IUserService).to(UserService);
 
 export { container };

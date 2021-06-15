@@ -1,4 +1,4 @@
-import { User } from "./user";
+import { User } from "./Identities/user";
 
 export interface Profile {
   Id: number;

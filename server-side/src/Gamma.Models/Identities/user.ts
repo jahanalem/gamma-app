@@ -5,6 +5,7 @@ import { Profile } from "../profile";
 import { Role } from "./role";
 
 export interface IUser {
+  Token?: string;
   Email: string;
   NormalizedEmail: string;
   UserName: string;
@@ -38,6 +39,7 @@ export class User extends Entity implements IUser {
     this.NormalizedEmail = this.Email.toUpperCase();
     this.NormalizedUserName = this.UserName.toUpperCase();
   }
+  Token?: string;
   NormalizedEmail: string;
   UserName: string;
   NormalizedUserName: string;

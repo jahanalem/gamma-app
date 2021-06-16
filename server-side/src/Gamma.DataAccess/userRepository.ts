@@ -8,10 +8,10 @@ import { HttpError } from "../Gamma.Common/models/httpError";
 const bcrypt = require("bcryptjs");
 
 export interface IUserRepository {
-  CreateUser: (newUser: IUser, password: string) => Promise<User | HttpError>;
+  CreateUser: (newUser: IUser, password: string) => Promise<User>;
   LogInUser: (user: ILoginUserViewModel) => any;
-  GetUserByEmail: (email: string) => Promise<User | HttpError>;
-  GetUserByUserName: (userName: string) => Promise<User | HttpError>;
+  GetUserByEmail: (email: string) => Promise<User>;
+  GetUserByUserName: (userName: string) => Promise<User>;
 }
 @injectable()
 export class UserRepository extends BaseRepository implements IUserRepository {
@@ -20,15 +20,13 @@ export class UserRepository extends BaseRepository implements IUserRepository {
     super();
   }
 
-  public async CreateUser(newUser: IUser, password: string): Promise<User | HttpError> {
+  public async CreateUser(newUser: IUser, password: string): Promise<User> {
 
     let hashedPassword;
     try {
       hashedPassword = await bcrypt.hash(password, 12);
     } catch (err) {
-      const error = new HttpError("Could not create user, please try again.", 500);
-
-      return await Promise.resolve(error);
+      throw (new HttpError("Could not create user, please try again.", 500));
     }
 
     const result = await ApplicationDbContext.Prisma.user.create({
@@ -52,12 +50,12 @@ export class UserRepository extends BaseRepository implements IUserRepository {
 
   public async LogInUser(user: ILoginUserViewModel) { }
 
-  public async GetUserByEmail(email: string): Promise<User | HttpError> {
+  public async GetUserByEmail(email: string): Promise<User> {
     const result = await ApplicationDbContext.Prisma.user
       .findFirst({
         where: { Email: email },
       }).catch(e => {
-        return Promise.resolve(e);
+        throw (e);
       })
       .finally(async () => {
         await ApplicationDbContext.Prisma.$disconnect();
@@ -66,13 +64,12 @@ export class UserRepository extends BaseRepository implements IUserRepository {
     return result;
   }
 
-  public async GetUserByUserName(userName: string): Promise<User | HttpError> {
+  public async GetUserByUserName(userName: string): Promise<User> {
     const result = await ApplicationDbContext.Prisma.user
       .findFirst({
         where: { UserName: userName },
       }).catch(e => {
-
-        return Promise.resolve(e);
+        throw (e);
       })
       .finally(async () => {
         await ApplicationDbContext.Prisma.$disconnect();

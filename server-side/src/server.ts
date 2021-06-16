@@ -5,7 +5,7 @@ import morgan from "morgan";
 import "reflect-metadata";
 import { InversifyExpressServer } from "inversify-express-utils";
 
-import { ErrorRequestHandler, NextFunction, Request, Response } from "express";
+import { ErrorRequestHandler, NextFunction, Request, RequestHandler, Response } from "express";
 
 import { container } from "./inversify.config";
 
@@ -47,6 +47,10 @@ const errorConfigFn = (app: express.Application) => {
     }
   );
 };
+
+
+
+
 
 let inversifyExpressServer = new InversifyExpressServer(container, null, {
   rootPath: "/api",

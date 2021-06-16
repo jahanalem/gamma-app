@@ -7,6 +7,7 @@ import {
   httpGet,
   httpPost,
   httpPut,
+  next,
   request,
   response,
 } from "inversify-express-utils";
@@ -24,7 +25,8 @@ export class UserController extends BaseController {
   }
 
   @httpPost("/signup")
-  private async signup(@request() req: Request, @response() res: Response, next: NextFunction) {
+  private async signup(@request() req: Request, @response() res: Response, @next() next: NextFunction) {
+
     const errors = validationResult(req);
     if (!errors.isEmpty()) {
       return next(new HttpError("Invalid inputs passed, please check your data.", 422));
@@ -39,9 +41,12 @@ export class UserController extends BaseController {
       password,
       confirmPassword
     );
-    const result = await this.userService.Signup(candidateUser);
 
-    res.status(200).json(result);
+    await this.userService.Signup(candidateUser).then(result => {
+      res.status(200).json(result);
+    }).catch(error => {
+      next(error);
+    });
   }
 
   @httpPost("/login")

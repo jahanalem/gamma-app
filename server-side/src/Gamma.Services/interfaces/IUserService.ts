@@ -4,10 +4,10 @@ import { ILoginUserViewModel } from "../../Gamma.Models/ViewModels/loginUserView
 import { ISignUpUserViewModel } from "../../Gamma.Models/ViewModels/signUpUserViewModel";
 
 export interface IUserService {
-  Signup: (newUser: ISignUpUserViewModel) => Promise<User | HttpError>;
+  Signup: (newUser: ISignUpUserViewModel) => Promise<User>;
   Login: (user: ILoginUserViewModel) => any;
-  GetUserByEmail: (email: string) => Promise<User | HttpError>;
-  GetUserByUsername: (username: string) => Promise<User | HttpError>;
+  GetUserByEmail: (email: string) => Promise<User>;
+  GetUserByUsername: (username: string) => Promise<User>;
   EmailExists(email: string): Promise<boolean>;
   UsernameExists(username: string): Promise<boolean>;
 }

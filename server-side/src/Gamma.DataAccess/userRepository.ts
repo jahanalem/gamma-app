@@ -5,6 +5,7 @@ import { BaseRepository } from "./baseRepository";
 import { ApplicationDbContext } from "./applicationDbContext";
 import { IUser, User } from "../Gamma.Models/Identities/user";
 import { HttpError } from "../Gamma.Common/models/httpError";
+import { HTTPStatusCodes } from "../Gamma.Common/constants/HTTPStatusCodes";
 const bcrypt = require("bcryptjs");
 
 export interface IUserRepository {
@@ -26,7 +27,7 @@ export class UserRepository extends BaseRepository implements IUserRepository {
     try {
       hashedPassword = await bcrypt.hash(password, 12);
     } catch (err) {
-      throw (new HttpError("Could not create user, please try again.", 500));
+      throw (new HttpError("Could not create user, please try again.", HTTPStatusCodes.ServerError.InternalServerError));
     }
 
     const result = await ApplicationDbContext.Prisma.user.create({

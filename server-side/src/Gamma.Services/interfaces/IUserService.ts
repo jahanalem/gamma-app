@@ -5,7 +5,7 @@ import { ISignUpUserViewModel } from "../../Gamma.Models/ViewModels/signUpUserVi
 
 export interface IUserService {
   Signup: (newUser: ISignUpUserViewModel) => Promise<User>;
-  Login: (user: ILoginUserViewModel) => any;
+  Login: (user: ILoginUserViewModel) => Promise<User>;
   GetUserByEmail: (email: string) => Promise<User>;
   GetUserByUsername: (username: string) => Promise<User>;
   EmailExists(email: string): Promise<boolean>;

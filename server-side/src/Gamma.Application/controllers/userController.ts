@@ -17,6 +17,8 @@ import { IUserService } from "../../Gamma.Services/interfaces/IUserService";
 import { SignUpUserViewModel } from "../../Gamma.Models/ViewModels/signUpUserViewModel";
 import { LoginUserViewModel } from "../../Gamma.Models/ViewModels/loginUserViewModel";
 import { HttpError } from "../../Gamma.Common/models/httpError";
+import { HTTPStatusCodes } from "../../Gamma.Common/constants/HTTPStatusCodes";
+import { error } from "console";
 
 @controller("/users")
 export class UserController extends BaseController {
@@ -29,7 +31,7 @@ export class UserController extends BaseController {
 
     const errors = validationResult(req);
     if (!errors.isEmpty()) {
-      return next(new HttpError("Invalid inputs passed, please check your data.", 422));
+      return next(new HttpError("Invalid inputs passed, please check your data.", HTTPStatusCodes.ClientError.UnprocessableEntity));
     }
     const { firstName, lastName, userName, email, password, confirmPassword } = req.body;
 
@@ -43,17 +45,22 @@ export class UserController extends BaseController {
     );
 
     await this.userService.Signup(candidateUser).then(result => {
-      res.status(200).json(result);
+      res.status(HTTPStatusCodes.Successful.Created).json(result);
     }).catch(error => {
       next(error);
     });
   }
 
-  @httpPost("/login")
-  private async login(@request() req: Request, @response() res: Response) {
+  @httpGet("/login")
+  private async login(@request() req: Request, @response() res: Response, @next() next: NextFunction) {
     const { email, password } = req.body;
     const user = new LoginUserViewModel(email, password);
-    this.userService.Login(user);
-    res.status(200).json();
+
+    await this.userService.Login(user).then(result => {
+      res.status(HTTPStatusCodes.Successful.OK).json(result);
+    }).catch(error => {
+      next(error);
+    });
+
   }
 }

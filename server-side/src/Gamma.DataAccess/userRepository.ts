@@ -13,6 +13,7 @@ export interface IUserRepository {
   LogInUser: (user: ILoginUserViewModel) => any;
   GetUserByEmail: (email: string) => Promise<User>;
   GetUserByUserName: (userName: string) => Promise<User>;
+  GetByCriteria(): Promise<User[]>;
 }
 @injectable()
 export class UserRepository extends BaseRepository implements IUserRepository {
@@ -75,6 +76,14 @@ export class UserRepository extends BaseRepository implements IUserRepository {
       .finally(async () => {
         await ApplicationDbContext.Prisma.$disconnect();
       });
+
+    return result;
+  }
+
+  public async GetByCriteria(): Promise<User[]> {
+    const result = await ApplicationDbContext.Prisma.user.findMany()
+      .catch(err => { throw (err) })
+      .finally(async () => { await ApplicationDbContext.Prisma.$disconnect(); });
 
     return result;
   }

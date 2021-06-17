@@ -9,7 +9,7 @@ import { User } from "../Gamma.Models/Identities/user";
 import { HttpError } from "../Gamma.Common/models/httpError";
 import { HTTPStatusCodes } from "../Gamma.Common/constants/HTTPStatusCodes";
 import { container } from "../inversify.config";
-const jwt = require('jsonwebtoken');
+import jwt from 'jsonwebtoken';
 const bcrypt = require("bcryptjs");
 
 @injectable()
@@ -80,12 +80,8 @@ export class UserService extends BaseService implements IUserService {
     }
 
     let isValidPassword: boolean;
-    try {
-      isValidPassword = await bcrypt.compare(userModel.Password, existingUser.PasswordHash);
-    }
-    catch (err) {
-      throw (new HttpError('Could not log you in, please check your credentials and try again.', HTTPStatusCodes.ServerError.InternalServerError));
-    }
+    try { isValidPassword = await bcrypt.compare(userModel.Password, existingUser.PasswordHash); }
+    catch (err) { throw (new HttpError('Could not log you in, please check your credentials and try again.', HTTPStatusCodes.ServerError.InternalServerError)); }
 
     if (!isValidPassword)
       throw (new HttpError('Invalid credentials, could not log you in.', HTTPStatusCodes.ClientError.Forbidden));
@@ -95,6 +91,10 @@ export class UserService extends BaseService implements IUserService {
     existingUser.Token = token;
 
     return existingUser;
+  }
+
+  public async GetAll(): Promise<User[]> {
+    return this.userRepository.GetByCriteria();
   }
 
   public async EditUser() { }
@@ -111,6 +111,7 @@ export class UserService extends BaseService implements IUserService {
     let token;
     try {
       token = jwt.sign({ userId: userId, email: email }, secretKey, { expiresIn: expiresIn });
+      console.log("THE TOKEN CREATED:", token);
     } catch (err) {
       throw (new HttpError('Signing up failed, please try again later.', HTTPStatusCodes.ServerError.InternalServerError));
     }

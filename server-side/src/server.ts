@@ -32,6 +32,17 @@ const configFn = (app: express.Application) => {
   app.use(express.urlencoded({ extended: true }) as express.RequestHandler);
   app.use(express.static("assets"));
   app.use(express.static(__dirname + "/"));
+  app.use((req: Request, res: Response, next: NextFunction) => {
+    res.setHeader('Access-Control-Allow-Origin', '*');
+    res.setHeader(
+      'Access-Control-Allow-Headers',
+      'Origin, X-Requested-With, Content-Type, Accept, Authorization'
+    );
+    res.setHeader('Access-Control-Allow-Methods', 'GET, POST, PATCH, DELETE');
+
+    next();
+  });
+
 };
 
 const errorConfigFn = (app: express.Application) => {

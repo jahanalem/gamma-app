@@ -11,7 +11,7 @@ import {
   request,
   response,
 } from "inversify-express-utils";
-import { inject } from "inversify";
+import { inject} from "inversify";
 import TYPES from "../../Gamma.Constants/types";
 import { IUserService } from "../../Gamma.Services/interfaces/IUserService";
 import { SignUpUserViewModel } from "../../Gamma.Models/ViewModels/signUpUserViewModel";
@@ -19,6 +19,8 @@ import { LoginUserViewModel } from "../../Gamma.Models/ViewModels/loginUserViewM
 import { HttpError } from "../../Gamma.Common/models/httpError";
 import { HTTPStatusCodes } from "../../Gamma.Common/constants/HTTPStatusCodes";
 import { error } from "console";
+
+const checkAuth = require('../middleware/checkAuthMiddleware');
 
 @controller("/users")
 export class UserController extends BaseController {
@@ -28,7 +30,6 @@ export class UserController extends BaseController {
 
   @httpPost("/signup")
   private async signup(@request() req: Request, @response() res: Response, @next() next: NextFunction) {
-
     const errors = validationResult(req);
     if (!errors.isEmpty()) {
       return next(new HttpError("Invalid inputs passed, please check your data.", HTTPStatusCodes.ClientError.UnprocessableEntity));
@@ -61,6 +62,12 @@ export class UserController extends BaseController {
     }).catch(error => {
       next(error);
     });
+
+  }
+
+  @httpGet("/admin", checkAuth)
+  private async getUsers(@request() req: Request, @response() res: Response, @next() next: NextFunction)
+  {
 
   }
 }

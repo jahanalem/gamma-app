@@ -39,14 +39,10 @@ container.bind<IPostService>(TYPES.IPostService).to(PostService);
 container.bind<ITagRepository>(TYPES.ITagRepository).to(TagRepository);
 container.bind<ITagService>(TYPES.ITagService).to(TagService);
 
-container
-  .bind<ICategoryRepository>(TYPES.ICategoryRepository)
-  .to(CategoryRepository);
+container.bind<ICategoryRepository>(TYPES.ICategoryRepository).to(CategoryRepository);
 container.bind<ICategoryService>(TYPES.ICategoryService).to(CategoryService);
 
-container
-  .bind<ICommentRepository>(TYPES.ICommentRepository)
-  .to(CommentRepository);
+container.bind<ICommentRepository>(TYPES.ICommentRepository).to(CommentRepository);
 container.bind<ICommentService>(TYPES.ICommentService).to(CommentService);
 
 container.bind<IUserRepository>(TYPES.IUserRepository).to(UserRepository);

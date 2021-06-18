@@ -11,7 +11,7 @@ import {
   request,
   response,
 } from "inversify-express-utils";
-import { inject} from "inversify";
+import { inject } from "inversify";
 import TYPES from "../../Gamma.Constants/types";
 import { IUserService } from "../../Gamma.Services/interfaces/IUserService";
 import { SignUpUserViewModel } from "../../Gamma.Models/ViewModels/signUpUserViewModel";
@@ -65,9 +65,12 @@ export class UserController extends BaseController {
 
   }
 
-  @httpGet("/admin", checkAuth)
-  private async getUsers(@request() req: Request, @response() res: Response, @next() next: NextFunction)
-  {
-
+  @httpGet("/admin")
+  private async getUsers(@request() req: Request, @response() res: Response, @next() next: NextFunction) {
+    await this.userService.GetByCriteria().then(result => {
+      res.status(HTTPStatusCodes.Successful.OK).json(result);
+    }).catch(error => {
+      next(error);
+    });
   }
 }

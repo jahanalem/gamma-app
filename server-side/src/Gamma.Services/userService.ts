@@ -93,8 +93,8 @@ export class UserService extends BaseService implements IUserService {
     return existingUser;
   }
 
-  public async GetAll(): Promise<User[]> {
-    return this.userRepository.GetByCriteria();
+  public async GetByCriteria(): Promise<User[]> {
+    return await this.userRepository.GetByCriteria();
   }
 
   public async EditUser() { }

@@ -10,5 +10,5 @@ export interface IUserService {
   GetUserByUsername: (username: string) => Promise<User>;
   EmailExists(email: string): Promise<boolean>;
   UsernameExists(username: string): Promise<boolean>;
-  GetAll: () => Promise<User[]>;
+  GetByCriteria(): Promise<User[]>;
 }

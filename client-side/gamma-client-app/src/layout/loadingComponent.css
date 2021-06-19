@@ -1,0 +1,9 @@
+.loader-color {
+    color: red;
+}
+
+.ui.inverted.dimmer .ui.loader {
+    color: green;
+}
+
+.ui.inverted.dimmer .ui.loader:after {}

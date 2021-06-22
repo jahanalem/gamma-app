@@ -5,7 +5,7 @@ import { IPost, Post } from "./post";
 export interface ICategory {
   Title: string;
   IsActive: boolean;
-  ParentId?: Nullable<number>;
+  ParentId?: Nullable<string>;
   Parent?: ICategory;
   Posts?: Post[];
 }
@@ -13,13 +13,13 @@ export interface ICategory {
 export class Category extends Entity implements ICategory {
   public Title: string;
   public IsActive: boolean;
-  ParentId?: number;
+  ParentId?: string;
   Parent?: ICategory;
   Posts?: Post[];
   constructor(
     title: string,
     isActive: boolean = true,
-    parentId: number = null
+    parentId: string = null
   ) {
     super();
     this.Title = title;

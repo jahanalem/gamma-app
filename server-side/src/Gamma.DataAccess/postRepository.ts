@@ -6,9 +6,9 @@ import { BaseRepository } from "./baseRepository";
 export interface IPostRepository {
   Create: (post: IPost) => Promise<void>;
   GetAll: () => Promise<Post[]>;
-  GetById: (id: number) => Promise<Post>;
-  Delete: (id: number) => Promise<any>;
-  Update: (id: number, post: IPost) => Promise<Post>;
+  GetById: (id: string) => Promise<Post>;
+  Delete: (id: string) => Promise<any>;
+  Update: (id: string, post: IPost) => Promise<Post>;
 }
 
 @injectable()
@@ -53,7 +53,7 @@ export class PostRepository extends BaseRepository implements IPostRepository {
     //let data = await ApplicationDbContext.db.execute("SELECT * FROM post");
   }
 
-  public async GetById(id: number): Promise<Post> {
+  public async GetById(id: string): Promise<Post> {
     const data = await ApplicationDbContext.Prisma.post
       .findUnique({
         where: { Id: id },
@@ -67,7 +67,7 @@ export class PostRepository extends BaseRepository implements IPostRepository {
     //const data = await ApplicationDbContext.db.execute("SELECT * FROM post WHERE Id = ?",[id]);
   }
 
-  public async Delete(id: number) {
+  public async Delete(id: string) {
     const data = await ApplicationDbContext.Prisma.post
       .delete({
         where: { Id: id },
@@ -81,7 +81,7 @@ export class PostRepository extends BaseRepository implements IPostRepository {
     return data;
   }
 
-  public async Update(id: number, post: IPost) {
+  public async Update(id: string, post: IPost) {
     const result = await ApplicationDbContext.Prisma.post
       .update({
         where: { Id: id },

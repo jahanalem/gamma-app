@@ -24,7 +24,7 @@ export class PostController extends BaseController {
   @httpDelete("/delete/:id")
   private async deletePost(@request() req: Request, @response() res: Response) {
     const id = req.params.id;
-    await this.pService.Delete(+id);
+    await this.pService.Delete(id);
 
     res.status(204).json();
   }
@@ -58,7 +58,7 @@ export class PostController extends BaseController {
   @httpGet("/:id")
   private async getById(@request() req: Request, @response() res: Response) {
     const id = req.params.id;
-    const data = await this.pService.GetById(+id);
+    const data = await this.pService.GetById(id);
 
     res.status(200).json(data);
   }
@@ -92,7 +92,7 @@ export class PostController extends BaseController {
       isActiveNewComment,
       authorId
     );
-    const result = await this.pService.Update(+id, p);
+    const result = await this.pService.Update(id, p);
 
     res.status(200).json(result);
   }

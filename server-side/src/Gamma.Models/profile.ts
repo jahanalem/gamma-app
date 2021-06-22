@@ -1,7 +1,7 @@
 import { User } from "./Identities/user";
 
 export interface Profile {
-  Id: number;
+  Id: string;
   Bio: string;
   User: User;
 }

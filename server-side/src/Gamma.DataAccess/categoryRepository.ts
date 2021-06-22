@@ -6,9 +6,9 @@ import { injectable } from "inversify";
 export interface ICategoryRepository {
   Create: (Category: ICategory) => Promise<Category>;
   GetAll: () => Promise<Category[]>;
-  GetById: (id: number) => Promise<Category>;
-  Delete: (id: number) => Promise<Category>;
-  Update: (id: number, Category: ICategory) => Promise<Category>;
+  GetById: (id: string) => Promise<Category>;
+  Delete: (id: string) => Promise<Category>;
+  Update: (id: string, Category: ICategory) => Promise<Category>;
 }
 
 @injectable()
@@ -52,7 +52,7 @@ export class CategoryRepository
     return result;
   }
 
-  public async GetById(id: number): Promise<Category> {
+  public async GetById(id: string): Promise<Category> {
     const result = await ApplicationDbContext.Prisma.category
       .findFirst({
         where: { Id: id },
@@ -68,7 +68,7 @@ export class CategoryRepository
 
   //#region UPDATE REGION
 
-  public async Update(id: number, category: ICategory): Promise<Category> {
+  public async Update(id: string, category: ICategory): Promise<Category> {
     const result = await ApplicationDbContext.Prisma.category
       .update({
         where: { Id: id },
@@ -89,7 +89,7 @@ export class CategoryRepository
 
   //#region DELETE REGION
 
-  public async Delete(id: number): Promise<Category> {
+  public async Delete(id: string): Promise<Category> {
     const result = await ApplicationDbContext.Prisma.category
       .delete({
         where: { Id: id },

@@ -5,25 +5,25 @@ import { IPost } from "./post";
 
 export interface IComment {
   Description: string;
-  ParentId: Nullable<number>;
-  WrittenById: number;
+  ParentId: Nullable<string>;
+  WrittenById: string;
   WrittenBy?: IUser;
-  PostId: number;
+  PostId: string;
   Post?: IPost;
 }
 
 export class Comment extends Entity implements IComment {
-  ParentId: number;
-  WrittenById: number;
+  ParentId: string;
+  WrittenById: string;
   WrittenBy?: IUser;
   Post?: IPost;
-  PostId: number;
+  PostId: string;
   Description: string;
   constructor(
     description: string,
-    postId: number,
-    writtenById: number,
-    parentId: number = null
+    postId: string,
+    writtenById: string,
+    parentId: string = null
   ) {
     super();
     this.Description = description;

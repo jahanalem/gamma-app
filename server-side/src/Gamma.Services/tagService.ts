@@ -17,7 +17,7 @@ export class TagService extends BaseService implements ITagService {
     return await this.tagRepository.GetAll();
   }
 
-  public async GetById(id: number): Promise<Tag> {
+  public async GetById(id: string): Promise<Tag> {
     return await this.tagRepository.GetById(id);
   }
 
@@ -26,11 +26,11 @@ export class TagService extends BaseService implements ITagService {
     return await this.tagRepository.Create(tag);
   }
 
-  public async Delete(id: number): Promise<Tag> {
+  public async Delete(id: string): Promise<Tag> {
     return await this.tagRepository.Delete(id);
   }
 
-  public async Update(id: number, tag: ITag): Promise<Tag> {
+  public async Update(id: string, tag: ITag): Promise<Tag> {
     return await this.tagRepository.Update(id, tag);
   }
 }

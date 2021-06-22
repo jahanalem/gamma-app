@@ -23,15 +23,15 @@ export class CategoryService extends BaseService implements ICategoryService {
     return await this.categoryRepository.GetAll();
   }
 
-  public async GetById(id: number): Promise<Category> {
+  public async GetById(id: string): Promise<Category> {
     return await this.categoryRepository.GetById(id);
   }
 
-  public async Update(id: number, Category: ICategory): Promise<Category> {
+  public async Update(id: string, Category: ICategory): Promise<Category> {
     return await this.categoryRepository.Update(id, Category);
   }
 
-  public async Delete(id: number): Promise<Category> {
+  public async Delete(id: string): Promise<Category> {
     return await this.categoryRepository.Delete(id);
   }
 }

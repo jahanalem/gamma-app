@@ -9,7 +9,7 @@ export interface IPost {
   IsPublished: boolean;
   IsActiveNewComment: boolean;
   Author?: User;
-  AuthorId: number;
+  AuthorId: string;
 }
 
 export class Post extends Entity implements IPost {
@@ -19,7 +19,7 @@ export class Post extends Entity implements IPost {
   IsActive: boolean;
   IsPublished: boolean;
   IsActiveNewComment: boolean;
-  AuthorId: number;
+  AuthorId: string;
   Author?: User;
 
   constructor(
@@ -29,7 +29,7 @@ export class Post extends Entity implements IPost {
     isActive: boolean,
     isPublished: boolean,
     isActiveNewComment: boolean,
-    authorId: number
+    authorId: string
   ) {
     super();
     this.Title = title;

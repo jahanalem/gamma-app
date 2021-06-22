@@ -45,7 +45,7 @@ export class TagController extends BaseController {
   @httpGet("/:id")
   private async getById(@request() req: Request, @response() res: Response) {
     const id = req.params.id;
-    const result = await this.tagService.GetById(+id);
+    const result = await this.tagService.GetById(id);
 
     res.status(200).json(result);
   }
@@ -59,7 +59,7 @@ export class TagController extends BaseController {
     const id = req.params.id;
     const { title } = req.body;
     let uTag = new Tag(title);
-    const result = await this.tagService.Update(+id, uTag);
+    const result = await this.tagService.Update(id, uTag);
 
     res.status(200).json(result);
   }
@@ -71,7 +71,7 @@ export class TagController extends BaseController {
   @httpDelete("/delete/:id")
   private async deletePost(@request() req: Request, @response() res: Response) {
     const id = req.params.id;
-    const result = await this.tagService.Delete(+id);
+    const result = await this.tagService.Delete(id);
 
     res.status(204).json(result);
   }

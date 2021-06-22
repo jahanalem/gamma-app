@@ -17,7 +17,7 @@ export class PostService extends BaseService implements IPostService {
     return this.postRepository.GetAll();
   }
 
-  public async GetById(id: number): Promise<Post> {
+  public async GetById(id: string): Promise<Post> {
     return this.postRepository.GetById(id);
   }
 
@@ -26,11 +26,11 @@ export class PostService extends BaseService implements IPostService {
     return await this.postRepository.Create(Post);
   }
 
-  public async Delete(id: number) {
+  public async Delete(id: string) {
     return this.postRepository.Delete(id);
   }
 
-  public async Update(id: number, post: IPost) {
+  public async Update(id: string, post: IPost) {
     return this.postRepository.Update(id, post);
   }
 }

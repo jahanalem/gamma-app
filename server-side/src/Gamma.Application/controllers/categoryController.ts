@@ -51,7 +51,7 @@ export class CategoryController extends BaseController {
   @httpGet("/:id")
   private async getById(@request() req: Request, @response() res: Response) {
     const id = req.params.id;
-    const result = await this.categoryService.GetById(+id);
+    const result = await this.categoryService.GetById(id);
 
     res.status(200).json(result);
   }
@@ -66,7 +66,7 @@ export class CategoryController extends BaseController {
     const { title, isActive, parentId } = req.body;
     let uCategory = new Category(title, isActive, parentId);
 
-    const result = await this.categoryService.Update(+id, uCategory);
+    const result = await this.categoryService.Update(id, uCategory);
 
     res.status(200).json(result);
   }
@@ -78,7 +78,7 @@ export class CategoryController extends BaseController {
   @httpDelete("/delete/:id")
   private async deletePost(@request() req: Request, @response() res: Response) {
     const id = req.params.id;
-    const result = await this.categoryService.Delete(+id);
+    const result = await this.categoryService.Delete(id);
 
     res.status(204).json(result);
   }

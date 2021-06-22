@@ -6,11 +6,11 @@ import { id, injectable } from "inversify";
 export interface ICommentRepository {
   Create: (comment: IComment) => Promise<Comment>;
   GetAll: () => Promise<Comment[]>;
-  GetById: (id: number) => Promise<Comment>;
-  GetCommentsByUserId: (userId: number) => Promise<Comment[]>;
-  GetCommentsByPostId: (postId: number) => Promise<Comment[]>;
-  Update: (id: number, comment: IComment) => Promise<Comment>;
-  Delete: (id: number) => Promise<Comment>;
+  GetById: (id: string) => Promise<Comment>;
+  GetCommentsByUserId: (userId: string) => Promise<Comment[]>;
+  GetCommentsByPostId: (postId: string) => Promise<Comment[]>;
+  Update: (id: string, comment: IComment) => Promise<Comment>;
+  Delete: (id: string) => Promise<Comment>;
 }
 
 @injectable()
@@ -55,7 +55,7 @@ export class CommentRepository
     return result;
   }
 
-  public async GetById(id: number): Promise<Comment> {
+  public async GetById(id: string): Promise<Comment> {
     const result = await ApplicationDbContext.Prisma.comment
       .findFirst({
         where: { Id: id },
@@ -67,7 +67,7 @@ export class CommentRepository
     return result;
   }
 
-  public async GetCommentsByPostId(postId: number): Promise<Comment[]> {
+  public async GetCommentsByPostId(postId: string): Promise<Comment[]> {
     const result = await ApplicationDbContext.Prisma.comment
       .findMany({
         where: { PostId: postId },
@@ -79,7 +79,7 @@ export class CommentRepository
     return result;
   }
 
-  public async GetCommentsByUserId(userId: number): Promise<Comment[]> {
+  public async GetCommentsByUserId(userId: string): Promise<Comment[]> {
     const result = await ApplicationDbContext.Prisma.comment
       .findMany({
         where: { WrittenById: userId },
@@ -95,7 +95,7 @@ export class CommentRepository
 
   //#region UPDATE REGION
 
-  public async Update(id: number, comment: IComment): Promise<Comment> {
+  public async Update(id: string, comment: IComment): Promise<Comment> {
     const result = await ApplicationDbContext.Prisma.comment
       .update({
         where: { Id: id },
@@ -117,7 +117,7 @@ export class CommentRepository
 
   //#region DELETE REGION
 
-  public async Delete(id: number): Promise<Comment> {
+  public async Delete(id: string): Promise<Comment> {
     const result = await ApplicationDbContext.Prisma.comment
       .delete({
         where: { Id: id },

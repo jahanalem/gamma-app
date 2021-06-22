@@ -22,23 +22,23 @@ export class CommentService extends BaseService implements ICommentService {
     return await this.commentRepository.GetAll();
   }
 
-  public async GetById(id: number): Promise<Comment> {
+  public async GetById(id: string): Promise<Comment> {
     return await this.commentRepository.GetById(id);
   }
 
-  public async GetCommentsByPostId(postId: number): Promise<Comment[]> {
+  public async GetCommentsByPostId(postId: string): Promise<Comment[]> {
     return await this.commentRepository.GetCommentsByPostId(postId);
   }
 
-  public async GetCommentsByUserId(userId: number) {
+  public async GetCommentsByUserId(userId: string) {
     return await this.commentRepository.GetCommentsByUserId(userId);
   }
 
-  public async Update(id: number, comment: IComment): Promise<Comment> {
+  public async Update(id: string, comment: IComment): Promise<Comment> {
     return await this.commentRepository.Update(id, comment);
   }
 
-  public async Delete(id: number): Promise<Comment> {
+  public async Delete(id: string): Promise<Comment> {
     return await this.commentRepository.Delete(id);
   }
 }

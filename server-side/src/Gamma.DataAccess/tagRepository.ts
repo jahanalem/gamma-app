@@ -6,9 +6,9 @@ import { injectable } from "inversify";
 export interface ITagRepository {
   Create: (tag: ITag) => Promise<Tag>;
   GetAll: () => Promise<Tag[]>;
-  GetById: (id: number) => Promise<Tag>;
-  Delete: (id: number) => Promise<Tag>;
-  Update: (id: number, tag: ITag) => Promise<Tag>;
+  GetById: (id: string) => Promise<Tag>;
+  Delete: (id: string) => Promise<Tag>;
+  Update: (id: string, tag: ITag) => Promise<Tag>;
 }
 
 @injectable()
@@ -47,7 +47,7 @@ export class TagRepository extends BaseRepository implements ITagRepository {
     return result;
   }
 
-  public async GetById(id: number): Promise<Tag> {
+  public async GetById(id: string): Promise<Tag> {
     const result = await ApplicationDbContext.Prisma.tag
       .findFirst({
         where: { Id: id },
@@ -63,7 +63,7 @@ export class TagRepository extends BaseRepository implements ITagRepository {
 
   //#region UPDATE REGION
 
-  public async Update(id: number, tag: ITag): Promise<Tag> {
+  public async Update(id: string, tag: ITag): Promise<Tag> {
     const result = await ApplicationDbContext.Prisma.tag
       .update({
         where: { Id: id },
@@ -80,7 +80,7 @@ export class TagRepository extends BaseRepository implements ITagRepository {
 
   //#region DELETE REGION
 
-  public async Delete(id: number): Promise<Tag> {
+  public async Delete(id: string): Promise<Tag> {
     const result = await ApplicationDbContext.Prisma.tag
       .delete({
         where: { Id: id },

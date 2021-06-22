@@ -50,7 +50,7 @@ export class CommentController extends BaseController {
   @httpGet("/:id")
   private async getById(@request() req: Request, @response() res: Response) {
     const id = req.params.id;
-    const result = await this.commentService.GetById(+id);
+    const result = await this.commentService.GetById(id);
 
     res.status(200).json(result);
   }
@@ -61,7 +61,7 @@ export class CommentController extends BaseController {
     @response() res: Response
   ) {
     const postId = req.params.postId;
-    const result = await this.commentService.GetCommentsByPostId(+postId);
+    const result = await this.commentService.GetCommentsByPostId(postId);
 
     res.status(200).json(result);
   }
@@ -72,7 +72,7 @@ export class CommentController extends BaseController {
     @response() res: Response
   ) {
     const userId = req.params.userId;
-    const result = await this.commentService.GetCommentsByUserId(+userId);
+    const result = await this.commentService.GetCommentsByUserId(userId);
 
     res.status(200).json(result);
   }
@@ -86,7 +86,7 @@ export class CommentController extends BaseController {
     const id = req.params.id;
     const { description, postId, writtenById, parentId } = req.body;
     let uComment = new Comment(description, postId, writtenById, parentId);
-    const result = await this.commentService.Update(+id, uComment);
+    const result = await this.commentService.Update(id, uComment);
 
     res.status(200).json(result);
   }
@@ -98,7 +98,7 @@ export class CommentController extends BaseController {
   @httpDelete("/delete/:id")
   private async deletePost(@request() req: Request, @response() res: Response) {
     const id = req.params.id;
-    const result = await this.commentService.Delete(+id);
+    const result = await this.commentService.Delete(id);
 
     res.status(204).json(result);
   }

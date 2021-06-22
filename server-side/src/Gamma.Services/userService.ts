@@ -101,9 +101,9 @@ export class UserService extends BaseService implements IUserService {
 
   public async GetUsers() { }
 
-  public async DeleteUser(id: number) { }
+  public async DeleteUser(id: string) { }
 
-  private async GenerateToken(userId: number,
+  private async GenerateToken(userId: string,
     email: string,
     secretKey: string = process.env.SECRET_KEY,
     expiresIn: string = '1h'): Promise<string> {

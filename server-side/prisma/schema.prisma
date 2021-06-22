@@ -11,8 +11,8 @@ generator client {
 }
 
 model Category {
-  Id           Int        @id @default(autoincrement())
-  ParentId     Int?
+  Id           String     @id @default(uuid())
+  ParentId     String?
   Parent       Category?  @relation("CategoryToParent", fields: [ParentId], references: [Id])
   Categories   Category[] @relation("CategoryToParent")
   Title        String     @db.VarChar(50)
@@ -23,7 +23,7 @@ model Category {
 }
 
 model Tag {
-  Id             Int              @id @default(autoincrement())
+  Id             String           @id @default(uuid())
   Title          String           @unique
   TagPostMapping TagPostMapping[]
   CreatedDate    DateTime         @default(now())
@@ -31,10 +31,10 @@ model Tag {
 }
 
 model Post {
-  Id                 Int              @id @default(autoincrement())
-  AuthorId           Int
+  Id                 String           @id @default(uuid())
+  AuthorId           String
   Author             User             @relation(fields: [AuthorId], references: [Id])
-  CategoryId         Int?
+  CategoryId         String?
   Category           Category?        @relation(fields: [CategoryId], references: [Id])
   Title              String           @db.VarChar(255)
   Description        String?          @db.MediumText
@@ -50,9 +50,9 @@ model Post {
 
 model TagPostMapping {
   Post         Post      @relation(fields: [PostId], references: [Id])
-  PostId       Int
+  PostId       String
   Tag          Tag       @relation(fields: [TagId], references: [Id])
-  TagId        Int
+  TagId        String
   CreatedDate  DateTime  @default(now())
   ModifiedDate DateTime? @updatedAt
 
@@ -60,13 +60,13 @@ model TagPostMapping {
 }
 
 model Comment {
-  Id           Int       @id @default(autoincrement())
-  ParentId     Int?
+  Id           String    @id @default(uuid())
+  ParentId     String?
   Parent       Comment?  @relation("CommentToParent", fields: [ParentId], references: [Id])
   Comments     Comment[] @relation("CommentToParent")
-  PostId       Int
+  PostId       String
   Post         Post      @relation(fields: [PostId], references: [Id])
-  WrittenById  Int
+  WrittenById  String
   WrittenBy    User      @relation(fields: [WrittenById], references: [Id])
   Description  String
   CreatedDate  DateTime  @default(now())
@@ -74,8 +74,8 @@ model Comment {
 }
 
 model Profile {
-  Id           Int       @id @default(autoincrement())
-  UserId       Int       @unique
+  Id           String    @id @default(uuid())
+  UserId       String    @unique
   User         User      @relation(fields: [UserId], references: [Id])
   Bio          String?   @db.MediumText
   CreatedDate  DateTime  @default(now())
@@ -83,7 +83,7 @@ model Profile {
 }
 
 model User {
-  Id                   Int               @id @default(autoincrement())
+  Id                   String            @id @default(uuid())
   Email                String            @unique @db.VarChar(64)
   NormalizedEmail      String            @unique @db.VarChar(64)
   UserName             String            @unique @db.VarChar(64)
@@ -92,7 +92,7 @@ model User {
   PasswordHash         String            @db.VarChar(1024)
   PhoneNumber          String?           @db.VarChar(32)
   PhoneNumberConfirmed Boolean           @default(false)
-  LockoutEnd           DateTime?         
+  LockoutEnd           DateTime?
   LockoutEnabled       Boolean           @default(false)
   AccessFailedCount    Int?
   FirstName            String?           @db.VarChar(32)
@@ -112,7 +112,7 @@ model User {
 }
 
 model Role {
-  Id              Int               @id @default(autoincrement())
+  Id              String            @id @default(uuid())
   Name            String            @unique @db.VarChar(64)
   NormalizedName  String            @unique @db.VarChar(64)
   Description     String?           @db.VarChar(512)
@@ -123,9 +123,9 @@ model Role {
 
 model UserRoleMapping {
   Role         Role      @relation(fields: [RoleId], references: [Id])
-  RoleId       Int
+  RoleId       String
   User         User      @relation(fields: [UserId], references: [Id])
-  UserId       Int
+  UserId       String
   CreatedDate  DateTime  @default(now())
   ModifiedDate DateTime? @updatedAt
 

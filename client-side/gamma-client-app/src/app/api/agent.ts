@@ -1,4 +1,4 @@
-import axios, { AxiosError, AxiosResponse } from 'axios';
+import axios, { AxiosResponse } from 'axios';
 import { IPostModel } from '../models/postModel';
 import { IUserModel } from '../models/userModel';
 import { ILoginUserViewModel } from '../viewModels/loginUserViewModel';
@@ -15,7 +15,7 @@ axios.defaults.baseURL = 'http://localhost:3000/api';//process.env.GAMMA_REACT_A
 
 axios.interceptors.response.use(async response => {
     try {
-        await sleep(1000);
+        await sleep(1);
         return response;
     }
     catch (error) {

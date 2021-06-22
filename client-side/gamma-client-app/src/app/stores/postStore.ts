@@ -22,7 +22,6 @@ export default class PostStore {
         try {
             const posts = await agent.Post.list();
             posts.forEach(post => {
-                //post.date = post.date.split('T')[0];
                 this.postInventory.set(post.Id, post);
             })
             this.setLoadingInitial(false);

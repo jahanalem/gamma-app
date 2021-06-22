@@ -1,16 +1,8 @@
-import { useState, useEffect } from "react";
 import { Card, ListGroup } from "react-bootstrap";
 import '../aboutUs/aboutUs.css';
 
 export const AboutUs: React.FC = () => {
-  const [aboutUs, setAboutUs] = useState([])
-
-  useEffect(() => {
-
-  }, []);
-
   return (
-
     <>
       <div className="about-section paddingTB60">
         <div className="container">
@@ -54,6 +46,5 @@ export const AboutUs: React.FC = () => {
         </div>
       </div>
     </>
-
   );
 }

@@ -1,4 +1,4 @@
-import Search from '../../features/searchEngine/Search';
+import {Search} from '../../features/searchEngine/Search';
 import { NavLink } from 'react-router-dom';
 import { Navbar, Nav } from "react-bootstrap";
 import '../mainNavbar/mainNavbar.css';

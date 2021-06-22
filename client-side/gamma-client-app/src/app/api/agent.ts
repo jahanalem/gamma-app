@@ -10,7 +10,7 @@ const sleep = (delay: number) => {
     })
 }
 
-axios.defaults.baseURL = process.env.GAMMA_REACT_APP_API_URL;
+axios.defaults.baseURL = 'http://localhost:3000/api';//process.env.GAMMA_REACT_APP_API_URL;
 
 
 axios.interceptors.response.use(async response => {

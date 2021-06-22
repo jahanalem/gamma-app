@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { useParams } from "react-router-dom";
-import LoadingComponent from "../../layout/LoadingComponent";
+import {LoadingComponent} from "../../layout/LoadingComponent";
 import { Card } from "react-bootstrap";
 import "./postDetails.css";
 import { IPostModel } from "../../app/models/postModel";

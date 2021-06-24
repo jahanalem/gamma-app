@@ -22,9 +22,13 @@ export class TagService extends BaseService implements ITagService {
   }
 
   public async Create(tag: ITag): Promise<Tag> {
-    console.log("tag service create");
     return await this.tagRepository.Create(tag);
   }
+
+  public async CreateMany(tags: ITag[]): Promise<number> {
+    return await this.tagRepository.CreateMany(tags);
+  }
+
 
   public async Delete(id: string): Promise<Tag> {
     return await this.tagRepository.Delete(id);

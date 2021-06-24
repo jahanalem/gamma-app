@@ -6,4 +6,5 @@ export interface ICategoryService {
   GetById: (id: string) => Promise<Category>;
   Update: (id: string, category: ICategory) => Promise<Category>;
   Delete: (id: string) => Promise<Category>;
+  CreateMany(Categories: ICategory[]): Promise<number>
 }

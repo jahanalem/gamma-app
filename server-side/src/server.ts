@@ -14,6 +14,7 @@ import "./Gamma.Application/controllers/tagController";
 import "./Gamma.Application/controllers/categoryController";
 import "./Gamma.Application/controllers/commentController";
 import "./Gamma.Application/controllers/userController";
+import "./Gamma.Application/controllers/roleController";
 
 
 const port = process.env.PORT || 3000;

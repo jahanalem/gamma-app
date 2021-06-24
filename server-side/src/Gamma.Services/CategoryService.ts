@@ -19,6 +19,12 @@ export class CategoryService extends BaseService implements ICategoryService {
     return await this.categoryRepository.Create(Category);
   }
 
+
+  public async CreateMany(Categories: ICategory[]): Promise<number> {
+    return await this.categoryRepository.CreateMany(Categories);
+  }
+
+
   public async GetAll(): Promise<Category[]> {
     return await this.categoryRepository.GetAll();
   }

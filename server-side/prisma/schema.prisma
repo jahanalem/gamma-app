@@ -23,11 +23,11 @@ model Category {
 }
 
 model Tag {
-  Id             String           @id @default(uuid())
-  Title          String           @unique
-  TagPostMapping TagPostMapping[]
-  CreatedDate    DateTime         @default(now())
-  ModifiedDate   DateTime?        @updatedAt
+  Id           String           @id @default(uuid())
+  Title        String           @unique
+  Posts        TagPostMapping[]
+  CreatedDate  DateTime         @default(now())
+  ModifiedDate DateTime?        @updatedAt
 }
 
 model Post {
@@ -43,20 +43,19 @@ model Post {
   IsActive           Boolean          @default(true)
   IsActiveNewComment Boolean          @default(true)
   Comments           Comment[]
-  TagPostMapping     TagPostMapping[]
+  Tags               TagPostMapping[]
   CreatedDate        DateTime         @default(now())
   ModifiedDate       DateTime?        @updatedAt
 }
 
 model TagPostMapping {
-  Post         Post      @relation(fields: [PostId], references: [Id])
-  PostId       String
-  Tag          Tag       @relation(fields: [TagId], references: [Id])
-  TagId        String
-  CreatedDate  DateTime  @default(now())
-  ModifiedDate DateTime? @updatedAt
-
-  @@id([PostId, TagId])
+  Id          String    @id @default(uuid())
+  Post        Post?     @relation(fields: [PostId], references: [Id])
+  Tag         Tag?      @relation(fields: [TagId], references: [Id])
+  PostId      String?
+  TagId       String?
+  CreatedDate DateTime  @default(now())
+  ModifiedDat DateTime? @updatedAt
 }
 
 model Comment {
@@ -108,26 +107,25 @@ model User {
   Comments             Comment[]
   CreatedDate          DateTime          @default(now())
   ModifiedDate         DateTime?         @updatedAt
-  UserRoleMapping      UserRoleMapping[]
+  Roles                UserRoleMapping[]
 }
 
 model Role {
-  Id              String            @id @default(uuid())
-  Name            String            @unique @db.VarChar(64)
-  NormalizedName  String            @unique @db.VarChar(64)
-  Description     String?           @db.VarChar(512)
-  CreatedDate     DateTime          @default(now())
-  ModifiedDate    DateTime?         @updatedAt
-  UserRoleMapping UserRoleMapping[]
+  Id             String            @id @default(uuid())
+  Name           String            @unique @db.VarChar(64)
+  NormalizedName String?           @unique @db.VarChar(64)
+  Description    String?           @db.VarChar(512)
+  CreatedDate    DateTime          @default(now())
+  ModifiedDate   DateTime?         @updatedAt
+  Users          UserRoleMapping[]
 }
 
 model UserRoleMapping {
-  Role         Role      @relation(fields: [RoleId], references: [Id])
-  RoleId       String
-  User         User      @relation(fields: [UserId], references: [Id])
-  UserId       String
+  Id           String    @id @default(uuid())
+  Role         Role?     @relation(fields: [RoleId], references: [Id])
+  User         User?     @relation(fields: [UserId], references: [Id])
+  RoleId       String?
+  UserId       String?
   CreatedDate  DateTime  @default(now())
   ModifiedDate DateTime? @updatedAt
-
-  @@id([RoleId, UserId])
 }

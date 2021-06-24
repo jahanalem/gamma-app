@@ -13,6 +13,9 @@ const TYPES = {
 
   IUserRepository: Symbol.for("IUserRepository"),
   IUserService: Symbol.for("IUserService"),
+
+  IRoleRepository: Symbol.for("IRoleRepository"),
+  IRoleService: Symbol.for("IRoleService"),
 };
 
 export default TYPES;

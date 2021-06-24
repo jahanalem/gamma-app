@@ -9,6 +9,7 @@ export interface ITagRepository {
   GetById: (id: string) => Promise<Tag>;
   Delete: (id: string) => Promise<Tag>;
   Update: (id: string, tag: ITag) => Promise<Tag>;
+  CreateMany(tags: ITag[]): Promise<number>;
 }
 
 @injectable()
@@ -32,6 +33,19 @@ export class TagRepository extends BaseRepository implements ITagRepository {
 
     return result;
   }
+
+  public async CreateMany(tags: ITag[]): Promise<number> {
+    const result = await ApplicationDbContext.Prisma.tag.createMany({
+      data: tags,
+      skipDuplicates: true
+    })
+      .finally(async () => {
+        await ApplicationDbContext.Prisma.$disconnect();
+      });
+
+    return result.count;
+  }
+
 
   //#endregion
 

@@ -10,6 +10,7 @@ import { HttpError } from "../Gamma.Common/models/httpError";
 import { HTTPStatusCodes } from "../Gamma.Common/constants/HTTPStatusCodes";
 import { container } from "../inversify.config";
 import jwt from 'jsonwebtoken';
+import { USERROLES } from "../Gamma.Constants/roleMembers";
 const bcrypt = require("bcryptjs");
 
 @injectable()
@@ -39,17 +40,31 @@ export class UserService extends BaseService implements IUserService {
       IsActive: true,
     });
 
-    const result = await this.userRepository.CreateUser(createdUser, candidateUser.Password);
+    if (!candidateUser.UserRole.trim())
+      candidateUser.UserRole = USERROLES.Contributor;
+    if (candidateUser.UserRole.trim().toUpperCase() !== USERROLES.Contributor.toUpperCase() &&
+      candidateUser.UserRole.trim().toUpperCase() !== USERROLES.Administrator.toUpperCase()) {
+
+      throw (new HttpError(`Invalid credentials, could not assign this role to the user because there isn't.`,
+        HTTPStatusCodes.ClientError.Forbidden));
+    }
+
+    const result = await this.userRepository.CreateUser(createdUser,
+      candidateUser.Password,
+      candidateUser.UserRole);
+
     result.Token = await this.GenerateToken(result.Id, result.Email, process.env.SECRET_KEY);
 
     return result;
   }
 
   public async GetUserByEmail(email: string): Promise<User> {
+
     return this.userRepository.GetUserByEmail(email);
   }
 
   public async GetUserByUsername(username: string): Promise<User> {
+
     return this.userRepository.GetUserByUserName(username);
   }
 
@@ -118,5 +133,4 @@ export class UserService extends BaseService implements IUserService {
 
     return token;
   }
-
 }

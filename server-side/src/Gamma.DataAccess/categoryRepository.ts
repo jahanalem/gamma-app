@@ -9,13 +9,13 @@ export interface ICategoryRepository {
   GetById: (id: string) => Promise<Category>;
   Delete: (id: string) => Promise<Category>;
   Update: (id: string, Category: ICategory) => Promise<Category>;
+  CreateMany(categories: ICategory[]): Promise<number>;
 }
 
 @injectable()
 export class CategoryRepository
   extends BaseRepository
-  implements ICategoryRepository
-{
+  implements ICategoryRepository {
   constructor() {
     super();
   }
@@ -36,6 +36,18 @@ export class CategoryRepository
       });
 
     return result;
+  }
+
+  public async CreateMany(categories: ICategory[]): Promise<number> {
+    const result = await ApplicationDbContext.Prisma.category.createMany({
+      data: categories,
+      skipDuplicates: true
+    })
+      .finally(async () => {
+        await ApplicationDbContext.Prisma.$disconnect();
+      });
+
+    return result.count;
   }
 
   //#endregion

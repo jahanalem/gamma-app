@@ -31,24 +31,13 @@ export class PostController extends BaseController {
 
   @httpPost("/create")
   private async create(@request() req: Request, @response() res: Response) {
-    const {
-      title,
-      summary,
-      description,
-      isActive,
-      isPublished,
-      isActiveNewComment,
-      authorId,
-    } = req.body;
-    let x = new Post(
-      title,
-      summary,
-      description,
-      isActive,
-      isPublished,
-      isActiveNewComment,
-      authorId
-    );
+
+    const { title, summary, description, isActive, isPublished,
+      isActiveNewComment, authorId, tags, categoryId } = req.body;
+
+    let x = new Post(title, summary, description, isActive, isPublished, isActiveNewComment, authorId, tags, categoryId);
+
+    console.log("xxxxxxxxxxxxxx:", x);
 
     await this.pService.Create(x);
 

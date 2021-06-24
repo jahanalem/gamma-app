@@ -1,15 +1,20 @@
 import { User } from "./Identities/user";
-import { Entity } from "./Entity";
+import { Entity, IEntity } from "./Entity";
+import { ITag, Tag } from "./tag";
+import { ICategory } from "./category";
 
-export interface IPost {
+export interface IPost extends IEntity {
   Title: string;
   Summary: string;
   Description: string;
   IsActive: boolean;
   IsPublished: boolean;
   IsActiveNewComment: boolean;
-  Author?: User;
   AuthorId: string;
+  Author?: User;
+  CategoryId?: string;
+  Category?: ICategory;
+  Tags?: ITag[];
 }
 
 export class Post extends Entity implements IPost {
@@ -21,6 +26,9 @@ export class Post extends Entity implements IPost {
   IsActiveNewComment: boolean;
   AuthorId: string;
   Author?: User;
+  Tags?: ITag[];
+  CategoryId?: string;
+  Category?: ICategory;
 
   constructor(
     title: string,
@@ -29,7 +37,9 @@ export class Post extends Entity implements IPost {
     isActive: boolean,
     isPublished: boolean,
     isActiveNewComment: boolean,
-    authorId: string
+    authorId: string,
+    tags: ITag[] = null,
+    categoryId: string = null
   ) {
     super();
     this.Title = title;
@@ -39,5 +49,7 @@ export class Post extends Entity implements IPost {
     this.IsPublished = isPublished;
     this.IsActiveNewComment = isActiveNewComment;
     this.AuthorId = authorId;
+    this.Tags = tags;
+    this.CategoryId = categoryId;
   }
 }

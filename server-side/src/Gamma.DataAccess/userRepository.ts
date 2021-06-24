@@ -35,13 +35,11 @@ export class UserRepository extends BaseRepository implements IUserRepository {
       throw (new HttpError("Could not create user, please try again.", HTTPStatusCodes.ServerError.InternalServerError));
     }
 
-
     let roleId = await ApplicationDbContext.Prisma.role.findFirst({
       where: { NormalizedName: userRole.toUpperCase() },
       select: { Id: true }
     })
 
-    //let roleId = "a4bec5e5-24b5-457b-834e-1dbc161bba8a";
     let userId = v4();
     const transResult = await ApplicationDbContext.Prisma.$transaction([
       ApplicationDbContext.Prisma.user.create({
@@ -63,31 +61,12 @@ export class UserRepository extends BaseRepository implements IUserRepository {
           UserId: userId
         },
       }),
-    ])
-      .finally(async () => {
-        await ApplicationDbContext.Prisma.$disconnect();
-      });
+    ]).finally(async () => {
+      await ApplicationDbContext.Prisma.$disconnect();
+    });
 
-
-    // const result = await ApplicationDbContext.Prisma.user.create({
-    //   data: {
-    //     Email: newUser.Email,
-    //     NormalizedEmail: newUser.NormalizedEmail,
-    //     UserName: newUser.UserName,
-    //     NormalizedUserName: newUser.NormalizedUserName,
-    //     FirstName: newUser.FirstName,
-    //     LastName: newUser.LastName,
-    //     IsActive: newUser.IsActive,
-    //     PasswordHash: hashedPassword,
-    //     Roles: { create: [{ Role: { create: { Name: 'Member', NormalizedName: 'MEMBER', Description: null } } }], }
-    //   }
-    // })
-    //   .finally(async () => {
-    //     await ApplicationDbContext.Prisma.$disconnect();
-    //   });
-    // [{UserId:'',RoleId:'b5ce2770-97e9-4bcb-b5bc-63779690c1cf'}]
-    // [{ Role: { create: { Name: 'Member', NormalizedName: 'MEMBER', Description: null } } }], 
     let result = transResult as unknown as User;
+
     return (result);
   }
 

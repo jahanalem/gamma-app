@@ -1,10 +1,12 @@
 import { injectable } from "inversify";
+import { v4 } from "uuid";
+import { postTagMapping } from "../Gamma.Common/types/dataTypes";
 import { IPost, Post } from "../Gamma.Models/post";
 import { ApplicationDbContext } from "./applicationDbContext";
 import { BaseRepository } from "./baseRepository";
 
 export interface IPostRepository {
-  Create: (post: IPost) => Promise<void>;
+  Create: (post: IPost) => Promise<Post>;
   GetAll: () => Promise<Post[]>;
   GetById: (id: string) => Promise<Post>;
   Delete: (id: string) => Promise<any>;
@@ -17,10 +19,16 @@ export class PostRepository extends BaseRepository implements IPostRepository {
     super();
   }
 
-  public async Create(post: IPost) {
-    const result = await ApplicationDbContext.Prisma.post
-      .create({
+  public async Create(post: IPost): Promise<Post> {
+
+    let postId = v4();
+    let postTagIds: postTagMapping[] = [];
+    post.Tags?.map(tag => postTagIds.push({ PostId: postId, TagId: tag.Id }));
+
+    const transResult = await ApplicationDbContext.Prisma.$transaction([
+      ApplicationDbContext.Prisma.post.create({
         data: {
+          Id: postId,
           Title: post.Title,
           Summary: post.Summary,
           Description: post.Description,
@@ -28,11 +36,36 @@ export class PostRepository extends BaseRepository implements IPostRepository {
           IsPublished: post.IsPublished,
           IsActiveNewComment: post.IsActiveNewComment,
           AuthorId: post.AuthorId,
+          CategoryId: post.CategoryId,
         },
+      }),
+      ApplicationDbContext.Prisma.tagPostMapping.createMany({
+        data: postTagIds
       })
-      .finally(async () => {
-        await ApplicationDbContext.Prisma.$disconnect();
-      });
+
+    ]).finally(async () => {
+      await ApplicationDbContext.Prisma.$disconnect();
+    });
+
+    let result = transResult as unknown as Post;
+
+    return result;
+
+    // const result = await ApplicationDbContext.Prisma.post
+    //   .create({
+    //     data: {
+    //       Title: post.Title,
+    //       Summary: post.Summary,
+    //       Description: post.Description,
+    //       IsActive: post.IsActive,
+    //       IsPublished: post.IsPublished,
+    //       IsActiveNewComment: post.IsActiveNewComment,
+    //       AuthorId: post.AuthorId,
+    //     },
+    //   })
+    //   .finally(async () => {
+    //     await ApplicationDbContext.Prisma.$disconnect();
+    //   });
 
     // await ApplicationDbContext.db.execute(`INSERT INTO post (Title, Summary, Description, IsActive, IsPublished, IsActiveNewComment) VALUES (?,?,?,?,?,?)`, [ post.Title, post.Summary, post.Description, post.IsActive, post.IsPublished, post.IsActiveNewComment,]);
   }

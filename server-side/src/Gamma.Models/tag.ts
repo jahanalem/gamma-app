@@ -1,6 +1,6 @@
-import { Entity } from "./Entity";
+import { Entity, IEntity } from "./Entity";
 
-export interface ITag {
+export interface ITag extends IEntity {
   Title: string;
   //IsActive: boolean;
 }

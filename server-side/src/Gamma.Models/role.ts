@@ -1,6 +1,6 @@
-import { Entity } from "./Entity";
+import { Entity, IEntity } from "./Entity";
 
-export interface IRole {
+export interface IRole extends IEntity {
     Name: string;
     Description?: string;
     NormalizedName?: string;

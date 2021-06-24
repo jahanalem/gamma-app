@@ -14,6 +14,7 @@
     "@types/express-session": "^1.17.3",
     "@types/jsonwebtoken": "^8.5.2",
     "@types/mysql": "^2.15.18",
+    "@types/uuid-validate": "0.0.1",
     "bcryptjs": "^2.4.3",
     "client-sessions": "^0.8.0",
     "cors": "^2.8.5",
@@ -29,6 +30,7 @@
     "mysql2": "^2.2.5",
     "reflect-metadata": "^0.1.13",
     "uuid": "^8.3.2",
+    "uuid-validate": "0.0.3",
     "uuidv1": "^1.6.14"
   },
   "devDependencies": {

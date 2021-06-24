@@ -1,9 +1,9 @@
 import { IUser } from "./Identities/user";
 import { Nullable } from "./../global.d";
-import { Entity } from "./Entity";
+import { Entity, IEntity } from "./Entity";
 import { IPost } from "./post";
 
-export interface IComment {
+export interface IComment extends IEntity {
   Description: string;
   ParentId: Nullable<string>;
   WrittenById: string;

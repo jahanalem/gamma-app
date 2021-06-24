@@ -1,8 +1,8 @@
 import { Nullable } from "../global";
-import { Entity } from "./Entity";
+import { Entity, IEntity } from "./Entity";
 import { IPost, Post } from "./post";
 
-export interface ICategory {
+export interface ICategory extends IEntity {
   Title: string;
   IsActive: boolean;
   ParentId?: Nullable<string>;

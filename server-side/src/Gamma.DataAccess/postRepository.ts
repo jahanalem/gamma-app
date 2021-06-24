@@ -5,6 +5,8 @@ import { IPost, Post } from "../Gamma.Models/post";
 import { ApplicationDbContext } from "./applicationDbContext";
 import { BaseRepository } from "./baseRepository";
 
+let validate = require('uuid-validate');
+
 export interface IPostRepository {
   Create: (post: IPost) => Promise<Post>;
   GetAll: () => Promise<Post[]>;
@@ -21,7 +23,8 @@ export class PostRepository extends BaseRepository implements IPostRepository {
 
   public async Create(post: IPost): Promise<Post> {
 
-    let postId = v4();
+    let postId = (!validate(post.Id)) ? v4() : post.Id;
+
     let postTagIds: postTagMapping[] = [];
     post.Tags?.map(tag => postTagIds.push({ PostId: postId, TagId: tag.Id }));
 
@@ -50,24 +53,6 @@ export class PostRepository extends BaseRepository implements IPostRepository {
     let result = transResult as unknown as Post;
 
     return result;
-
-    // const result = await ApplicationDbContext.Prisma.post
-    //   .create({
-    //     data: {
-    //       Title: post.Title,
-    //       Summary: post.Summary,
-    //       Description: post.Description,
-    //       IsActive: post.IsActive,
-    //       IsPublished: post.IsPublished,
-    //       IsActiveNewComment: post.IsActiveNewComment,
-    //       AuthorId: post.AuthorId,
-    //     },
-    //   })
-    //   .finally(async () => {
-    //     await ApplicationDbContext.Prisma.$disconnect();
-    //   });
-
-    // await ApplicationDbContext.db.execute(`INSERT INTO post (Title, Summary, Description, IsActive, IsPublished, IsActiveNewComment) VALUES (?,?,?,?,?,?)`, [ post.Title, post.Summary, post.Description, post.IsActive, post.IsPublished, post.IsActiveNewComment,]);
   }
 
   public async GetAll(): Promise<Post[]> {
@@ -126,6 +111,7 @@ export class PostRepository extends BaseRepository implements IPostRepository {
           IsPublished: post.IsPublished,
           IsActiveNewComment: post.IsActiveNewComment,
           AuthorId: post.AuthorId,
+          CategoryId: post.CategoryId,
         },
       })
       .finally(async () => {

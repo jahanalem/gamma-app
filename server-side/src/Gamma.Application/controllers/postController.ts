@@ -32,11 +32,11 @@ export class PostController extends BaseController {
   @httpPost("/create")
   private async create(@request() req: Request, @response() res: Response) {
 
-    const { title, summary, description, isActive, isPublished,
+    const { id, title, summary, description, isActive, isPublished,
       isActiveNewComment, authorId, tags, categoryId } = req.body;
 
     let x = new Post(title, summary, description, isActive, isPublished, isActiveNewComment, authorId, tags, categoryId);
-
+    x.Id = id;
     console.log("xxxxxxxxxxxxxx:", x);
 
     await this.pService.Create(x);
@@ -71,6 +71,7 @@ export class PostController extends BaseController {
       isPublished,
       isActiveNewComment,
       authorId,
+      categoryId
     } = req.body;
     let p = new Post(
       title,
@@ -79,7 +80,8 @@ export class PostController extends BaseController {
       isActive,
       isPublished,
       isActiveNewComment,
-      authorId
+      authorId,
+      categoryId
     );
     const result = await this.pService.Update(id, p);
 

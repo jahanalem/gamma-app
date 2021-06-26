@@ -37,7 +37,6 @@ export class PostController extends BaseController {
 
     let x = new Post(title, summary, description, isActive, isPublished, isActiveNewComment, authorId, tags, categoryId);
     x.Id = id;
-    console.log("xxxxxxxxxxxxxx:", x);
 
     await this.pService.Create(x);
 
@@ -54,9 +53,13 @@ export class PostController extends BaseController {
 
   @httpGet("/")
   private async getAll(@request() req: Request, @response() res: Response) {
-    let data = await this.pService.GetAll();
-    console.log(data[0]);
+    let d1 = new Date();
 
+    let data = await this.pService.GetAll();
+    
+    let d2 = new Date();
+    let delta = d2.getMilliseconds()-d1.getMilliseconds();
+    console.log("get all posts in postController.ts (delta time):",delta);
     res.status(200).json(data);
   }
 

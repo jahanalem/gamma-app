@@ -32,6 +32,7 @@ export class TagController extends BaseController {
     else {
       const { title } = req.body;
       const newTag = new Tag(title);
+      console.log("newTag:",newTag);
       const result = await this.tagService.Create(newTag);
       res.status(200).json(result);
     }

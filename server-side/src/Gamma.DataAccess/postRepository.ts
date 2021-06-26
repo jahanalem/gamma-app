@@ -4,6 +4,9 @@ import { postTagMapping } from "../Gamma.Common/types/dataTypes";
 import { IPost, Post } from "../Gamma.Models/post";
 import { ApplicationDbContext } from "./applicationDbContext";
 import { BaseRepository } from "./baseRepository";
+var colors = require('colors');
+const { performance } = require('perf_hooks');
+
 
 let validate = require('uuid-validate');
 
@@ -56,19 +59,25 @@ export class PostRepository extends BaseRepository implements IPostRepository {
   }
 
   public async GetAll(): Promise<Post[]> {
-    const allUsers = await ApplicationDbContext.Prisma.post
-      .findMany({
-        include: {
-          Comments: true,
-        },
-      })
-      .finally(async () => {
-        await ApplicationDbContext.Prisma.$disconnect();
-      });
-    console.dir(allUsers, { depth: null });
+    let d1 = performance.now();
+    const posts = await ApplicationDbContext.Prisma.post.findMany()
+    .finally(async () => {
+      await ApplicationDbContext.Prisma.$disconnect();
+    });
+    let d2 = performance.now();
+    let deltaD = d2 - d1;
+    console.log(colors.green('postRepository (delta time) with PRISMA:'), deltaD);
 
-    return allUsers;
-    //let data = await ApplicationDbContext.db.execute("SELECT * FROM post");
+    // let d3 = performance.now();
+    // let data = await ApplicationDbContext.db.execute("SELECT * FROM post");
+    // let d4 = performance.now();
+    // let delta = d4 - d3;
+    
+    //console.log(colors.cyan('wothout ORM:'), delta);
+    //console.dir(posts, { depth: null });
+
+    return posts;
+
   }
 
   public async GetById(id: string): Promise<Post> {

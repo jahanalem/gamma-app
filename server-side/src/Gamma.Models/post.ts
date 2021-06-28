@@ -15,6 +15,7 @@ export interface IPost extends IEntity {
   CategoryId?: string;
   Category?: ICategory;
   Tags?: ITag[];
+  TagIds?: string[];
 }
 
 export class Post extends Entity implements IPost {
@@ -29,6 +30,7 @@ export class Post extends Entity implements IPost {
   Tags?: ITag[];
   CategoryId?: string;
   Category?: ICategory;
+  TagIds?: string[];
 
   constructor(
     title: string,
@@ -38,8 +40,8 @@ export class Post extends Entity implements IPost {
     isPublished: boolean,
     isActiveNewComment: boolean,
     authorId: string,
-    tags: ITag[] = null,
-    categoryId: string = null
+    categoryId: string = null,
+    tagIds: string[] = null
   ) {
     super();
     this.Title = title;
@@ -49,7 +51,7 @@ export class Post extends Entity implements IPost {
     this.IsPublished = isPublished;
     this.IsActiveNewComment = isActiveNewComment;
     this.AuthorId = authorId;
-    this.Tags = tags;
     this.CategoryId = categoryId;
+    this.TagIds = tagIds;
   }
 }

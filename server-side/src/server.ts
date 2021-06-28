@@ -18,6 +18,11 @@ import "./Gamma.Application/controllers/roleController";
 
 
 const port = process.env.PORT || 3000;
+const chalk = require('chalk');
+// const colors = require('colors');
+// colors.setTheme({
+//   custom: ['black', 'underline','bgBlue','bold']
+// });
 
 // config sessions
 
@@ -54,14 +59,11 @@ const errorConfigFn = (app: express.Application) => {
       res: Response,
       next: NextFunction
     ) => {
-      console.error(err);
+      console.error(chalk.red(err));
       res.status(500).send(err);
     }
   );
 };
-
-
-
 
 
 let inversifyExpressServer = new InversifyExpressServer(container, null, {
@@ -72,7 +74,7 @@ inversifyExpressServer
   .setErrorConfig(errorConfigFn)
   .build()
   .listen(port, () => {
-    console.log(`Server listen on port ${port}. welcome to Gamma app!`);
+    console.log(chalk.black.bgGreen.underline(`Server listen on port ${port}. welcome to Gamma app!`));
   });
 
 module.exports = inversifyExpressServer;

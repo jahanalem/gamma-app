@@ -1,6 +1,6 @@
 import { BaseController } from "./baseController";
-import { Request, Response } from "express";
-import { Post } from "../../Gamma.Models/post";
+import { json, Request, Response } from "express";
+import { IPost, Post } from "../../Gamma.Models/post";
 import { inject } from "inversify";
 
 import { IPostService } from "../../Gamma.Services/interfaces/IPostService";
@@ -31,16 +31,31 @@ export class PostController extends BaseController {
 
   @httpPost("/create")
   private async create(@request() req: Request, @response() res: Response) {
+    let title: string = req.body.Title;
+    let summary: string = req.body.Summary;
+    let description: string = req.body.Description;
+    let isActive: boolean = req.body.IsActive;
+    let isPublished: boolean = req.body.IsPublished;
+    let isActiveNewComment: boolean = req.body.IsActiveNewComment;
+    let authorId: string = req.body.AuthorId;
+    let categoryId: string = req.body.CategoryId;
+    let tagIds: string[] = req.body.TagIds;
 
-    const { id, title, summary, description, isActive, isPublished,
-      isActiveNewComment, authorId, tags, categoryId } = req.body;
+    let x = new Post(title,
+      summary,
+      description,
+      isActive,
+      isPublished,
+      isActiveNewComment,
+      authorId,
+      categoryId,
+      tagIds);
+    
+    let result  = await this.pService.Create(x);
 
-    let x = new Post(title, summary, description, isActive, isPublished, isActiveNewComment, authorId, tags, categoryId);
-    x.Id = id;
+    console.log(result);
 
-    await this.pService.Create(x);
-
-    res.status(200).json(x);
+    res.status(200).json(result);
   }
 
   @httpGet("/:id")
@@ -56,10 +71,10 @@ export class PostController extends BaseController {
     let d1 = new Date();
 
     let data = await this.pService.GetAll();
-    
+
     let d2 = new Date();
-    let delta = d2.getMilliseconds()-d1.getMilliseconds();
-    console.log("get all posts in postController.ts (delta time):",delta);
+    let delta = d2.getMilliseconds() - d1.getMilliseconds();
+    //console.log("get all posts in postController.ts:", data);
     res.status(200).json(data);
   }
 

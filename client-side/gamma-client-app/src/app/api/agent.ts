@@ -15,7 +15,7 @@ axios.defaults.baseURL = 'http://localhost:3000/api';//process.env.GAMMA_REACT_A
 
 axios.interceptors.response.use(async response => {
     try {
-        await sleep(1);
+        //await sleep(1);
         return response;
     }
     catch (error) {
@@ -35,15 +35,15 @@ const requests = {
 
 const Post = {
     list: () => requests.get<IPostModel[]>('/posts/'),
-    details: (id: number) => requests.get<IPostModel>(`/posts/${id}`),
+    details: (id: string) => requests.get<IPostModel>(`/posts/${id}`),
     create: (postFormValues: IPostModel) => requests.post<void>('/posts/create', postFormValues),
     update: (postFormValues: IPostModel) => requests.post<void>(`/posts/update/${postFormValues.Id}`, postFormValues),
-    delete: (id: number) => requests.del<void>(`/posts/delete/${id}`)
+    delete: (id: string) => requests.del<void>(`/posts/delete/${id}`)
 }
 
 const Account = {
     list: requests.get<IUserModel[]>('/users/admin/'),
-    details: (id: number) => requests.get<IUserModel>(`/users/admin/${id}`),
+    details: (id: string) => requests.get<IUserModel>(`/users/admin/${id}`),
     signup: (registerFormValues: ISignUpUserViewModel) => requests.post<void>('/users/signup', registerFormValues),
     login: (loginFormValues: ILoginUserViewModel) => requests.post<IUserModel>('/users/login', loginFormValues)
 }

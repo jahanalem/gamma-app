@@ -1,32 +1,67 @@
-import { Search } from '../../features/searchEngine/Search';
-import { NavLink } from 'react-router-dom';
-import { Navbar, Nav } from "react-bootstrap";
-import '../mainNavbar/mainNavbar.css';
+
+import { Link } from 'react-router-dom';
+
+
 import { observer } from 'mobx-react-lite';
+import { useState } from 'react';
 
 export const MainNavbar: React.FC = observer(() => {
+
+    const [isAuthenticated, setIsAuthenticated] = useState(true);
+    const [superAdmin, setSuperAdmin] = useState(true);
     return (
         <>
-            <div className="mainNavbar mb-3">
-                <Navbar bg="dark" variant="dark" collapseOnSelect expand="lg">
-                    <Navbar.Brand as={NavLink} exact to='/'>Blog</Navbar.Brand>
-                    <Navbar.Toggle aria-controls="responsive-navbar-nav" />
-                    <Navbar.Collapse id="responsive-navbar-nav">
-                        <Nav className="mr-auto" >
+            <header className="mainheader">
+                <img src="/images/menu.png" id="button1" alt="menu button" />
+                <div id="cats">
+                    <div className="search-section">
 
-                            <Nav.Link as={NavLink} exact to='/'>Home</Nav.Link>
-                            <Nav.Link as={NavLink} exact to='/about'>About</Nav.Link>
-                            <Nav.Link as={NavLink} exact to='/contact'>Contact</Nav.Link>
+                        <form id="searchForm" className="form-inline" role="search">
+                            <div className="input-group">
+                                <input id="searchBox" type="search" className="form-control" autoComplete="off" placeholder="Search" name="search" />
+                                <div id="search-result-body">
 
-                            <Search />
+                                    <div id="number-of-search-results"></div>
+                                    <div id="search-results">
 
-                        </Nav>
-                        <nav>
-                            <Nav.Link as={NavLink} exact to='/login' >Login</Nav.Link>
-                        </nav>
-                    </Navbar.Collapse>
-                </Navbar>
-            </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </form>
+
+                    </div>
+                    <div className="menu-section">
+                        <ul id="menu">
+
+                            <li className="item"><Link to='/home'> Home</Link></li>
+                            <li className="item">
+                                <Link to="#">Categories<span className="plus"></span></Link>
+                            </li>
+                            <li className="item"><Link to='/about'> About</Link></li>
+                            <li className="item"><Link to='/contact'>  Contact</Link></li>
+
+
+                            {/* <li className="item">
+                                <Link to='#' className=""> LogOut</Link>
+                            </li> */}
+
+                            {/* <li className="item">
+                                <Link to='#' className="">  Dashboard</Link>
+                            </li> */}
+
+
+                            <li className="item">
+                                <Link to='/login' className=""> Login</Link>
+                            </li>
+
+
+                        </ul>
+                    </div>
+                </div>
+                <div id="logo">
+                    <img src="images/greencodes-logo.png" alt="logo" />
+                </div>
+            </header>
         </>
     );
 })

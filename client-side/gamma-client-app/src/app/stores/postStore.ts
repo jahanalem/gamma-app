@@ -4,7 +4,7 @@ import agent from '../api/agent';
 
 
 export default class PostStore {
-    postInventory = new Map<number, IPostModel>();
+    postInventory = new Map<string, IPostModel>();
     selectedPost: IPostModel | undefined = undefined;
     loading = false;
     loadingInitial = true;
@@ -14,13 +14,15 @@ export default class PostStore {
     }
 
     get postsByDate() {
-        return Array.from(this.postInventory.values()).sort((a, b) =>
-            (a.CreatedDate.valueOf()) - (b.CreatedDate.valueOf()));
+        let result = Array.from(this.postInventory.values()).sort((a, b) => (a.CreatedDate.valueOf()) - (b.CreatedDate.valueOf()));
+        console.log("RRRRRRRRRRRRRRRRRRRRRRRRR",this.postInventory.values());
+        return result;
     }
 
     loadPosts = async () => {
         try {
             const posts = await agent.Post.list();
+            console.log("POSTS ARE:",posts[0].Tags);
             posts.forEach(post => {
                 this.postInventory.set(post.Id, post);
             })
@@ -35,7 +37,7 @@ export default class PostStore {
         this.loadingInitial = state;
     }
 
-    selectPost = (id: number) => {
+    selectPost = (id: string) => {
         this.selectedPost = this.postInventory.get(id);
     }
 
@@ -80,7 +82,7 @@ export default class PostStore {
         }
     }
 
-    deletePost = async (id: number) => {
+    deletePost = async (id: string) => {
         this.loading = true;
         try {
             await agent.Post.delete(id);

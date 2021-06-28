@@ -5,7 +5,7 @@ export const HomePage: React.FC = observer(() => {
 
     return (
         <>
-            <Posts />
+             <Posts /> 
         </>
     )
 })

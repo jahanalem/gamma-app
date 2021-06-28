@@ -18,6 +18,7 @@
     "@types/mysql": "^2.15.18",
     "@types/uuid-validate": "0.0.1",
     "bcryptjs": "^2.4.3",
+    "chalk": "^4.1.1",
     "client-sessions": "^0.8.0",
     "colors": "^1.4.0",
     "cors": "^2.8.5",

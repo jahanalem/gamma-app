@@ -4,9 +4,10 @@ import { postTagMapping } from "../Gamma.Common/types/dataTypes";
 import { IPost, Post } from "../Gamma.Models/post";
 import { ApplicationDbContext } from "./applicationDbContext";
 import { BaseRepository } from "./baseRepository";
-var colors = require('colors');
+//let colors = require('colors');
 const { performance } = require('perf_hooks');
 
+const colors = require('chalk');
 
 let validate = require('uuid-validate');
 
@@ -28,8 +29,15 @@ export class PostRepository extends BaseRepository implements IPostRepository {
 
     let postId = (!validate(post.Id)) ? v4() : post.Id;
 
+    //console.log("postrepo: postId:", postId);
+
     let postTagIds: postTagMapping[] = [];
-    post.Tags?.map(tag => postTagIds.push({ PostId: postId, TagId: tag.Id }));
+    //console.log("TAGS: ", post.TagIds);
+
+    post.TagIds?.map(tag => postTagIds.push({ PostId: postId, TagId: tag }));
+
+
+    //console.log("postTagIds: ", postTagIds);
 
     const transResult = await ApplicationDbContext.Prisma.$transaction([
       ApplicationDbContext.Prisma.post.create({
@@ -55,28 +63,37 @@ export class PostRepository extends BaseRepository implements IPostRepository {
 
     let result = transResult as unknown as Post;
 
+    console.log("created post =", result);
+
     return result;
   }
 
   public async GetAll(): Promise<Post[]> {
-    let d1 = performance.now();
-    const posts = await ApplicationDbContext.Prisma.post.findMany()
-    .finally(async () => {
-      await ApplicationDbContext.Prisma.$disconnect();
-    });
-    let d2 = performance.now();
-    let deltaD = d2 - d1;
-    console.log(colors.green('postRepository (delta time) with PRISMA:'), deltaD);
+    // let d1 = performance.now();
+    const results = await ApplicationDbContext.Prisma.post.findMany({
+      include: { Tags: { include: { Tag: true } } },
+    })
+      .finally(async () => {
+        await ApplicationDbContext.Prisma.$disconnect();
+      });
+    // let d2 = performance.now();
+    // let deltaD = d2 - d1;
+    // console.log(colors.green('postRepository (delta time) with PRISMA:'), deltaD);
 
     // let d3 = performance.now();
     // let data = await ApplicationDbContext.db.execute("SELECT * FROM post");
     // let d4 = performance.now();
     // let delta = d4 - d3;
-    
-    //console.log(colors.cyan('wothout ORM:'), delta);
-    //console.dir(posts, { depth: null });
 
-    return posts;
+    //console.log(colors.cyan('wothout ORM:'), delta);
+
+    const result = results.map(post => {
+      return { ...post, Tags: post.Tags.map(tag => tag.Tag) }
+    })
+
+    console.log(colors.yellow("from repository: "), result);
+
+    return (result as unknown as IPost[]);
 
   }
 

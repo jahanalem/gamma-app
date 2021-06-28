@@ -10,6 +10,6 @@ export interface IPostModel extends IEntity {
   IsPublished: boolean;
   IsActiveNewComment: boolean;
   Author?: IUserModel;
-  AuthorId: number;
+  AuthorId: string;
   Tags: ITagModel[];
 }

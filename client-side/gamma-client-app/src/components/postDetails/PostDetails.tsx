@@ -10,7 +10,7 @@ export const PostDetails: React.FC = observer(() => {
 
     const { postStore } = useStore();
     let { id } = useParams<{ id?: string }>();
-    postStore.selectPost(+id);
+    postStore.selectPost(id);
 
     return (
         <>

@@ -4,9 +4,9 @@ import { IUserModel } from "./userModel";
 
 export interface ICommentModel extends IEntity {
     Description: string;
-    ParentId: number | null;
-    WrittenById: number;
+    ParentId: string | null;
+    WrittenById: string;
     WrittenBy?: IUserModel;
-    PostId: number;
+    PostId: string;
     Post?: IPostModel;
 }

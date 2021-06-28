@@ -1,12 +1,12 @@
 export interface IEntity {
-    Id?: number;
+    Id?: string;
     CreatedDate?: Date;
     ModifiedDate?: Date;
 }
 
 
 export class Entity implements IEntity {
-    public Id?: number;
+    public Id?: string;
     public CreatedDate?: Date;
     public ModifiedDate?: Date;
     constructor() {

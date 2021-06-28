@@ -11,6 +11,8 @@ import { Posts } from "./components/posts/Posts";
 import { useStore } from "./app/stores/store";
 import { LoadingComponent } from "./layout/LoadingComponent";
 import { Container } from "semantic-ui-react";
+import { Login } from "./components/Account/login/login";
+import { Signup } from "./components/Account/signup/signup";
 
 const App: React.FC = () => {
   const { postStore } = useStore();
@@ -24,36 +26,44 @@ const App: React.FC = () => {
 
   return (
 
-    <div className="container">
+    <div id="page-container">
       <MainNavbar />
-      <Route exact path='/' component={HomePage} />
-      <Route
-        path={'/(.+)'}
-        render={() => (
-          <>
-            <Container style={{ marginTop: '7em' }}>
+      <main className="wrapper">
+        <div>
+          <div id="render_body" className="container-fluid">
 
-              <Route path="/home" >
-                <HomePage />
-              </Route>
-              <Route path="/about" >
-                <AboutUs />
-              </Route>
-              <Route path="/contact">
-                <ContactUs />
-              </Route>
-              <Route path="/post/:id">
-                <PostDetails />
-              </Route>
-              <Route path="/posts/:page">
-                <Posts />
-              </Route>
-
-            </Container >
-          </>
-        )}
-      />
-
+            <Route exact path='/' component={HomePage} />
+            <Route
+              path={'/(.+)'}
+              render={() => (
+                <>
+                  <Route path="/home" >
+                    <HomePage />
+                  </Route>
+                  <Route path="/about" >
+                    <AboutUs />
+                  </Route>
+                  <Route path="/contact">
+                    <ContactUs />
+                  </Route>
+                  <Route path="/post/:id">
+                    <PostDetails />
+                  </Route>
+                  <Route path="/posts/:page">
+                    <Posts />
+                  </Route>
+                  <Route path="/login">
+                    <Login />
+                  </Route>
+                  <Route path="/signup">
+                    <Signup />
+                  </Route>
+                </>
+              )}
+            />
+          </div>
+        </div>
+      </main>
     </div>
 
   );

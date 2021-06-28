@@ -3,6 +3,7 @@ import AboutusStore from "./aboutusStore";
 import CommentStore from "./commentStore";
 import ContactusStore from "./contactusStore";
 import PostStore from "./postStore";
+import TagStore from "./tagStore";
 import UserStore from "./userStore";
 
 interface IStore {
@@ -11,6 +12,7 @@ interface IStore {
     commentStore: CommentStore
     contactusStore: ContactusStore
     userStore: UserStore
+    tagStore: TagStore
 }
 
 export const store: IStore = {
@@ -19,6 +21,7 @@ export const store: IStore = {
     commentStore: new CommentStore(),
     contactusStore: new ContactusStore(),
     userStore: new UserStore(),
+    tagStore: new TagStore(),
 }
 
 export const StoreContext = createContext(store);

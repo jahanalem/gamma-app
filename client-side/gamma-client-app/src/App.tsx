@@ -16,10 +16,11 @@ import { Signup } from "./components/Account/signup/signup";
 
 const App: React.FC = () => {
   const { postStore } = useStore();
-
+  const { tagStore } = useStore();
   useEffect(() => {
     postStore.loadPosts();
-  }, [postStore])
+    tagStore.loadTags();
+  }, [postStore, tagStore])
 
 
   if (postStore.loadingInitial) return <LoadingComponent content="Loading app" />

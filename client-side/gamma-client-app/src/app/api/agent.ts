@@ -1,5 +1,6 @@
 import axios, { AxiosResponse } from 'axios';
 import { IPostModel } from '../models/postModel';
+import { ITagModel } from '../models/tagModel';
 import { IUserModel } from '../models/userModel';
 import { ILoginUserViewModel } from '../viewModels/loginUserViewModel';
 import { ISignUpUserViewModel } from '../viewModels/signUpUserViewModel';
@@ -48,9 +49,18 @@ const Account = {
     login: (loginFormValues: ILoginUserViewModel) => requests.post<IUserModel>('/users/login', loginFormValues)
 }
 
+const Tag = {
+    list: () => requests.get<ITagModel[]>('/tags/'),
+    details: (id: string) => requests.get<ITagModel>(`/tags/${id}`),
+    create: (tagFormValues: ITagModel) => requests.post<void>('/tags/create', tagFormValues),
+    update: (tagFormValues: ITagModel) => requests.post<void>(`/tags/update/${tagFormValues.Id}`, tagFormValues),
+    delete: (id: string) => requests.del<void>(`/tags/delete/${id}`)
+}
+
 const agent = {
     Post,
-    Account
+    Account,
+    Tag
 }
 
 export default agent;

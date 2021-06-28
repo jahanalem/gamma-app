@@ -1,11 +1,11 @@
-import { IPostModel } from './../models/postModel';
 import { makeAutoObservable, runInAction } from "mobx";
 import agent from '../api/agent';
+import { ITagModel } from '../models/tagModel';
 
 
-export default class PostStore {
-    postInventory = new Map<string, IPostModel>();
-    selectedPost: IPostModel | undefined = undefined;
+export default class TagStore {
+    tagInventory = new Map<string, ITagModel>();
+    selectedTag: ITagModel | undefined = undefined;
     loading = false;
     loadingInitial = true;
 
@@ -13,18 +13,18 @@ export default class PostStore {
         makeAutoObservable(this);
     }
 
-    get postsByDate() {
-        let result = Array.from(this.postInventory.values()).sort((a, b) => (a.CreatedDate.valueOf()) - (b.CreatedDate.valueOf()));
+    get tagsSortedByTitle() {
+        let result = Array.from(this.tagInventory.values()).sort((a, b) => a.Title.localeCompare(b.Title));
 
         return result;
     }
 
-    loadPosts = async () => {
+    loadTags = async () => {
         try {
-            const posts = await agent.Post.list();
-            console.log("POSTS ARE:",posts[0].Tags);
-            posts.forEach(post => {
-                this.postInventory.set(post.Id, post);
+            const tags = await agent.Tag.list();
+            console.log("TAGS ARE:", tags);
+            tags.forEach(tag => {
+                this.tagInventory.set(tag.Id, tag);
             })
             this.setLoadingInitial(false);
         } catch (error) {
@@ -37,22 +37,22 @@ export default class PostStore {
         this.loadingInitial = state;
     }
 
-    selectPost = (id: string) => {
-        this.selectedPost = this.postInventory.get(id);
+    selectTag = (id: string) => {
+        this.selectedTag = this.tagInventory.get(id);
     }
 
-    cancelSelectedPost = () => {
-        this.selectedPost = undefined;
+    cancelSelectedTag = () => {
+        this.selectedTag = undefined;
     }
 
-    createPost = async (post: IPostModel) => {
+    createTag = async (tag: ITagModel) => {
         this.loading = true;
-        //activity.id = uuid();
+        //tag.id = uuid();
         try {
-            await agent.Post.create(post);
+            await agent.Tag.create(tag);
             runInAction(() => {
-                this.postInventory.set(post.Id, post);
-                this.selectedPost = post;
+                this.tagInventory.set(tag.Id, tag);
+                this.selectedTag = tag;
                 //this.editMode = false;
                 this.loading = false;
             })
@@ -64,13 +64,13 @@ export default class PostStore {
         }
     }
 
-    updatePost = async (post: IPostModel) => {
+    updateTag = async (tag: ITagModel) => {
         this.loading = true;
         try {
-            await agent.Post.update(post);
+            await agent.Tag.update(tag);
             runInAction(() => {
-                this.postInventory.set(post.Id, post);
-                this.selectedPost = post;
+                this.tagInventory.set(tag.Id, tag);
+                this.selectedTag = tag;
                 //this.editMode = false;
                 this.loading = false;
             })
@@ -82,13 +82,13 @@ export default class PostStore {
         }
     }
 
-    deletePost = async (id: string) => {
+    deleteTag = async (id: string) => {
         this.loading = true;
         try {
-            await agent.Post.delete(id);
+            await agent.Tag.delete(id);
             runInAction(() => {
-                this.postInventory.delete(id);
-                if (this.selectedPost?.Id === id) this.cancelSelectedPost();
+                this.tagInventory.delete(id);
+                if (this.selectedTag?.Id === id) this.cancelSelectedTag();
                 this.loading = false;
             })
         } catch (error) {

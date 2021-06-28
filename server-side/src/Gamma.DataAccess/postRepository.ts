@@ -91,10 +91,7 @@ export class PostRepository extends BaseRepository implements IPostRepository {
       return { ...post, Tags: post.Tags.map(tag => tag.Tag) }
     })
 
-    console.log(colors.yellow("from repository: "), result);
-
     return (result as unknown as IPost[]);
-
   }
 
   public async GetById(id: string): Promise<Post> {

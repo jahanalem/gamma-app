@@ -22,7 +22,6 @@ export class PostService extends BaseService implements IPostService {
   }
 
   public async Create(Post: IPost):Promise<IPost> {
-    console.log("<<< ServiceLayer >>>");
     return await this.postRepository.Create(Post);
   }
 

@@ -1,16 +1,15 @@
 import React from "react";
 import { Link } from 'react-router-dom';
-import { Card, Nav } from "react-bootstrap";
 import "./post.css";
 import { IPostModel } from "../../app/models/postModel"
+import { observer } from "mobx-react-lite";
 
 interface IProps {
     article: IPostModel;
     selectedTagId: string;
 }
 
-const Post: React.FC<IProps> = (props) => {
-
+export const Post: React.FC<IProps> = observer((props) => {
     return (
         <div className="col-xs-12 col-sm-6 col-md-4 col-lg-6">
             <article >
@@ -62,6 +61,4 @@ const Post: React.FC<IProps> = (props) => {
             </article>
         </div>
     )
-}
-
-export default Post;
+})

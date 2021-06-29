@@ -1,9 +1,7 @@
 import { Link } from 'react-router-dom';
 import { observer } from 'mobx-react-lite';
-import { useState } from 'react';
 
 export const Login: React.FC = observer(() => {
-
     return (
         <>
             <div id="loginContainer" className="row">

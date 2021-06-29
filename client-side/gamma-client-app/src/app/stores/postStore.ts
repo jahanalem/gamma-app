@@ -40,9 +40,7 @@ export default class PostStore {
     loadPosts = async () => {
         this.loadingInitial = true;
         try {
-
             const posts = await agent.Post.list();
-
             runInAction(() => {
                 console.log("POSTS ARE:", posts[0].Tags);
                 posts.forEach(post => {

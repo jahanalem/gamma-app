@@ -1,14 +1,12 @@
 
 import { Link } from 'react-router-dom';
-
-
 import { observer } from 'mobx-react-lite';
-import { useState } from 'react';
+//import { useState } from 'react';
 
 export const MainNavbar: React.FC = observer(() => {
 
-    const [isAuthenticated, setIsAuthenticated] = useState(true);
-    const [superAdmin, setSuperAdmin] = useState(true);
+    //const [isAuthenticated, setIsAuthenticated] = useState(true);
+    //const [superAdmin, setSuperAdmin] = useState(true);
     return (
         <>
             <header className="mainheader">

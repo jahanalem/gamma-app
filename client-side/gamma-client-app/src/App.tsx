@@ -13,17 +13,18 @@ import { LoadingComponent } from "./layout/LoadingComponent";
 import { Container } from "semantic-ui-react";
 import { Login } from "./components/Account/login/login";
 import { Signup } from "./components/Account/signup/signup";
+import { PostsByTagId } from "./components/postsByTagId/postsByTagId";
 
 const App: React.FC = () => {
-  const { postStore } = useStore();
-  const { tagStore } = useStore();
-  useEffect(() => {
-    postStore.loadPosts();
-    tagStore.loadTags();
-  }, [postStore, tagStore])
+  // const { postStore } = useStore();
+  // const { tagStore } = useStore();
+  // useEffect(() => {
+  //   postStore.loadPosts();
+  //   tagStore.loadTags();
+  // });
 
 
-  if (postStore.loadingInitial) return <LoadingComponent content="Loading app" />
+  // if (postStore.loadingInitial) return <LoadingComponent content="Loading app" />
 
   return (
 
@@ -38,7 +39,8 @@ const App: React.FC = () => {
               path={'/(.+)'}
               render={() => (
                 <>
-                  <Route path="/home" >
+                  <Route path={["/home", "/posts/tag/:tagId"]} >
+                    {console.log("go to homepage from /home")}
                     <HomePage />
                   </Route>
                   <Route path="/about" >
@@ -53,6 +55,7 @@ const App: React.FC = () => {
                   <Route path="/posts/:page">
                     <Posts />
                   </Route>
+
                   <Route path="/login">
                     <Login />
                   </Route>

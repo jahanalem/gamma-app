@@ -21,7 +21,11 @@ export class PostService extends BaseService implements IPostService {
     return this.postRepository.GetById(id);
   }
 
-  public async Create(Post: IPost):Promise<IPost> {
+  public async GetByTagId(tagId: string): Promise<IPost[]> {
+    return this.postRepository.GetByTagId(tagId);
+  }
+
+  public async Create(Post: IPost): Promise<IPost> {
     return await this.postRepository.Create(Post);
   }
 

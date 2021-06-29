@@ -50,8 +50,8 @@ export class PostController extends BaseController {
       authorId,
       categoryId,
       tagIds);
-    
-    let result  = await this.pService.Create(x);
+
+    let result = await this.pService.Create(x);
 
     console.log(result);
 
@@ -63,6 +63,15 @@ export class PostController extends BaseController {
     const id = req.params.id;
     const data = await this.pService.GetById(id);
 
+    res.status(200).json(data);
+  }
+
+  @httpGet("/tag/:tagId")
+  private async getByTagId(@request() req: Request, @response() res: Response) {
+    const tagId = req.params.tagId;
+    console.log("tagId:", tagId);
+    const data = await this.pService.GetByTagId(tagId);
+    console.log(data);
     res.status(200).json(data);
   }
 

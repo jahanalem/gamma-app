@@ -7,7 +7,7 @@ import { store, StoreContext } from './app/stores/store';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import 'font-awesome/css/font-awesome.min.css'
 import './index.css';
-//import 'semantic-ui-css/semantic.min.css';
+import 'semantic-ui-css/semantic.min.css';
 
 ReactDOM.render(
   <StoreContext.Provider value={store}>

@@ -39,7 +39,8 @@ const Post = {
     details: (id: string) => requests.get<IPostModel>(`/posts/${id}`),
     create: (postFormValues: IPostModel) => requests.post<void>('/posts/create', postFormValues),
     update: (postFormValues: IPostModel) => requests.post<void>(`/posts/update/${postFormValues.Id}`, postFormValues),
-    delete: (id: string) => requests.del<void>(`/posts/delete/${id}`)
+    delete: (id: string) => requests.del<void>(`/posts/delete/${id}`),
+    listByTagId: (tagId: string) => requests.get<IPostModel[]>(`/posts/tag/${tagId}`),
 }
 
 const Account = {

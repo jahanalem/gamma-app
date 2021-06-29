@@ -15,6 +15,7 @@ export interface IPostRepository {
   Create: (post: IPost) => Promise<Post>;
   GetAll: () => Promise<Post[]>;
   GetById: (id: string) => Promise<Post>;
+  GetByTagId: (tagId: string) => Promise<IPost[]>;
   Delete: (id: string) => Promise<any>;
   Update: (id: string, post: IPost) => Promise<Post>;
 }
@@ -107,6 +108,34 @@ export class PostRepository extends BaseRepository implements IPostRepository {
     return data;
     //const data = await ApplicationDbContext.db.execute("SELECT * FROM post WHERE Id = ?",[id]);
   }
+
+  public async GetByTagId(tagId: string): Promise<IPost[]> {
+    const results = await ApplicationDbContext.Prisma.post.findMany({
+      where: { Tags: { some: { Tag: { Id: tagId } } } },
+      include:
+      {
+        Tags:
+        {
+          include:
+          {
+            Tag: true
+          }
+        }
+      },
+    })
+      .finally(async () => {
+        await ApplicationDbContext.Prisma.$disconnect();
+      });
+
+    const result = results.map(post => {
+      return { ...post, Tags: post.Tags.map(tag => tag.Tag) }
+    })
+
+    return (result as unknown as IPost[]);
+    //const data = await ApplicationDbContext.db.execute("SELECT * FROM post WHERE Id = ?",[id]);
+  }
+
+
 
   public async Delete(id: string) {
     const data = await ApplicationDbContext.Prisma.post

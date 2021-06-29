@@ -9,9 +9,6 @@ export const Posts: React.FC = observer(() => {
 
     const { postStore } = useStore();
     const { postsByDate } = postStore;
- 
-
-    console.log("postsByDate[0]", postsByDate[0].Tags);
 
     return (
         <>

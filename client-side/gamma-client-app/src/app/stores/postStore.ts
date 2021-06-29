@@ -19,13 +19,37 @@ export default class PostStore {
         return result;
     }
 
-    loadPosts = async () => {
+    postsByTagId = async (tagId: string) => {
+        this.loadingInitial = true;
+        this.postInventory.clear();
         try {
-            const posts = await agent.Post.list();
-            console.log("POSTS ARE:",posts[0].Tags);
-            posts.forEach(post => {
-                this.postInventory.set(post.Id, post);
+            const posts = await agent.Post.listByTagId(tagId);
+            runInAction(() => {
+                posts.forEach(post => {
+                    this.postInventory.set(post.Id, post);
+                })
             })
+
+            this.setLoadingInitial(false);
+        } catch (error) {
+            console.log(error);
+            this.setLoadingInitial(false);
+        }
+    }
+
+    loadPosts = async () => {
+        this.loadingInitial = true;
+        try {
+
+            const posts = await agent.Post.list();
+
+            runInAction(() => {
+                console.log("POSTS ARE:", posts[0].Tags);
+                posts.forEach(post => {
+                    this.postInventory.set(post.Id, post);
+                })
+            })
+
             this.setLoadingInitial(false);
         } catch (error) {
             console.log(error);

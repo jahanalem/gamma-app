@@ -20,11 +20,15 @@ export default class TagStore {
     }
 
     loadTags = async () => {
+        this.loadingInitial = true;
+        this.tagInventory.clear();
         try {
             const tags = await agent.Tag.list();
-            console.log("TAGS ARE:", tags);
-            tags.forEach(tag => {
-                this.tagInventory.set(tag.Id, tag);
+            runInAction(() => {
+                console.log("TAGS ARE:", tags);
+                tags.forEach(tag => {
+                    this.tagInventory.set(tag.Id, tag);
+                })
             })
             this.setLoadingInitial(false);
         } catch (error) {

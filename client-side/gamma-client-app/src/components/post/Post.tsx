@@ -1,15 +1,28 @@
-import React from "react";
-import { Link } from 'react-router-dom';
+import React, { SyntheticEvent } from "react";
+import { Link, useHistory } from 'react-router-dom';
 import "./post.css";
 import { IPostModel } from "../../app/models/postModel"
 import { observer } from "mobx-react-lite";
+import { useStore } from "../../app/stores/store";
+import tagStore from "../../app/stores/tagStore";
+
+
 
 interface IProps {
     article: IPostModel;
-    selectedTagId: string;
 }
 
 export const Post: React.FC<IProps> = observer((props) => {
+    const { tagStore } = useStore();
+    const history = useHistory();
+
+    const tagHandler = (e: SyntheticEvent<HTMLAnchorElement>, tagId: string) => {
+        e.preventDefault();
+        console.log("tagId:", tagId);
+        tagStore.setSelectedTagId(tagId);
+        history.push(`/posts/tag/${tagId}`);
+    }
+
     return (
         <div className="col-xs-12 col-sm-6 col-md-4 col-lg-6">
             <article >
@@ -39,17 +52,19 @@ export const Post: React.FC<IProps> = observer((props) => {
                                 <span key={"tag_" + index.toString()}>
                                     {(tag !== null) ?
                                         <>
-                                            <Link to="#">
-                                                {(props.selectedTagId === tag.Id) ?
+                                            <div className="tags-inline">
+                                                {(tagStore.selectedTagId === tag.Id) ?
                                                     <>
                                                         <span className="badge badge-success">{tag.Title}</span>
                                                     </>
                                                     :
                                                     <>
-                                                        <span className="badge badge-dark">{tag.Title}</span>
+                                                        <Link id={tag.Id} to={`/posts/tag/${tag.Id}`} onClick={(e) => tagHandler(e, tag.Id)}>
+                                                            <span className="badge badge-dark">{tag.Title}</span>
+                                                        </Link>
                                                     </>
                                                 }
-                                            </Link>
+                                            </div>
                                         </> : <></>
                                     }
                                 </span>

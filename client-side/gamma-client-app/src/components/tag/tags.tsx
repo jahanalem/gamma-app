@@ -1,14 +1,17 @@
 import { observer } from "mobx-react-lite";
-import { Link } from "react-router-dom";
+import { SyntheticEvent } from "react";
+import { Link, Redirect, useHistory } from "react-router-dom";
 import { useStore } from "../../app/stores/store";
 
 export const Tags: React.FC = observer(() => {
     const { tagStore } = useStore();
-    const { tagsSortedByTitle } = tagStore;
-
-    // const tagHandler = (e: SyntheticEvent<HTMLAnchorElement>) => {
-    //     e.preventDefault();
-    // }
+    const history = useHistory();
+    const tagHandler = (e: SyntheticEvent<HTMLAnchorElement>, tagId: string) => {
+        e.preventDefault();
+        console.log("tagId:", tagId);
+        tagStore.setSelectedTagId(tagId);
+        history.push(`/posts/tag/${tagId}`);
+    }
 
     return (
         <>
@@ -19,10 +22,10 @@ export const Tags: React.FC = observer(() => {
                         <div id="tagList" className="row">
                             <div className="col-lg-12">
                                 <ul className="list-unstyled mb-0">
-                                    {tagsSortedByTitle.map((tag, index) => {
+                                    {tagStore.tagsSortedByTitle.map((tag, index) => {
                                         return (
                                             <li key={index}>
-                                                <Link to={`/posts/tag/${tag.Id}`} className="btn btn-sm btn-success">
+                                                <Link id={tag.Id} to={`/posts/tag/${tag.Id}`} onClick={(e) => tagHandler(e, tag.Id)} className="btn btn-sm btn-success">
                                                     <span className="fa fa-tag mr-1"> </span>{tag.Title}
                                                 </Link>
                                             </li>

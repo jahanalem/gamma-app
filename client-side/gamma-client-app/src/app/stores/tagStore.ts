@@ -9,8 +9,14 @@ export default class TagStore {
     loading = false;
     loadingInitial = true;
 
+    selectedTagId: string | null = null;
+
     constructor() {
         makeAutoObservable(this);
+    }
+
+    setSelectedTagId = (tagId: string) => {
+        this.selectedTagId = tagId;
     }
 
     get tagsSortedByTitle() {

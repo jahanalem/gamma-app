@@ -5,3 +5,10 @@
     margin-left: auto;
     margin-right: auto;
 }
+
+.tags-inline{
+    display:inline-block;
+}
+.tags-inline span{
+    margin:0 10px;
+}

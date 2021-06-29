@@ -1,4 +1,5 @@
 import axios, { AxiosResponse } from 'axios';
+import { ICategoryModel } from '../models/categoryModel';
 import { IPostModel } from '../models/postModel';
 import { ITagModel } from '../models/tagModel';
 import { IUserModel } from '../models/userModel';
@@ -58,10 +59,19 @@ const Tag = {
     delete: (id: string) => requests.del<void>(`/tags/delete/${id}`)
 }
 
+const Category = {
+    list: () => requests.get<ICategoryModel[]>('/categories/'),
+    details: (id: string) => requests.get<ICategoryModel>(`/categories/${id}`),
+    create: (categoryFormValues: ICategoryModel) => requests.post<void>('/categories/create', categoryFormValues),
+    update: (categoryFormValues: ICategoryModel) => requests.post<void>(`/categories/update/${categoryFormValues.Id}`, categoryFormValues),
+    delete: (id: string) => requests.del<void>(`/categories/delete/${id}`)
+}
+
 const agent = {
     Post,
     Account,
-    Tag
+    Tag,
+    Category
 }
 
 export default agent;

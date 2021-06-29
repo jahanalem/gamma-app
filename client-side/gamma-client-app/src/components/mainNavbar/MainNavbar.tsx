@@ -1,6 +1,7 @@
 
 import { Link } from 'react-router-dom';
 import { observer } from 'mobx-react-lite';
+import { Category } from '../category/Category';
 //import { useState } from 'react';
 
 export const MainNavbar: React.FC = observer(() => {
@@ -13,7 +14,6 @@ export const MainNavbar: React.FC = observer(() => {
                 <img src="/images/menu.png" id="button1" alt="menu button" />
                 <div id="cats">
                     <div className="search-section">
-
                         <form id="searchForm" className="form-inline" role="search">
                             <div className="input-group">
                                 <input id="searchBox" type="search" className="form-control" autoComplete="off" placeholder="Search" name="search" />
@@ -26,7 +26,6 @@ export const MainNavbar: React.FC = observer(() => {
                                 </div>
                             </div>
                         </form>
-
                     </div>
                     <div className="menu-section">
                         <ul id="menu">
@@ -34,6 +33,7 @@ export const MainNavbar: React.FC = observer(() => {
                             <li className="item"><Link to='/home'> Home</Link></li>
                             <li className="item">
                                 <Link to="#">Categories<span className="plus"></span></Link>
+                                <Category />
                             </li>
                             <li className="item"><Link to='/about'> About</Link></li>
                             <li className="item"><Link to='/contact'>  Contact</Link></li>

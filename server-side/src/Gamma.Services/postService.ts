@@ -25,6 +25,10 @@ export class PostService extends BaseService implements IPostService {
     return this.postRepository.GetByTagId(tagId);
   }
 
+  public async GetByCategoryId(catId: string): Promise<IPost[]> {
+    return this.postRepository.GetByCategoryId(catId);
+  }
+
   public async Create(Post: IPost): Promise<IPost> {
     return await this.postRepository.Create(Post);
   }

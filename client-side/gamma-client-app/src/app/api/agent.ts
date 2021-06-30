@@ -12,7 +12,7 @@ const sleep = (delay: number) => {
     })
 }
 
-axios.defaults.baseURL = 'http://localhost:3000/api';//process.env.GAMMA_REACT_APP_API_URL;
+axios.defaults.baseURL = 'http://127.0.0.1:3000/api';//process.env.GAMMA_REACT_APP_API_URL;
 
 
 axios.interceptors.response.use(async response => {
@@ -42,6 +42,7 @@ const Post = {
     update: (postFormValues: IPostModel) => requests.post<void>(`/posts/update/${postFormValues.Id}`, postFormValues),
     delete: (id: string) => requests.del<void>(`/posts/delete/${id}`),
     listByTagId: (tagId: string) => requests.get<IPostModel[]>(`/posts/tag/${tagId}`),
+    listByCatId: (catId: string) => requests.get<IPostModel[]>(`/posts/category/${catId}`),
 }
 
 const Account = {

@@ -36,6 +36,24 @@ export default class PostStore {
             this.setLoadingInitial(false);
         }
     }
+    postsByCategoryId = async (catId: string) => {
+        this.loadingInitial = true;
+        this.postInventory.clear();
+        try {
+            const posts = await agent.Post.listByCatId(catId);
+            runInAction(() => {
+                posts.forEach(post => {
+                    this.postInventory.set(post.Id, post);
+                })
+            })
+
+            this.setLoadingInitial(false);
+        } catch (error) {
+            console.log(error);
+            this.setLoadingInitial(false);
+        }
+    }
+
 
     loadPosts = async () => {
         this.loadingInitial = true;

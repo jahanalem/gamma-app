@@ -306,7 +306,7 @@ a {
     align-content: stretch;
     display: flex;
     flex-wrap: wrap;
-    justify-content: start;
+    justify-content: flex-start; /*changed start to flex-start*/
     margin-top: 6.25rem;
     padding-bottom: 6.7rem;
 }

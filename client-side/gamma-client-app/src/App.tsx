@@ -10,6 +10,7 @@ import { Login } from "./components/Account/login/login";
 import { Signup } from "./components/Account/signup/signup";
 import { PostsByTagId } from "./components/postsByTagId/PostsByTagId";
 import './App.css';
+import { PostsByCategoryId } from "./components/postsByCategoryId/PostsByCategoryId";
 
 
 const App: React.FC = () => {
@@ -29,7 +30,7 @@ const App: React.FC = () => {
                     <HomePage />
                   </Route>
                   <Route path="/posts/tag/:tagId">
-                    <PostsByTagId/>
+                    <PostsByTagId />
                   </Route>
                   <Route path="/about" >
                     <AboutUs />
@@ -42,6 +43,9 @@ const App: React.FC = () => {
                   </Route>
                   <Route path="/posts/:page">
                     <Posts />
+                  </Route>
+                  <Route path="/posts/category/:catId">
+                    <PostsByCategoryId />
                   </Route>
                   <Route path="/login">
                     <Login />

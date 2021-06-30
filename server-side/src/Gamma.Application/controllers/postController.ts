@@ -75,6 +75,15 @@ export class PostController extends BaseController {
     res.status(200).json(data);
   }
 
+  @httpGet("/category/:catId")
+  private async getByCategoryId(@request() req: Request, @response() res: Response) {
+    const catId = req.params.catId;
+    console.log("catId:", catId);
+    const data = await this.pService.GetByCategoryId(catId);
+    console.log(data);
+    res.status(200).json(data);
+  }
+
   @httpGet("/")
   private async getAll(@request() req: Request, @response() res: Response) {
     let d1 = new Date();

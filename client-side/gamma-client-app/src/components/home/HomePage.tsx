@@ -17,7 +17,6 @@ export const HomePage: React.FC = observer((props) => {
     const location = useLocation<stateType>();
     const { tagId } = location.state || { tagId: null };
     const {catId} = location.state || {catId:null};
-    console.log("catId = ",catId);
     useEffect(() => {
         if (tagId) {
             postStore.postsByTagId(tagId);
@@ -29,16 +28,12 @@ export const HomePage: React.FC = observer((props) => {
             postStore.loadPosts();
         }
 
-
-
         tagStore.loadTags();
 
-    }, [tagId, postStore, tagStore]);
+    }, [tagId, postStore, tagStore,catId]);
 
     if (tagStore.loadingInitial) return <LoadingComponent content="Loading tags" />
     if (postStore.loadingInitial) return <LoadingComponent content="Loading posts" />
-
-    console.log("HomePage");
 
     return (
         <>

@@ -4,6 +4,10 @@ import { observer } from 'mobx-react-lite';
 import { Category } from '../category/Category';
 //import { useState } from 'react';
 
+import $ from "jquery";
+
+
+
 export const MainNavbar: React.FC = observer(() => {
 
     //const [isAuthenticated, setIsAuthenticated] = useState(true);
@@ -38,7 +42,6 @@ export const MainNavbar: React.FC = observer(() => {
                             <li className="item"><Link to='/about'> About</Link></li>
                             <li className="item"><Link to='/contact'>  Contact</Link></li>
 
-
                             {/* <li className="item">
                                 <Link to='#' className=""> LogOut</Link>
                             </li> */}
@@ -47,11 +50,9 @@ export const MainNavbar: React.FC = observer(() => {
                                 <Link to='#' className="">  Dashboard</Link>
                             </li> */}
 
-
                             <li className="item">
                                 <Link to='/login' className=""> Login</Link>
                             </li>
-
 
                         </ul>
                     </div>

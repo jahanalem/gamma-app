@@ -60,7 +60,7 @@ export default class PostStore {
         try {
             const posts = await agent.Post.list();
             runInAction(() => {
-                console.log("POSTS ARE:", posts[0].Tags);
+                //console.log("POSTS ARE:", posts[0].Tags);
                 posts.forEach(post => {
                     this.postInventory.set(post.Id, post);
                 })

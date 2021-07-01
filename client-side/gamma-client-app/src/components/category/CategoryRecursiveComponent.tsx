@@ -5,13 +5,13 @@ import { Link } from "react-router-dom";
 import { ICategoryModel } from "../../app/models/categoryModel";
 import { v4 as uuidv4 } from 'uuid';
 
-
 interface ICategoryRecursive {
     categoryies: ICategoryModel[];
     parentId: string | null;
     item?: ICategoryModel;
     count?: number;
 }
+
 
 export const CategoryRecursiveComponent: React.FC<ICategoryRecursive> = observer((props) => {
 
@@ -28,19 +28,9 @@ export const CategoryRecursiveComponent: React.FC<ICategoryRecursive> = observer
                                             <li className="subitem">
                                                 <Link to={`/posts/category/${child.Id}`}>
                                                     {child.Title}
-                                                    {
-                                                        (props.categoryies.some(c => c.ParentId === child.Id)) ?
-                                                            <>
-                                                                <span className="plus"></span>
-                                                            </>
-                                                            :
-                                                            null
-                                                    }
+                                                    {(props.categoryies.some(c => c.ParentId === child.Id)) ? <> <span className="plus"></span>  </> : null}
                                                 </Link>
-                                                <CategoryRecursiveComponent
-                                                    categoryies={props.categoryies}
-                                                    parentId={child.Id}
-                                                />
+                                                <CategoryRecursiveComponent categoryies={props.categoryies} parentId={child.Id} />
 
                                             </li>
                                         </Fragment>

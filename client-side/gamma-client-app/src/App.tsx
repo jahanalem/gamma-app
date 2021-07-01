@@ -11,9 +11,40 @@ import { Signup } from "./components/Account/signup/signup";
 import { PostsByTagId } from "./components/postsByTagId/PostsByTagId";
 import './App.css';
 import { PostsByCategoryId } from "./components/postsByCategoryId/PostsByCategoryId";
+import $ from "jquery";
+
+console.log("AAAAAAAAAAA");
+
+// $(()=> {
+//   console.log("BBBBBBBBBB");
+//   $(".plus").on('click', function (event: JQuery.ClickEvent<HTMLElement, null, HTMLElement, HTMLElement>) {
+//     $(".plus").toggleClass("rotated-plus");
+//     $(".plus").parent().siblings("ul").slideToggle();
+//     //event.preventDefault();
+    
+//   });
+// });
+
+// $( ()=> {
+//   console.log("CCCCCCCCCCCc");
+//   $("#button1").on('click', function (event:JQuery.ClickEvent<HTMLElement, null, HTMLElement, HTMLElement>) {
+      
+//     if ($("#cats").css("left") === "-300px") {
+//       $("#cats").css("left", "0");
+
+//       $("#topmenu ul").slideUp();
+//     } else {
+//       $("#cats").css("left", "-300px");
+//     }
+//     //event.preventDefault();
+
+//   });
+// });
+
 
 
 const App: React.FC = () => {
+
   return (
     <div id="page-container">
       <MainNavbar />
@@ -60,8 +91,32 @@ const App: React.FC = () => {
         </div>
       </main>
     </div>
-
   );
 }
 
 export default observer(App);
+
+
+
+$(function () {
+  $("#button1").click(function () {
+      if ($("#cats").css("left") === "-300px") {
+          $("#cats").css("left", "0");
+
+          $("#topmenu ul").slideUp();
+      } else {
+          $("#cats").css("left", "-300px");
+      }
+  });
+});
+
+
+$(document).ready(function () {
+  console.log("I am .plus");
+  $(".plus").click(function (event) {
+    console.log(".plus clicked!");
+    $(".plus").toggleClass("rotated-plus");
+    $(".plus").parent().siblings("ul").slideToggle();
+    event.preventDefault();
+  });
+});

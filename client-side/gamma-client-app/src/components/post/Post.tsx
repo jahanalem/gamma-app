@@ -4,9 +4,6 @@ import "./post.css";
 import { IPostModel } from "../../app/models/postModel"
 import { observer } from "mobx-react-lite";
 import { useStore } from "../../app/stores/store";
-import tagStore from "../../app/stores/tagStore";
-
-
 
 interface IProps {
     article: IPostModel;

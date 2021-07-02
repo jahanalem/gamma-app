@@ -8,7 +8,7 @@ import { PostDetails } from "./components/postDetails/PostDetails";
 import { Posts } from "./components/posts/Posts";
 import { Login } from "./components/Account/login/login";
 import { Signup } from "./components/Account/signup/signup";
-import { PostsByTagId } from "./components/postsByTagId/PostsByTagId";
+import { PostsByTagId } from "./components/postsByTagId/postsByTagId";
 import './App.css';
 import { PostsByCategoryId } from "./components/postsByCategoryId/PostsByCategoryId";
 import $ from "jquery";

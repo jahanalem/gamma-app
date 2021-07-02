@@ -1,10 +1,69 @@
 import { observer } from "mobx-react-lite";
+import { SyntheticEvent, useState } from "react";
+import { useHistory } from "react-router-dom";
 import { Link } from 'react-router-dom';
+import { couldStartTrivia } from "typescript";
+import { useStore } from "../../../app/stores/store";
+import { SignUpUserViewModel } from "../../../app/viewModels/signUpUserViewModel";
 
 export const Signup: React.FC = observer(() => {
 
+    const { userStore } = useStore();
+
+    let history = useHistory();
+
+    const [newRegister, setNewRegister] = useState({
+        firstName: "",
+        lastName: "",
+        userName: "",
+        email: "",
+        password: "",
+        confirmPassword: "",
+        errors: {},
+    });
+
+    const onChange = (e: SyntheticEvent<HTMLInputElement>) => {
+        let keyName = e.currentTarget.name;
+        let value = e.currentTarget.value;
+        setNewRegister((previous) => {
+            return {
+                ...previous,
+                [keyName]: value,
+            };
+        });
+    };
+
+    const onSubmit = (e: SyntheticEvent<HTMLFormElement>) => {
+        e.preventDefault();
+        const newUser = new SignUpUserViewModel(
+            newRegister.firstName,
+            newRegister.lastName,
+            newRegister.userName,
+            newRegister.email,
+            newRegister.password,
+            newRegister.confirmPassword);
+
+       
+            userStore.createUser(newUser).then(result => {
+                console.log("User c!")
+                history.push(`/login`);
+            }).catch(error => {
+                console.error(error);
+            });
+     
+
+        // (async () =>
+        //     await userStore.createUser(newUser).then(result => {
+        //         console.log("User created successfully!")
+        //         history.push(`/login`);
+        //     }).catch(error => {
+        //         console.error(error);
+        //     })
+        // )();
+    };
+
     const togglePasswordVisibility = (e: any) => {
-        
+
     }
 
     return (
@@ -26,28 +85,67 @@ export const Signup: React.FC = observer(() => {
                             </p>
                             <hr />
                             <div className="text-danger" asp-validation-summary="All"></div>
-                            <form asp-action="Signup" method="post" id="signupForm">
+                            <form onSubmit={onSubmit} id="signupForm">
 
                                 <input type="hidden" name="returnUrl" value="@ViewBag.returnUrl" />
                                 <div className="form-group">
-                                    <input asp-for="FirstName" placeholder="first name" className="form-control" required />
+                                    <input type="text"
+                                        name="firstName"
+                                        value={newRegister.firstName}
+                                        onChange={onChange}
+                                        placeholder="first name"
+                                        className="form-control"
+                                        required />
                                 </div>
                                 <div className="form-group">
-                                    <input asp-for="LastName" placeholder="last name" className="form-control" required />
+                                    <input type="text"
+                                        name="lastName"
+                                        value={newRegister.lastName}
+                                        onChange={onChange}
+                                        placeholder="last name"
+                                        className="form-control"
+                                        required />
                                 </div>
                                 <div className="form-group">
-                                    <input asp-for="UserName" placeholder="user name" className="form-control" required />
+                                    <input type="text"
+                                        name="userName"
+                                        value={newRegister.userName}
+                                        onChange={onChange}
+                                        placeholder="user name"
+                                        className="form-control"
+                                        required />
                                 </div>
                                 <div className="form-group">
-                                    <input asp-for="Email" className="form-control" placeholder="Email" type="email" required />
+                                    <input type="email"
+                                        name="email"
+                                        value={newRegister.email}
+                                        onChange={onChange}
+                                        className="form-control"
+                                        placeholder="Email"
+                                        required />
                                 </div>
                                 <div className="form-group">
-                                    <input asp-for="Password" className="form-control" placeholder="password" type="password" minLength={4} maxLength={8} required />
+                                    <input type="password"
+                                        name="password"
+                                        value={newRegister.password}
+                                        onChange={onChange}
+                                        className="form-control"
+                                        placeholder="password"
+                                        minLength={4} maxLength={8}
+                                        required />
                                 </div>
                                 <div className="form-group">
-                                    <input asp-for="ConfirmPassword" className="form-control" placeholder="confirm password" type="password"
-                                        data-rule-equalto="#Password" minLength={4} maxLength={8} required />
-                                    <input type="checkbox" onClick={togglePasswordVisibility} />Show Password
+                                    <input type="password"
+                                        name="confirmPassword"
+                                        value={newRegister.confirmPassword}
+                                        onChange={onChange}
+                                        className="form-control"
+                                        placeholder="confirm password"
+                                        data-rule-equalto="#Password"
+                                        minLength={4} maxLength={8}
+                                        required />
+                                    <input type="checkbox"
+                                        onClick={togglePasswordVisibility} />Show Password
                                 </div>
                                 <div className="row">
                                     <div className="col-md-12">
@@ -68,5 +166,4 @@ export const Signup: React.FC = observer(() => {
             </div>
         </>
     )
-
 })

@@ -1,10 +1,11 @@
+import { ISignUpUserViewModel } from "../viewModels/signUpUserViewModel";
 import { ICommentModel } from "./commentModel";
 import { Entity, IEntity } from "./entityModel";
 import { IPostModel } from "./postModel";
 import { IProfileModel } from "./profileModel";
 import { IRoleModel } from "./roleModel";
 
-export interface IUserModel extends IEntity {
+export interface IUserModel extends IEntity , ISignUpUserViewModel {
   Token?: string;
   Email: string;
   NormalizedEmail: string;
@@ -12,6 +13,8 @@ export interface IUserModel extends IEntity {
   NormalizedUserName: string;
   EmailConfirmed: boolean;
   PasswordHash: string;
+  //ConfirmPassword?: string;
+  //Password?: string;
   PhoneNumber: string;
   PhoneNumberConfirmed: boolean;
   LockoutEnd: Date;
@@ -40,6 +43,8 @@ export class UserModel extends Entity implements IUserModel {
     // this.NormalizedEmail = this.Email.toUpperCase();
     // this.NormalizedUserName = this.UserName.toUpperCase();
   }
+  //Password?: string;
+  //ConfirmPassword?: string;
   Token?: string;
   NormalizedEmail: string;
   UserName: string;

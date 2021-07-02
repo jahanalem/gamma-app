@@ -1,10 +1,11 @@
 export interface ISignUpUserViewModel {
+  Id?: string;
   FirstName: string;
   LastName: string;
   UserName: string;
   Email: string;
-  Password: string;
-  ConfirmPassword: string;
+  Password?: string;
+  ConfirmPassword?: string;
 }
 
 export class SignUpUserViewModel implements ISignUpUserViewModel {

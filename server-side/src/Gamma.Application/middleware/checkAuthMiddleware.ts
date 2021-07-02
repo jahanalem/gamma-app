@@ -11,7 +11,7 @@ module.exports = (req: Request, res: Response, next: NextFunction) => {
         return next();
     }
     try {
-        const tempToken = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOjgsImVtYWlsIjoicXl5eUBnbWFpbC5jb20iLCJpYXQiOjE2MjM5NjkxNDUsImV4cCI6MTYyMzk3Mjc0NX0.pDZjM1km5-VWbs-zs7gRH-ayFES8y_6_qymslyrZkm0";
+        const tempToken = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI4Yzc2MTJmZi00ZDljLTQ4YzMtOTNkZC1iMDhhYTRlM2FhNDUiLCJlbWFpbCI6InMuci5hbGVtQGdtYWlsLmNvbSIsImlhdCI6MTYyNTE1MzQwNSwiZXhwIjoxNjI1MTU3MDA1fQ.6ze9Pad5u3-5sddNax0h0LWqPRVcCjft60QY3VA_e54";
         const token = tempToken//req.headers.authorization.split(' ')[1];
         if (!token) {
             throw (new HttpError('Authentication failed!', HTTPStatusCodes.ClientError.Unauthorized));

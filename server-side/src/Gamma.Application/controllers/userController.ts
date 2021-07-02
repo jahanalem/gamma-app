@@ -34,17 +34,23 @@ export class UserController extends BaseController {
     if (!errors.isEmpty()) {
       return next(new HttpError("Invalid inputs passed, please check your data.", HTTPStatusCodes.ClientError.UnprocessableEntity));
     }
-    const { firstName, lastName, userName, email, password, confirmPassword, userRole } = req.body;
+
+    console.log("req.body:", req.body);
+
+
+    const { FirstName, LastName, UserName, Email, Password, ConfirmPassword, UserRole } = req.body;
 
     const candidateUser = new SignUpUserViewModel(
-      firstName,
-      lastName,
-      userName,
-      email,
-      password,
-      confirmPassword,
-      userRole
+      FirstName,
+      LastName,
+      UserName,
+      Email,
+      Password,
+      ConfirmPassword,
+      UserRole
     );
+
+console.log("candidateUser:", candidateUser);
 
     await this.userService.Signup(candidateUser).then(result => {
       res.status(HTTPStatusCodes.Successful.Created).json(result);
@@ -66,7 +72,7 @@ export class UserController extends BaseController {
 
   }
 
-  @httpGet("/admin")
+  @httpGet("/admin", checkAuth)
   private async getUsers(@request() req: Request, @response() res: Response, @next() next: NextFunction) {
     await this.userService.GetByCriteria().then(result => {
       res.status(HTTPStatusCodes.Successful.OK).json(result);

@@ -46,10 +46,11 @@ const Post = {
 }
 
 const Account = {
-    list: requests.get<IUserModel[]>('/users/admin/'),
+    list: () => requests.get<IUserModel[]>('/users/admin/'),
     details: (id: string) => requests.get<IUserModel>(`/users/admin/${id}`),
-    signup: (registerFormValues: ISignUpUserViewModel) => requests.post<void>('/users/signup', registerFormValues),
-    login: (loginFormValues: ILoginUserViewModel) => requests.post<IUserModel>('/users/login', loginFormValues)
+    signup: (registerFormValues: ISignUpUserViewModel) => requests.post<IUserModel>('/users/signup', registerFormValues),
+    login: (loginFormValues: ILoginUserViewModel) => requests.post<IUserModel>('/users/login', loginFormValues),
+    delete: (id: string) => requests.del<void>(`/users/delete/${id}`),
 }
 
 const Tag = {
@@ -72,7 +73,7 @@ const agent = {
     Post,
     Account,
     Tag,
-    Category
+    Category,
 }
 
 export default agent;

@@ -5,13 +5,17 @@ import { Category } from '../category/Category';
 //import { useState } from 'react';
 
 import $ from "jquery";
+import { useStore } from '../../app/stores/store';
 
 
 
 export const MainNavbar: React.FC = observer(() => {
-
+    const { userStore } = useStore();
     //const [isAuthenticated, setIsAuthenticated] = useState(true);
     //const [superAdmin, setSuperAdmin] = useState(true);
+    const logoutHandler = ()=>{
+        userStore.logout();
+    }
     return (
         <>
             <header className="mainheader">
@@ -41,19 +45,26 @@ export const MainNavbar: React.FC = observer(() => {
                             </li>
                             <li className="item"><Link to='/about'> About</Link></li>
                             <li className="item"><Link to='/contact'>  Contact</Link></li>
-
-                            {/* <li className="item">
-                                <Link to='#' className=""> LogOut</Link>
-                            </li> */}
-
+                            {
+                                userStore.isLoggedIn ? (
+                                    <>
+                                        <li className="item">
+                                            <Link to='#' onClick={logoutHandler} className=""> LogOut</Link>
+                                            {/* <button onClick={auth.logout}>LOGOUT</button> */}
+                                        </li>
+                                    </>
+                                ) : (
+                                    <>
+                                        <li className="item">
+                                            
+                                            <Link to='/login' className=""> Login</Link>
+                                        </li>
+                                    </>
+                                )
+                            }
                             {/* <li className="item">
                                 <Link to='#' className="">  Dashboard</Link>
                             </li> */}
-
-                            <li className="item">
-                                <Link to='/login' className=""> Login</Link>
-                            </li>
-
                         </ul>
                     </div>
                 </div>

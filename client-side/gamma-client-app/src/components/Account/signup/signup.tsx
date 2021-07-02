@@ -2,7 +2,6 @@ import { observer } from "mobx-react-lite";
 import { SyntheticEvent, useState } from "react";
 import { useHistory } from "react-router-dom";
 import { Link } from 'react-router-dom';
-import { couldStartTrivia } from "typescript";
 import { useStore } from "../../../app/stores/store";
 import { SignUpUserViewModel } from "../../../app/viewModels/signUpUserViewModel";
 
@@ -33,7 +32,7 @@ export const Signup: React.FC = observer(() => {
         });
     };
 
-    const onSubmit = (e: SyntheticEvent<HTMLFormElement>) => {
+    const onSubmit =async (e: SyntheticEvent<HTMLFormElement>) => {
         e.preventDefault();
         const newUser = new SignUpUserViewModel(
             newRegister.firstName,
@@ -43,23 +42,12 @@ export const Signup: React.FC = observer(() => {
             newRegister.password,
             newRegister.confirmPassword);
 
-       
-            userStore.createUser(newUser).then(result => {
+            await userStore.createUser(newUser).then(result => {
                 console.log("User c!")
                 history.push(`/login`);
             }).catch(error => {
                 console.error(error);
             });
-     
-
-        // (async () =>
-        //     await userStore.createUser(newUser).then(result => {
-        //         console.log("User created successfully!")
-        //         history.push(`/login`);
-        //     }).catch(error => {
-        //         console.error(error);
-        //     })
-        // )();
     };
 
     const togglePasswordVisibility = (e: any) => {
@@ -132,6 +120,7 @@ export const Signup: React.FC = observer(() => {
                                         className="form-control"
                                         placeholder="password"
                                         minLength={4} maxLength={8}
+                                        autoComplete="off"
                                         required />
                                 </div>
                                 <div className="form-group">
@@ -143,6 +132,7 @@ export const Signup: React.FC = observer(() => {
                                         placeholder="confirm password"
                                         data-rule-equalto="#Password"
                                         minLength={4} maxLength={8}
+                                        autoComplete="off"
                                         required />
                                     <input type="checkbox"
                                         onClick={togglePasswordVisibility} />Show Password

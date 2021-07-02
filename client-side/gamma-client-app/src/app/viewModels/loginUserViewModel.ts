@@ -1,6 +1,8 @@
 export interface ILoginUserViewModel {
   Email: string;
   Password: string;
+  displayName?: string;
+  username?: string;
 }
 
 export class LoginUserViewModel implements ILoginUserViewModel {

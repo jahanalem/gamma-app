@@ -51,6 +51,7 @@ const Account = {
     signup: (registerFormValues: ISignUpUserViewModel) => requests.post<IUserModel>('/users/signup', registerFormValues),
     login: (loginFormValues: ILoginUserViewModel) => requests.post<IUserModel>('/users/login', loginFormValues),
     delete: (id: string) => requests.del<void>(`/users/delete/${id}`),
+    refreshToken: () => requests.post<IUserModel>('/account/refreshToken', {}),
 }
 
 const Tag = {

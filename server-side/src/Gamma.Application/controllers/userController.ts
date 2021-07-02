@@ -35,9 +35,6 @@ export class UserController extends BaseController {
       return next(new HttpError("Invalid inputs passed, please check your data.", HTTPStatusCodes.ClientError.UnprocessableEntity));
     }
 
-    console.log("req.body:", req.body);
-
-
     const { FirstName, LastName, UserName, Email, Password, ConfirmPassword, UserRole } = req.body;
 
     const candidateUser = new SignUpUserViewModel(
@@ -50,7 +47,7 @@ export class UserController extends BaseController {
       UserRole
     );
 
-console.log("candidateUser:", candidateUser);
+    console.log("candidateUser:", candidateUser);
 
     await this.userService.Signup(candidateUser).then(result => {
       res.status(HTTPStatusCodes.Successful.Created).json(result);
@@ -59,10 +56,12 @@ console.log("candidateUser:", candidateUser);
     });
   }
 
-  @httpGet("/login")
+
+  @httpPost("/login")
   private async login(@request() req: Request, @response() res: Response, @next() next: NextFunction) {
-    const { email, password } = req.body;
-    const user = new LoginUserViewModel(email, password);
+    console.log("login> req.body",  req.body);
+    const { Email, Password } = req.body;
+    const user = new LoginUserViewModel(Email, Password);
 
     await this.userService.Login(user).then(result => {
       res.status(HTTPStatusCodes.Successful.OK).json(result);

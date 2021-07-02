@@ -1,7 +1,45 @@
-import { Link } from 'react-router-dom';
+import { Link, useHistory } from 'react-router-dom';
 import { observer } from 'mobx-react-lite';
+import { SyntheticEvent, useState } from 'react';
+import { LoginUserViewModel } from '../../../app/viewModels/loginUserViewModel';
+import { useStore } from '../../../app/stores/store';
 
 export const Login: React.FC = observer(() => {
+    const { userStore } = useStore();
+    let history = useHistory();
+
+    const [loginUser, setLoginUser] = useState({
+        email: "",
+        password: "",
+        errors: {},
+    });
+
+    const onChange = (e: SyntheticEvent<HTMLInputElement>) => {
+        let keyName = e.currentTarget.name;
+        let value = e.currentTarget.value;
+        setLoginUser((previous) => {
+            return {
+                ...previous,
+                [keyName]: value,
+            };
+        });
+    };
+
+    const onSubmit = async (e: SyntheticEvent<HTMLFormElement>) => {
+        e.preventDefault();
+        const loggingUser = new LoginUserViewModel(
+            loginUser.email,
+            loginUser.password
+        )
+        await userStore.login(loggingUser).then(result => {
+            console.log("User logged in!")
+            history.push(`/`);
+        }).catch(error => {
+            console.error(error);
+        });
+    };
+
+
     return (
         <>
             <div id="loginContainer" className="row">
@@ -27,14 +65,27 @@ export const Login: React.FC = observer(() => {
                     } */}
 
                             <div className="text-danger" asp-validation-summary="All"></div>
-                            <form asp-action="Login" method="post">
+                            <form onSubmit={onSubmit} method="post">
 
                                 <input type="hidden" name="returnUrl" value="@ViewBag.returnUrl" />
                                 <div className="form-group">
-                                    <input asp-for="Email" className="form-control" placeholder="Email or login" type="email" />
+                                    <input type="email"
+                                        name="email"
+                                        value={loginUser.email}
+                                        onChange={onChange}
+                                        placeholder="Email"
+                                        className="form-control"
+                                        required />
                                 </div>
+                                
                                 <div className="form-group">
-                                    <input asp-for="Password" className="form-control" placeholder="******" type="password" />
+                                    <input type="password"
+                                        name="password"
+                                        value={loginUser.password}
+                                        onChange={onChange}
+                                        placeholder="******"
+                                        className="form-control"
+                                        required />
                                 </div>
                                 <div className="row">
                                     <div className="col-md-6">

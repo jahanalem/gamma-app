@@ -2,6 +2,7 @@ import { createContext, useContext } from "react";
 import AboutusStore from "./aboutusStore";
 import CategoryStore from "./categoryStore";
 import CommentStore from "./commentStore";
+import CommonStore from "./commonStore";
 import ContactusStore from "./contactusStore";
 import PostStore from "./postStore";
 import TagStore from "./tagStore";
@@ -15,6 +16,7 @@ interface IStore {
     userStore: UserStore;
     tagStore: TagStore;
     categoryStore: CategoryStore;
+    commonStore: CommonStore;
 }
 
 export const store: IStore = {
@@ -25,6 +27,7 @@ export const store: IStore = {
     userStore: new UserStore(),
     tagStore: new TagStore(),
     categoryStore: new CategoryStore(),
+    commonStore: new CommonStore(),
 }
 
 export const StoreContext = createContext(store);

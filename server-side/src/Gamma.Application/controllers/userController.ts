@@ -59,7 +59,7 @@ export class UserController extends BaseController {
 
   @httpPost("/login")
   private async login(@request() req: Request, @response() res: Response, @next() next: NextFunction) {
-    console.log("login> req.body",  req.body);
+    console.log("login> req.body", req.body);
     const { Email, Password } = req.body;
     const user = new LoginUserViewModel(Email, Password);
 
@@ -79,4 +79,15 @@ export class UserController extends BaseController {
       next(error);
     });
   }
+
+  @httpGet("/current", checkAuth)
+  private async getCurrentUser(@request() req: Request, @response() res: Response, @next() next: NextFunction) {
+    console.log("controller > req.userData", req.userData);
+    await this.userService.GetUserByEmail(req.userData.email).then(result => {
+      res.status(HTTPStatusCodes.Successful.OK).json(result);
+    }).catch(error => {
+      next(error);
+    });
+  }
+
 }

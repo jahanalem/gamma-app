@@ -5,6 +5,7 @@ import { ITagModel } from '../models/tagModel';
 import { IUserModel } from '../models/userModel';
 import { ILoginUserViewModel } from '../viewModels/loginUserViewModel';
 import { ISignUpUserViewModel } from '../viewModels/signUpUserViewModel';
+import { store } from '../stores/store';
 
 const sleep = (delay: number) => {
     return new Promise((resolve) => {
@@ -14,10 +15,15 @@ const sleep = (delay: number) => {
 
 axios.defaults.baseURL = 'http://127.0.0.1:3000/api';//process.env.GAMMA_REACT_APP_API_URL;
 
+axios.interceptors.request.use(config => {
+    const token = store.commonStore.token;
+    if (token) config.headers.Authorization = `Bearer ${token}`
+    return config;
+})
 
 axios.interceptors.response.use(async response => {
     try {
-        //await sleep(1);
+        await sleep(1);
         return response;
     }
     catch (error) {
@@ -51,6 +57,7 @@ const Account = {
     signup: (registerFormValues: ISignUpUserViewModel) => requests.post<IUserModel>('/users/signup', registerFormValues),
     login: (loginFormValues: ILoginUserViewModel) => requests.post<IUserModel>('/users/login', loginFormValues),
     delete: (id: string) => requests.del<void>(`/users/delete/${id}`),
+    current: () => requests.get<IUserModel>('/users/current'),
     refreshToken: () => requests.post<IUserModel>('/account/refreshToken', {}),
 }
 

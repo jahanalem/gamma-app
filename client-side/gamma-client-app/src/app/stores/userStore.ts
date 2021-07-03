@@ -3,7 +3,6 @@ import { makeAutoObservable, runInAction } from "mobx";
 import agent from '../api/agent';
 import { IUserModel, UserModel } from '../models/userModel';
 import { ISignUpUserViewModel } from "../viewModels/signUpUserViewModel";
-import { v4 as uuidv4 } from 'uuid';
 import { store } from "./store";
 import { ILoginUserViewModel } from "../viewModels/loginUserViewModel";
 
@@ -100,6 +99,16 @@ export default class UserStore {
         window.localStorage.removeItem('jwt');
         this.user = null;
         history.push('/');
+    }
+
+    getCurrentUser = async () => {
+        try {
+            const user = await agent.Account.current();
+            console.log(user);
+            runInAction(() => this.user = user);
+        } catch (error) {
+            console.log(error);
+        }
     }
 
     updateUser = async (user: IUserModel) => {

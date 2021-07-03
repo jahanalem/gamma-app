@@ -2,17 +2,13 @@
 import { Link } from 'react-router-dom';
 import { observer } from 'mobx-react-lite';
 import { Category } from '../category/Category';
-//import { useState } from 'react';
-
-import $ from "jquery";
 import { useStore } from '../../app/stores/store';
 
 
 
 export const MainNavbar: React.FC = observer(() => {
     const { userStore } = useStore();
-    //const [isAuthenticated, setIsAuthenticated] = useState(true);
-    //const [superAdmin, setSuperAdmin] = useState(true);
+
     const logoutHandler = ()=>{
         userStore.logout();
     }

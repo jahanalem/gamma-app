@@ -1,6 +1,6 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
-import { BrowserRouter, Router } from 'react-router-dom';
+import { Router } from 'react-router-dom';
 import App from './App';
 import reportWebVitals from './reportWebVitals';
 import { store, StoreContext } from './app/stores/store';

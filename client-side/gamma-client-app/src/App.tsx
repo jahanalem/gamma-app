@@ -12,9 +12,11 @@ import { PostsByTagId } from "./components/postsByTagId/postsByTagId";
 import './App.css';
 import { PostsByCategoryId } from "./components/postsByCategoryId/PostsByCategoryId";
 import $ from "jquery";
+import { useEffect } from "react";
+import { useStore } from "./app/stores/store";
+import { LoadingComponent } from "./layout/LoadingComponent";
 
-console.log("AAAAAAAAAAA");
-
+/*
 // $(()=> {
 //   console.log("BBBBBBBBBB");
 //   $(".plus").on('click', function (event: JQuery.ClickEvent<HTMLElement, null, HTMLElement, HTMLElement>) {
@@ -40,10 +42,22 @@ console.log("AAAAAAAAAAA");
 
 //   });
 // });
-
-
+*/
 
 const App: React.FC = () => {
+  const {commonStore, userStore} = useStore();
+
+  useEffect(() => {
+    if (commonStore.token) {
+      console.log("there is token.");
+      userStore.getCurrentUser().finally(() => commonStore.setAppLoaded());
+    } else {
+      console.log("there is NOT token.");
+      commonStore.setAppLoaded();
+    }
+  }, [commonStore, userStore])
+
+  if (!commonStore.appLoaded) return <LoadingComponent content='Loading app...' />
 
   return (
     <div id="page-container">
@@ -95,8 +109,6 @@ const App: React.FC = () => {
 }
 
 export default observer(App);
-
-
 
 $(function () {
   $("#button1").click(function () {

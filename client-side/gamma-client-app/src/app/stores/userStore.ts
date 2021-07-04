@@ -37,7 +37,6 @@ export default class UserStore {
         try {
             const Users = await agent.Account.list();
             runInAction(() => {
-                //console.log("UserS ARE:", Users);
                 Users.forEach(User => {
                     this.userInventory.set(User.Id, User);
                 })
@@ -66,7 +65,6 @@ export default class UserStore {
         //signupViewModel.Id = uuidv4();
         try {
             const newUser = await agent.Account.signup(signupViewModel);
-            console.log("newUser", newUser);
             runInAction(() => {
                 this.userInventory.set(newUser.Id, newUser);
                 this.selectedUser = newUser;

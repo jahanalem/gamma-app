@@ -21,6 +21,7 @@ export class PostController extends BaseController {
     super();
   }
 
+
   @httpDelete("/delete/:id")
   private async deletePost(@request() req: Request, @response() res: Response) {
     const id = req.params.id;
@@ -28,6 +29,7 @@ export class PostController extends BaseController {
 
     res.status(204).json();
   }
+
 
   @httpPost("/create")
   private async create(@request() req: Request, @response() res: Response) {
@@ -53,10 +55,9 @@ export class PostController extends BaseController {
 
     let result = await this.pService.Create(x);
 
-    console.log(result);
-
     res.status(200).json(result);
   }
+
 
   @httpGet("/:id")
   private async getById(@request() req: Request, @response() res: Response) {
@@ -66,36 +67,33 @@ export class PostController extends BaseController {
     res.status(200).json(data);
   }
 
+
   @httpGet("/tag/:tagId")
   private async getByTagId(@request() req: Request, @response() res: Response) {
     const tagId = req.params.tagId;
-    console.log("tagId:", tagId);
     const data = await this.pService.GetByTagId(tagId);
-    console.log(data);
+
     res.status(200).json(data);
   }
+
 
   @httpGet("/category/:catId")
   private async getByCategoryId(@request() req: Request, @response() res: Response) {
     const catId = req.params.catId;
-    console.log("catId:", catId);
     const data = await this.pService.GetByCategoryId(catId);
-    console.log(data);
+
     res.status(200).json(data);
   }
+
 
   @httpGet("/")
   private async getAll(@request() req: Request, @response() res: Response) {
-    let d1 = new Date();
+    const data = await this.pService.GetAll();
 
-    let data = await this.pService.GetAll();
-
-    let d2 = new Date();
-    let delta = d2.getMilliseconds() - d1.getMilliseconds();
-    //console.log("get all posts in postController.ts:", data);
     res.status(200).json(data);
   }
 
+  
   @httpPut("/update/:id")
   private async update(@request() req: Request, @response() res: Response) {
     const id = req.params.id;

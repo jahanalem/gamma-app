@@ -17,9 +17,7 @@ import { ICommentService } from "../../Gamma.Services/interfaces/ICommentService
 
 @controller("/comments")
 export class CommentController extends BaseController {
-  constructor(
-    @inject(TYPES.ICommentService) private commentService: ICommentService
-  ) {
+  constructor(@inject(TYPES.ICommentService) private commentService: ICommentService) {
     super();
   }
 
@@ -33,6 +31,7 @@ export class CommentController extends BaseController {
     const { description, writtenById, postId, parentId } = req.body;
     const newComment = new Comment(description, postId, writtenById, parentId);
     const result = await this.commentService.Create(newComment);
+
     res.status(200).json(result);
   }
 
@@ -47,6 +46,7 @@ export class CommentController extends BaseController {
     res.status(200).json(result);
   }
 
+
   @httpGet("/:id")
   private async getById(@request() req: Request, @response() res: Response) {
     const id = req.params.id;
@@ -55,22 +55,18 @@ export class CommentController extends BaseController {
     res.status(200).json(result);
   }
 
+
   @httpGet("/post/:postId")
-  private async getCommentsByPostId(
-    @request() req: Request,
-    @response() res: Response
-  ) {
+  private async getCommentsByPostId(@request() req: Request, @response() res: Response) {
     const postId = req.params.postId;
     const result = await this.commentService.GetCommentsByPostId(postId);
 
     res.status(200).json(result);
   }
 
+
   @httpGet("/user/:userId")
-  private async getCommentsByUserId(
-    @request() req: Request,
-    @response() res: Response
-  ) {
+  private async getCommentsByUserId(@request() req: Request, @response() res: Response) {
     const userId = req.params.userId;
     const result = await this.commentService.GetCommentsByUserId(userId);
 

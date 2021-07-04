@@ -8,7 +8,7 @@ export interface ISignUpUserViewModel {
   Email: string;
   Password: string;
   ConfirmPassword: string;
-  UserRole?: string;
+  UserRoleName?: string;
 }
 
 export class SignUpUserViewModel implements ISignUpUserViewModel {
@@ -19,7 +19,7 @@ export class SignUpUserViewModel implements ISignUpUserViewModel {
     email: string,
     password: string,
     confirmPassword: string,
-    userRole: string = USERROLES.Contributor
+    userRoleName: string = USERROLES.Contributor
   ) {
     this.FirstName = firstName;
     this.LastName = lastName;
@@ -27,7 +27,7 @@ export class SignUpUserViewModel implements ISignUpUserViewModel {
     this.Email = email;
     this.Password = password;
     this.ConfirmPassword = confirmPassword;
-    this.UserRole = userRole;
+    this.UserRoleName = userRoleName;
   }
   FirstName: string;
   LastName: string;
@@ -35,5 +35,5 @@ export class SignUpUserViewModel implements ISignUpUserViewModel {
   Email: string;
   Password: string;
   ConfirmPassword: string;
-  UserRole?: string;
+  UserRoleName?: string;
 }

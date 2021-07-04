@@ -21,7 +21,6 @@ export class TagRepository extends BaseRepository implements ITagRepository {
   //#region CREATE REGION
 
   public async Create(tag: ITag): Promise<Tag> {
-    console.log("create a tag");
     const result = await ApplicationDbContext.Prisma.tag
       .create({
         data: {
@@ -36,7 +35,6 @@ export class TagRepository extends BaseRepository implements ITagRepository {
   }
 
   public async CreateMany(tags: ITag[]): Promise<number> {
-    console.log("create many tags");
     const result = await ApplicationDbContext.Prisma.tag.createMany({
       data: tags,
       skipDuplicates: true

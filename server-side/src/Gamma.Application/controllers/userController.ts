@@ -18,7 +18,6 @@ import { SignUpUserViewModel } from "../../Gamma.Models/ViewModels/signUpUserVie
 import { LoginUserViewModel } from "../../Gamma.Models/ViewModels/loginUserViewModel";
 import { HttpError } from "../../Gamma.Common/models/httpError";
 import { HTTPStatusCodes } from "../../Gamma.Common/constants/HTTPStatusCodes";
-import { error } from "console";
 
 const checkAuth = require('../middleware/checkAuthMiddleware');
 
@@ -27,6 +26,7 @@ export class UserController extends BaseController {
   constructor(@inject(TYPES.IUserService) private userService: IUserService) {
     super();
   }
+
 
   @httpPost("/signup")
   private async signup(@request() req: Request, @response() res: Response, @next() next: NextFunction) {
@@ -47,8 +47,6 @@ export class UserController extends BaseController {
       UserRole
     );
 
-    console.log("candidateUser:", candidateUser);
-
     await this.userService.Signup(candidateUser).then(result => {
       res.status(HTTPStatusCodes.Successful.Created).json(result);
     }).catch(error => {
@@ -59,7 +57,6 @@ export class UserController extends BaseController {
 
   @httpPost("/login")
   private async login(@request() req: Request, @response() res: Response, @next() next: NextFunction) {
-    console.log("login> req.body", req.body);
     const { Email, Password } = req.body;
     const user = new LoginUserViewModel(Email, Password);
 
@@ -68,8 +65,8 @@ export class UserController extends BaseController {
     }).catch(error => {
       next(error);
     });
-
   }
+
 
   @httpGet("/admin", checkAuth)
   private async getUsers(@request() req: Request, @response() res: Response, @next() next: NextFunction) {
@@ -80,14 +77,14 @@ export class UserController extends BaseController {
     });
   }
 
+
   @httpGet("/current", checkAuth)
   private async getCurrentUser(@request() req: Request, @response() res: Response, @next() next: NextFunction) {
-    console.log("controller > req.userData", req.userData);
+    console.log("getCurrentUser > req.userData", req.userData);
     await this.userService.GetUserByEmail(req.userData.email).then(result => {
       res.status(HTTPStatusCodes.Successful.OK).json(result);
     }).catch(error => {
       next(error);
     });
   }
-
 }

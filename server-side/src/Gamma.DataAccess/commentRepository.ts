@@ -14,10 +14,7 @@ export interface ICommentRepository {
 }
 
 @injectable()
-export class CommentRepository
-  extends BaseRepository
-  implements ICommentRepository
-{
+export class CommentRepository extends BaseRepository implements ICommentRepository {
   constructor() {
     super();
   }

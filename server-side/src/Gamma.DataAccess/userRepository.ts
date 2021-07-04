@@ -21,10 +21,10 @@ export interface IUserRepository {
 }
 @injectable()
 export class UserRepository extends BaseRepository implements IUserRepository {
-
   constructor() {
     super();
   }
+
 
   public async CreateUser(newUser: IUser, password: string, userRole: string = USERROLES.Contributor): Promise<User> {
 
@@ -70,21 +70,28 @@ export class UserRepository extends BaseRepository implements IUserRepository {
     return (result);
   }
 
+
   public async LogInUser(user: ILoginUserViewModel) { }
+
 
   public async GetUserByEmail(email: string): Promise<User> {
     const result = await ApplicationDbContext.Prisma.user
       .findFirst({
         where: { Email: email },
-      }).catch(e => {
+        include: { Roles: { include: { Role: true } } }
+      })
+      .catch(e => {
         throw (e);
       })
       .finally(async () => {
         await ApplicationDbContext.Prisma.$disconnect();
       });
 
-    return result;
+    const user = result as unknown as IUser;
+
+    return user;
   }
+
 
   public async GetUserByUserName(userName: string): Promise<User> {
     const result = await ApplicationDbContext.Prisma.user
@@ -99,6 +106,7 @@ export class UserRepository extends BaseRepository implements IUserRepository {
 
     return result;
   }
+
 
   public async GetByCriteria(): Promise<User[]> {
     const result = await ApplicationDbContext.Prisma.user.findMany()

@@ -17,6 +17,7 @@ export class ApplicationDbContext {
   public static get Prisma() {
     if (ApplicationDbContext.prismaInstance) return this.prismaInstance;
     this.prismaInstance = new PrismaClient();
+    
     return this.prismaInstance;
   }
 }

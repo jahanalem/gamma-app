@@ -27,13 +27,14 @@ export class TagController extends BaseController {
   private async createTag(@request() req: Request, @response() res: Response) {
     if (Object.keys(req.body).length > 1) {
       const result = await this.tagService.CreateMany(req.body);
+
       res.status(200).json(result);
     }
     else {
       const { title } = req.body;
       const newTag = new Tag(title);
-      console.log("newTag:",newTag);
       const result = await this.tagService.Create(newTag);
+
       res.status(200).json(result);
     }
 

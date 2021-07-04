@@ -31,7 +31,6 @@ export default class CategoryStore {
         try {
             const categories = await agent.Category.list();
             runInAction(() => {
-                //console.log("Categories ARE:", categories);
                 categories.forEach(category => {
                     this.categoryInventory.set(category.Id, category);
                 })

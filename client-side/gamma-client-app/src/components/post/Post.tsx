@@ -15,7 +15,6 @@ export const Post: React.FC<IProps> = observer((props) => {
 
     const tagHandler = (e: SyntheticEvent<HTMLAnchorElement>, tagId: string) => {
         e.preventDefault();
-        console.log("tagId:", tagId);
         tagStore.setSelectedTagId(tagId);
         history.push(`/posts/tag/${tagId}`);
     }

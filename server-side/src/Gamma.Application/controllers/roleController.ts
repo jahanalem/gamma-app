@@ -35,7 +35,6 @@ export class RoleController extends BaseController {
             res.status(200).json(result);
         }
         else {
-            console.log("Role(req.body):", req.body);
             const { Name, Description } = req.body;
             const newRole = new Role(Name, Description);
             const result = await this.roleService.Create(newRole);
@@ -54,6 +53,7 @@ export class RoleController extends BaseController {
 
         res.status(200).json(result);
     }
+
 
     @httpGet("/:id")
     private async getById(@request() req: Request, @response() res: Response) {

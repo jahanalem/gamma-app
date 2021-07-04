@@ -31,7 +31,6 @@ export default class TagStore {
         try {
             const tags = await agent.Tag.list();
             runInAction(() => {
-                //console.log("TAGS ARE:", tags);
                 tags.forEach(tag => {
                     this.tagInventory.set(tag.Id, tag);
                 })

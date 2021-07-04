@@ -1,4 +1,5 @@
 import { Route } from "react-router-dom";
+import { useEffect } from "react";
 import { observer } from "mobx-react-lite";
 import { AboutUs } from "./components/aboutUs/AboutUs";
 import { ContactUs } from "./components/contactUs/ContactUs";
@@ -9,50 +10,19 @@ import { Posts } from "./components/posts/Posts";
 import { Login } from "./components/Account/login/login";
 import { Signup } from "./components/Account/signup/signup";
 import { PostsByTagId } from "./components/postsByTagId/postsByTagId";
-import './App.css';
 import { PostsByCategoryId } from "./components/postsByCategoryId/PostsByCategoryId";
-import $ from "jquery";
-import { useEffect } from "react";
 import { useStore } from "./app/stores/store";
 import { LoadingComponent } from "./layout/LoadingComponent";
-
-/*
-// $(()=> {
-//   console.log("BBBBBBBBBB");
-//   $(".plus").on('click', function (event: JQuery.ClickEvent<HTMLElement, null, HTMLElement, HTMLElement>) {
-//     $(".plus").toggleClass("rotated-plus");
-//     $(".plus").parent().siblings("ul").slideToggle();
-//     //event.preventDefault();
-    
-//   });
-// });
-
-// $( ()=> {
-//   console.log("CCCCCCCCCCCc");
-//   $("#button1").on('click', function (event:JQuery.ClickEvent<HTMLElement, null, HTMLElement, HTMLElement>) {
-      
-//     if ($("#cats").css("left") === "-300px") {
-//       $("#cats").css("left", "0");
-
-//       $("#topmenu ul").slideUp();
-//     } else {
-//       $("#cats").css("left", "-300px");
-//     }
-//     //event.preventDefault();
-
-//   });
-// });
-*/
+import './App.css';
+import $ from "jquery";
 
 const App: React.FC = () => {
-  const {commonStore, userStore} = useStore();
+  const { commonStore, userStore } = useStore();
 
   useEffect(() => {
     if (commonStore.token) {
-      console.log("there is token.");
       userStore.getCurrentUser().finally(() => commonStore.setAppLoaded());
     } else {
-      console.log("there is NOT token.");
       commonStore.setAppLoaded();
     }
   }, [commonStore, userStore])
@@ -112,13 +82,13 @@ export default observer(App);
 
 $(function () {
   $("#button1").click(function () {
-      if ($("#cats").css("left") === "-300px") {
-          $("#cats").css("left", "0");
+    if ($("#cats").css("left") === "-300px") {
+      $("#cats").css("left", "0");
 
-          $("#topmenu ul").slideUp();
-      } else {
-          $("#cats").css("left", "-300px");
-      }
+      $("#topmenu ul").slideUp();
+    } else {
+      $("#cats").css("left", "-300px");
+    }
   });
 });
 

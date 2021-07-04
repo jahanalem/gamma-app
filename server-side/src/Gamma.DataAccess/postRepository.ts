@@ -4,8 +4,7 @@ import { postTagMapping } from "../Gamma.Common/types/dataTypes";
 import { IPost, Post } from "../Gamma.Models/post";
 import { ApplicationDbContext } from "./applicationDbContext";
 import { BaseRepository } from "./baseRepository";
-//let colors = require('colors');
-const { performance } = require('perf_hooks');
+//const { performance } = require('perf_hooks');
 
 const colors = require('chalk');
 
@@ -31,15 +30,9 @@ export class PostRepository extends BaseRepository implements IPostRepository {
 
     let postId = (!validate(post.Id)) ? v4() : post.Id;
 
-    //console.log("postrepo: postId:", postId);
-
     let postTagIds: postTagMapping[] = [];
-    //console.log("TAGS: ", post.TagIds);
 
     post.TagIds?.map(tag => postTagIds.push({ PostId: postId, TagId: tag }));
-
-
-    //console.log("postTagIds: ", postTagIds);
 
     const transResult = await ApplicationDbContext.Prisma.$transaction([
       ApplicationDbContext.Prisma.post.create({
@@ -65,29 +58,17 @@ export class PostRepository extends BaseRepository implements IPostRepository {
 
     let result = transResult as unknown as Post;
 
-    console.log("created post =", result);
-
     return result;
   }
 
+
   public async GetAll(): Promise<Post[]> {
-    // let d1 = performance.now();
     const results = await ApplicationDbContext.Prisma.post.findMany({
       include: { Tags: { include: { Tag: true } } },
     })
       .finally(async () => {
         await ApplicationDbContext.Prisma.$disconnect();
       });
-    // let d2 = performance.now();
-    // let deltaD = d2 - d1;
-    // console.log(colors.green('postRepository (delta time) with PRISMA:'), deltaD);
-
-    // let d3 = performance.now();
-    // let data = await ApplicationDbContext.db.execute("SELECT * FROM post");
-    // let d4 = performance.now();
-    // let delta = d4 - d3;
-
-    //console.log(colors.cyan('wothout ORM:'), delta);
 
     const result = results.map(post => {
       return { ...post, Tags: post.Tags.map(tag => tag.Tag) }
@@ -95,6 +76,7 @@ export class PostRepository extends BaseRepository implements IPostRepository {
 
     return (result as unknown as IPost[]);
   }
+
 
   public async GetById(id: string): Promise<Post> {
     const data = await ApplicationDbContext.Prisma.post
@@ -109,6 +91,7 @@ export class PostRepository extends BaseRepository implements IPostRepository {
     return data;
     //const data = await ApplicationDbContext.db.execute("SELECT * FROM post WHERE Id = ?",[id]);
   }
+
 
   public async GetByTagId(tagId: string): Promise<IPost[]> {
     const results = await ApplicationDbContext.Prisma.post.findMany({
@@ -133,8 +116,8 @@ export class PostRepository extends BaseRepository implements IPostRepository {
     })
 
     return (result as unknown as IPost[]);
-    //const data = await ApplicationDbContext.db.execute("SELECT * FROM post WHERE Id = ?",[id]);
   }
+
 
   public async GetByCategoryId(catId: string): Promise<IPost[]> {
     const results = await ApplicationDbContext.Prisma.post.findMany({
@@ -159,8 +142,8 @@ export class PostRepository extends BaseRepository implements IPostRepository {
     })
 
     return (result as unknown as IPost[]);
-    //const data = await ApplicationDbContext.db.execute("SELECT * FROM post WHERE Id = ?",[id]);
   }
+
 
   public async Delete(id: string) {
     const data = await ApplicationDbContext.Prisma.post
@@ -171,10 +154,9 @@ export class PostRepository extends BaseRepository implements IPostRepository {
         await ApplicationDbContext.Prisma.$disconnect();
       });
 
-    //const data = await ApplicationDbContext.db.execute("DELETE FROM post WHERE id = ?",[id]);
-
     return data;
   }
+
 
   public async Update(id: string, post: IPost) {
     const result = await ApplicationDbContext.Prisma.post

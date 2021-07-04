@@ -43,7 +43,6 @@ export const Signup: React.FC = observer(() => {
             newRegister.confirmPassword);
 
             await userStore.createUser(newUser).then(result => {
-                console.log("User c!")
                 history.push(`/login`);
             }).catch(error => {
                 console.error(error);

@@ -31,18 +31,20 @@ export class CategoryController extends BaseController {
     @request() req: Request,
     @response() res: Response
   ) {
-    console.log("CategoryController");
     if (Object.keys(req.body).length > 1) {
       const result = await this.categoryService.CreateMany(req.body);
+
       res.status(200).json(result);
     }
     else {
       const { title, isActive, parentId } = req.body;
       const newCategory = new Category(title, isActive, parentId);
       const result = await this.categoryService.Create(newCategory);
+
       res.status(200).json(result);
     }
   }
+
 
   //#endregion
 
@@ -55,6 +57,7 @@ export class CategoryController extends BaseController {
     res.status(200).json(result);
   }
 
+
   @httpGet("/:id")
   private async getById(@request() req: Request, @response() res: Response) {
     const id = req.params.id;
@@ -62,6 +65,7 @@ export class CategoryController extends BaseController {
 
     res.status(200).json(result);
   }
+
 
   // #endregion
 
@@ -77,6 +81,7 @@ export class CategoryController extends BaseController {
 
     res.status(200).json(result);
   }
+
 
   //#endregion
 

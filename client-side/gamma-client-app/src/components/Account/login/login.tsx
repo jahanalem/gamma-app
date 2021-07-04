@@ -32,7 +32,6 @@ export const Login: React.FC = observer(() => {
             loginUser.password
         )
         await userStore.login(loggingUser).then(result => {
-            console.log("User logged in!")
             history.push(`/`);
         }).catch(error => {
             console.error(error);

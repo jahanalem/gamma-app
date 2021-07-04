@@ -1,6 +1,6 @@
 export const USERROLES: UserRoles = {
-    Administrator: "Administrator",
-    Contributor: "Contributor"
+    Administrator: "ADMINISTRATOR", //"Administrator",
+    Contributor: "CONTRIBUTOR" //"Contributor"
 }
 
 export type UserRoles = {

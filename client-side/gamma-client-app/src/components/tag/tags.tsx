@@ -8,7 +8,6 @@ export const Tags: React.FC = observer(() => {
     const history = useHistory();
     const tagHandler = (e: SyntheticEvent<HTMLAnchorElement>, tagId: string) => {
         e.preventDefault();
-        console.log("tagId:", tagId);
         tagStore.setSelectedTagId(tagId);
         history.push(`/posts/tag/${tagId}`);
     }

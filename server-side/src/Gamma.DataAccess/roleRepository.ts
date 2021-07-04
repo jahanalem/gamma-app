@@ -1,7 +1,7 @@
 import { IRole, Role } from "../Gamma.Models/role";
 import { BaseRepository } from "./baseRepository";
 import { ApplicationDbContext } from "./applicationDbContext";
-import { injectable } from "inversify";
+import { id, injectable } from "inversify";
 
 export interface IRoleRepository {
     Create: (Role: IRole) => Promise<Role>;
@@ -10,6 +10,8 @@ export interface IRoleRepository {
     Delete: (id: string) => Promise<Role>;
     Update: (id: string, Role: IRole) => Promise<Role>;
     CreateMany(Roles: IRole[]): Promise<number>;
+    GetRoleByRoleName(roleName: string): Promise<{ Id: string, NormalizedName: string }>;
+    GetRoleByRoleId(roleId: string): Promise<{ Id: string, NormalizedName: string }>
 }
 
 @injectable()
@@ -72,6 +74,26 @@ export class RoleRepository extends BaseRepository implements IRoleRepository {
             });
 
         return result;
+    }
+
+    public async GetRoleByRoleName(roleName: string = "Contributor"): Promise<{ Id: string, NormalizedName: string }> {
+        const normalizedRoleName = roleName.toUpperCase().trim();
+        const role = await ApplicationDbContext.Prisma.role.findFirst({
+            where: { NormalizedName: normalizedRoleName },
+            select: { Id: true, NormalizedName: true }
+        })
+
+        return role;
+    }
+
+    public async GetRoleByRoleId(roleId: string): Promise<{ Id: string, NormalizedName: string }> {
+
+        const role = await ApplicationDbContext.Prisma.role.findFirst({
+            where: { Id: roleId },
+            select: { Id: true, NormalizedName: true }
+        })
+
+        return role;
     }
 
     //#endregion

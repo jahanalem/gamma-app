@@ -64,7 +64,7 @@ export default class PostStore {
                     this.postInventory.set(post.Id, post);
                 })
             })
-
+            console.log("loadPosts size",this.postInventory.size);
             this.setLoadingInitial(false);
         } catch (error) {
             console.log(error);
@@ -77,6 +77,7 @@ export default class PostStore {
     }
 
     selectPost = (id: string) => {
+        console.log("this.postInventory.get(id)",this.postInventory.size);
         this.selectedPost = this.postInventory.get(id);
     }
 

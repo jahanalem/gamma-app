@@ -18,6 +18,7 @@ import { SignUpUserViewModel } from "../../Gamma.Models/ViewModels/signUpUserVie
 import { LoginUserViewModel } from "../../Gamma.Models/ViewModels/loginUserViewModel";
 import { HttpError } from "../../Gamma.Common/models/httpError";
 import { HTTPStatusCodes } from "../../Gamma.Common/constants/HTTPStatusCodes";
+import { USERROLES } from "../../Gamma.Constants/roleMembers";
 
 const checkAuth = require('../middleware/checkAuthMiddleware');
 
@@ -68,7 +69,7 @@ export class UserController extends BaseController {
   }
 
 
-  @httpGet("/admin", checkAuth)
+  @httpGet("/", checkAuth(USERROLES.ADMINISTRATOR))
   private async getUsers(@request() req: Request, @response() res: Response, @next() next: NextFunction) {
     await this.userService.GetByCriteria().then(result => {
       res.status(HTTPStatusCodes.Successful.OK).json(result);
@@ -87,4 +88,5 @@ export class UserController extends BaseController {
       next(error);
     });
   }
+  
 }

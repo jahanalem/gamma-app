@@ -52,7 +52,7 @@ const Post = {
 }
 
 const Account = {
-    list: () => requests.get<IUserModel[]>('/users/admin/'),
+    list: () => requests.get<IUserModel[]>('/users/'),
     details: (id: string) => requests.get<IUserModel>(`/users/admin/${id}`),
     signup: (registerFormValues: ISignUpUserViewModel) => requests.post<IUserModel>('/users/signup', registerFormValues),
     login: (loginFormValues: ILoginUserViewModel) => requests.post<IUserModel>('/users/login', loginFormValues),

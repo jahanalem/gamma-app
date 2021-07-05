@@ -1,9 +1,24 @@
 export const USERROLES: UserRoles = {
-    Administrator: "ADMINISTRATOR", //"Administrator",
-    Contributor: "CONTRIBUTOR" //"Contributor"
+    ADMINISTRATOR: "ADMINISTRATOR", //"Administrator",
+    CONTRIBUTOR: "CONTRIBUTOR" //"Contributor"
 }
 
 export type UserRoles = {
-    Administrator: string,
-    Contributor: string,
+    ADMINISTRATOR: string,
+    CONTRIBUTOR: string,
+}
+
+// export const ACCESSLEVELS: accessLevels = {
+//     ADMINISTRATOR: 100,
+//     CONTRIBUTOR: 10,
+// };
+
+export type accessLevels = {
+    ADMINISTRATOR: number,
+    CONTRIBUTOR: number,
+}
+
+export const ACCESSLEVELS: { [key: string]: number } = {
+    ADMINISTRATOR: 100,
+    CONTRIBUTOR: 10,
 }

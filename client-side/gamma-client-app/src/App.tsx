@@ -21,13 +21,22 @@ const App: React.FC = () => {
 
   useEffect(() => {
     if (commonStore.token) {
-      userStore.getCurrentUser().finally(() => commonStore.setAppLoaded());
+      userStore.getCurrentUser().catch((error) => {
+        commonStore.setAppLoaded();
+        console.log(error);
+        commonStore.setServerError({
+          statusCode: 400,
+          message: "Access denied!",
+          details: "You don't have permision for this action."
+        });
+      })
+        .finally(() => commonStore.setAppLoaded());
     } else {
       commonStore.setAppLoaded();
     }
   }, [commonStore, userStore])
 
-  if (!commonStore.appLoaded) return <LoadingComponent content='Loading app...' />
+  //if (!commonStore.appLoaded) return <LoadingComponent content='Loading app...' />
 
   return (
     <div id="page-container">

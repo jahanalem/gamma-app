@@ -26,7 +26,7 @@ export class UserRepository extends BaseRepository implements IUserRepository {
   }
 
 
-  public async CreateUser(newUser: IUser, password: string, userRole: string = USERROLES.Contributor): Promise<User> {
+  public async CreateUser(newUser: IUser, password: string, userRole: string = USERROLES.CONTRIBUTOR): Promise<User> {
 
     let hashedPassword;
     try {

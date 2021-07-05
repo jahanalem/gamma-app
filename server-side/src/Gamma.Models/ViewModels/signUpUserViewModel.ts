@@ -19,7 +19,7 @@ export class SignUpUserViewModel implements ISignUpUserViewModel {
     email: string,
     password: string,
     confirmPassword: string,
-    userRoleName: string = USERROLES.Contributor
+    userRoleName: string = USERROLES.CONTRIBUTOR
   ) {
     this.FirstName = firstName;
     this.LastName = lastName;

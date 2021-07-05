@@ -14,6 +14,9 @@ import {
   request,
   response,
 } from "inversify-express-utils";
+import { USERROLES } from "../../Gamma.Constants/roleMembers";
+
+const checkAuth = require('../middleware/checkAuthMiddleware');
 
 @controller("/posts")
 export class PostController extends BaseController {
@@ -86,14 +89,14 @@ export class PostController extends BaseController {
   }
 
 
-  @httpGet("/")
+  @httpGet("/", checkAuth(USERROLES.CONTRIBUTOR))
   private async getAll(@request() req: Request, @response() res: Response) {
     const data = await this.pService.GetAll();
 
     res.status(200).json(data);
   }
 
-  
+
   @httpPut("/update/:id")
   private async update(@request() req: Request, @response() res: Response) {
     const id = req.params.id;

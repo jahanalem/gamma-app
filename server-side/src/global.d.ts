@@ -14,7 +14,7 @@ export type GammaToken = {
 declare global {
     namespace Express {
         interface Request {
-            userData: any
+            userData: GammaToken
         }
     }
 }

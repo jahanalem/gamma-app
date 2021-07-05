@@ -1,18 +1,28 @@
-import React, { useState } from "react";
+import React, { useEffect } from "react";
 import { useParams } from "react-router-dom";
 import { observer } from "mobx-react-lite";
 import { useStore } from "../../app/stores/store";
 import "./postDetails.css";
-import postStore from "../../app/stores/postStore";
+import { toJS } from "mobx";
+import { LoadingComponent } from "../../layout/LoadingComponent";
 
-
-export const PostDetails: React.FC = observer(() => {
+export default observer(function PostDetails() {
     const { postStore } = useStore();
     let { id } = useParams<{ id?: string }>();
-    postStore.selectPost(id);
-    const [postDate, setPostDate] = useState<string>('OK');
-    console.log(postStore.selectedPost.Id)
-    setPostDate(postStore.selectedPost.CreatedDate.toString());
+
+    useEffect(() => {
+        console.log("0002 - in useEffect");
+        try {
+            postStore.details(id);
+        }
+        catch (error) { }
+
+    }, [id, postStore]);
+
+
+    if (!postStore.postDetails) {
+        return <LoadingComponent content='Loading post...' />
+    }
 
     return (
         <>
@@ -20,23 +30,21 @@ export const PostDetails: React.FC = observer(() => {
                 <div className="row">
                     <div className="col-lg-12">
 
-                        <h1 className="mt-4">{postStore.selectedPost.Title}</h1>
-
+                        <h1 className="mt-4">{postStore.postDetails.Title}</h1>
 
                         <p className="lead">
                         </p>
 
                         <hr />
 
-
-                        {<input type="date" value={postDate} />}
+                        <span>{postStore.postDetails.CreatedDate.toString()}</span>
 
                         <hr />
                         <div>
-                            <p className="lead">{postStore.selectedPost.Summary}</p>
+                            <p className="lead">{postStore.postDetails.Summary}</p>
 
                             <div className="text-justify">
-                                {postStore.selectedPost.Description}
+                                {postStore.postDetails.Description}
                             </div>
                             <blockquote className="blockquote">
                                 <p className="mb-0"></p>
@@ -47,10 +55,6 @@ export const PostDetails: React.FC = observer(() => {
 
                             <hr />
                         </div>
-
-
-
-
                     </div>
                 </div>
             </div>

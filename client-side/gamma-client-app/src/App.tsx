@@ -5,16 +5,16 @@ import { AboutUs } from "./components/aboutUs/AboutUs";
 import { ContactUs } from "./components/contactUs/ContactUs";
 import { MainNavbar } from "./components/mainNavbar/MainNavbar";
 import { HomePage } from "./components/home/HomePage";
-import { PostDetails } from "./components/postDetails/PostDetails";
+import  PostDetails  from "./components/postDetails/PostDetails";
 import { Posts } from "./components/posts/Posts";
 import { Login } from "./components/Account/login/login";
 import { Signup } from "./components/Account/signup/signup";
 import { PostsByTagId } from "./components/postsByTagId/postsByTagId";
 import { PostsByCategoryId } from "./components/postsByCategoryId/PostsByCategoryId";
 import { useStore } from "./app/stores/store";
-import { LoadingComponent } from "./layout/LoadingComponent";
+//import { LoadingComponent } from "./layout/LoadingComponent";
 import './App.css';
-import $ from "jquery";
+//import $ from "jquery";
 
 const App: React.FC = () => {
   const { commonStore, userStore } = useStore();
@@ -88,7 +88,7 @@ const App: React.FC = () => {
 }
 
 export default observer(App);
-
+/*
 $(function () {
   $("#button1").click(function () {
     if ($("#cats").css("left") === "-300px") {
@@ -103,7 +103,7 @@ $(function () {
 
 
 $(document).ready(function () {
-  console.log("I am .plus");
+  //console.log("I am .plus");
   $(".plus").click(function (event) {
     console.log(".plus clicked!");
     $(".plus").toggleClass("rotated-plus");
@@ -111,3 +111,4 @@ $(document).ready(function () {
     event.preventDefault();
   });
 });
+*/

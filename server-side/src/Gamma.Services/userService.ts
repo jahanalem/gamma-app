@@ -132,6 +132,7 @@ export class UserService extends BaseService implements IUserService {
 
     //const role = await this.roleRepository.GetRoleByRoleName(USERROLES.ADMINISTRATOR);
     //console.log("roleeeeeeeeeeeeeeeeeeeee", role);
+    
     const gammaToken: GammaToken = {
       userId: existingUser.Id,
       email: existingUser.Email,

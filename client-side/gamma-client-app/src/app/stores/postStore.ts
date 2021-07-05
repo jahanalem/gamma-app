@@ -19,6 +19,25 @@ export default class PostStore {
         return result;
     }
 
+    get postDetails() {
+        return this.selectedPost;
+    }
+
+    details = async (id: string) => {
+        this.loadingInitial = true;
+        try {
+            const detailPost = await agent.Post.details(id);
+            runInAction(() => {
+                this.selectedPost = detailPost;
+            })
+        }
+        catch (error) {
+            console.log(error);
+            this.setLoadingInitial(false);
+        }
+    }
+
+
     postsByTagId = async (tagId: string) => {
         this.loadingInitial = true;
         this.postInventory.clear();
@@ -36,6 +55,8 @@ export default class PostStore {
             this.setLoadingInitial(false);
         }
     }
+
+
     postsByCategoryId = async (catId: string) => {
         this.loadingInitial = true;
         this.postInventory.clear();
@@ -64,7 +85,7 @@ export default class PostStore {
                     this.postInventory.set(post.Id, post);
                 })
             })
-            console.log("loadPosts size",this.postInventory.size);
+            //console.log("loadPosts size", this.postInventory.size);
             this.setLoadingInitial(false);
         } catch (error) {
             console.log(error);
@@ -77,8 +98,12 @@ export default class PostStore {
     }
 
     selectPost = (id: string) => {
-        console.log("this.postInventory.get(id)",this.postInventory.size);
-        this.selectedPost = this.postInventory.get(id);
+        console.log("this.postInventory.get(id)", this.postInventory.size);
+        runInAction(async () => {
+            const detailPost = await agent.Post.details(id);
+            this.selectedPost = detailPost;
+            console.log("this.selectedPost", this.selectedPost);
+        })
     }
 
     cancelSelectedPost = () => {

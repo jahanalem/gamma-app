@@ -5,7 +5,7 @@ import { AboutUs } from "./components/aboutUs/AboutUs";
 import { ContactUs } from "./components/contactUs/ContactUs";
 import { MainNavbar } from "./components/mainNavbar/MainNavbar";
 import { HomePage } from "./components/home/HomePage";
-import  PostDetails  from "./components/postDetails/PostDetails";
+import PostDetails from "./components/postDetails/PostDetails";
 import { Posts } from "./components/posts/Posts";
 import { Login } from "./components/Account/login/login";
 import { Signup } from "./components/Account/signup/signup";
@@ -14,6 +14,7 @@ import { PostsByCategoryId } from "./components/postsByCategoryId/PostsByCategor
 import { useStore } from "./app/stores/store";
 //import { LoadingComponent } from "./layout/LoadingComponent";
 import './App.css';
+import { Footer } from "./layout/footer/Footer";
 //import $ from "jquery";
 
 const App: React.FC = () => {
@@ -83,6 +84,7 @@ const App: React.FC = () => {
           </div>
         </div>
       </main>
+      <Footer />
     </div>
   );
 }

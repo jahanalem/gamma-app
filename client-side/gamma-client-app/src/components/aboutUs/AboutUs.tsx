@@ -29,6 +29,8 @@ export const AboutUs: React.FC = () => {
                     <ListGroup.Item>ReactJS (frontend) with Typescript</ListGroup.Item>
                     <ListGroup.Item>ExpressJS (backend) with Typescript</ListGroup.Item>
                     <ListGroup.Item>PrismaJS (as ORM)</ListGroup.Item>
+                    <ListGroup.Item>MobX (as state management)</ListGroup.Item>
+                    <ListGroup.Item>Axios (Promise based HTTP client for the browser and node.js)</ListGroup.Item>
                   </ListGroup>
                 </Card>
               </div>

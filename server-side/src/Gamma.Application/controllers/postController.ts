@@ -89,7 +89,7 @@ export class PostController extends BaseController {
   }
 
 
-  @httpGet("/", checkAuth(USERROLES.CONTRIBUTOR))
+  @httpGet("/")
   private async getAll(@request() req: Request, @response() res: Response) {
     const data = await this.pService.GetAll();
 

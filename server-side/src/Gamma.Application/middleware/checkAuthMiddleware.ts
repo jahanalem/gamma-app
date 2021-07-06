@@ -10,7 +10,7 @@ module.exports = (mandatoryRole: string = USERROLES.CONTRIBUTOR) => {
 
     return (req: Request, res: Response, next: NextFunction) => {
         if (req.method === 'OPTIONS') {
-            return next();
+            next();
         }
 
         try {
@@ -23,7 +23,7 @@ module.exports = (mandatoryRole: string = USERROLES.CONTRIBUTOR) => {
             // roleName === req.userData.roleName || roleName === USERROLES.ADMINISTRATOR
 
             if (ACCESSLEVELS[req.userData.roleName] >= ACCESSLEVELS[mandatoryRole]) {
-                return next();
+                next();
             }
             else {
                 throw (new HttpError('Access denied!', HTTPStatusCodes.ClientError.Forbidden));

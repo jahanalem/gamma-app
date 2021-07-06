@@ -8,7 +8,7 @@ import { Tags } from "../tag/tags";
 
 interface stateType {
     tagId: string;
-    catId:string;
+    catId: string;
 }
 
 export const HomePage: React.FC = observer((props) => {
@@ -16,12 +16,12 @@ export const HomePage: React.FC = observer((props) => {
 
     const location = useLocation<stateType>();
     const { tagId } = location.state || { tagId: null };
-    const {catId} = location.state || {catId:null};
+    const { catId } = location.state || { catId: null };
     useEffect(() => {
         if (tagId) {
             postStore.postsByTagId(tagId);
         }
-        else if(catId){
+        else if (catId) {
             postStore.postsByCategoryId(catId);
         }
         else {
@@ -30,7 +30,7 @@ export const HomePage: React.FC = observer((props) => {
 
         tagStore.loadTags();
 
-    }, [tagId, postStore, tagStore,catId]);
+    }, [tagId, postStore, tagStore, catId]);
 
     if (postStore.loadingInitial) return <LoadingComponent content="Loading posts" />
     if (tagStore.loadingInitial) return <LoadingComponent content="Loading tags" />

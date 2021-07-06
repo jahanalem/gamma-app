@@ -79,14 +79,13 @@ export class UserController extends BaseController {
   }
 
 
-  @httpGet("/current", checkAuth)
-  private async getCurrentUser(@request() req: Request, @response() res: Response, @next() next: NextFunction) {
-    console.log("getCurrentUser > req.userData", req.userData);
+  @httpGet("/current", checkAuth(USERROLES.CONTRIBUTOR))
+  public async getCurrentUser(@request() req: Request, @response() res: Response, @next() next: NextFunction) {
     await this.userService.GetUserByEmail(req.userData.email).then(result => {
+      result.Token = req.headers.authorization.split(' ')[1];
       res.status(HTTPStatusCodes.Successful.OK).json(result);
     }).catch(error => {
       next(error);
     });
   }
-  
 }

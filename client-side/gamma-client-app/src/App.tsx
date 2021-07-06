@@ -22,6 +22,7 @@ const App: React.FC = () => {
 
   useEffect(() => {
     if (commonStore.token) {
+      console.log("there is commonStore.token");
       userStore.getCurrentUser().catch((error) => {
         commonStore.setAppLoaded();
         console.log(error);
@@ -33,6 +34,7 @@ const App: React.FC = () => {
       })
         .finally(() => commonStore.setAppLoaded());
     } else {
+      console.log("there is NOT commonStore.token");
       commonStore.setAppLoaded();
     }
   }, [commonStore, userStore])

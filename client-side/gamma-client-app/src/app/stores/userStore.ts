@@ -8,7 +8,7 @@ import { ILoginUserViewModel } from "../viewModels/loginUserViewModel";
 
 
 export default class UserStore {
-    user: UserModel | null = null;
+    user: IUserModel | null = null;
     userInventory = new Map<string, IUserModel>();
     selectedUser: IUserModel | undefined = undefined;
     loading = false;
@@ -22,6 +22,7 @@ export default class UserStore {
     }
 
     get isLoggedIn() {
+        console.log("!!this.user :",!!this.user);
         return !!this.user;
     }
 
@@ -100,10 +101,14 @@ export default class UserStore {
     }
 
     getCurrentUser = async () => {
+        console.log("getCurrentUser = async () => {");
         try {
-            const user = await agent.Account.current();
-            console.log("getCurrentUser: ",user);
-            runInAction(() => this.user = user);
+            let currentUser = await agent.Account.current();
+            console.log("currentUser", currentUser);
+            store.commonStore.setToken(currentUser.Token);
+            runInAction(() => this.user = currentUser);
+            //this.user = currentUser;
+            //console.log("getCurrentUser: ",this.user.Email);
         } catch (error) {
             console.log(error);
         }

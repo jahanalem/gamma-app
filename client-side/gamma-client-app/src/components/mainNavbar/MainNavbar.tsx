@@ -5,7 +5,6 @@ import { Category } from '../category/Category';
 import { useStore } from '../../app/stores/store';
 import GammaSearch from '../features/searchEngine/GammaSearch';
 import "./mainNavbar.css";
-import userStore from '../../app/stores/userStore';
 
 export const MainNavbar: React.FC = observer(() => {
     const { userStore } = useStore();
@@ -13,6 +12,7 @@ export const MainNavbar: React.FC = observer(() => {
     const logoutHandler = () => {
         userStore.logout();
     }
+    
     return (
         <>
             <header className="mainheader">

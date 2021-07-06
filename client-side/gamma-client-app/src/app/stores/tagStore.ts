@@ -26,8 +26,14 @@ export default class TagStore {
     }
 
     loadTags = async () => {
-        this.loadingInitial = true;
-        this.tagInventory.clear();
+        this.setLoadingInitial(true);
+        if (this.tagInventory.size > 0) {
+            this.setLoadingInitial(false);
+
+            return;
+        }
+
+        //this.tagInventory.clear();
         try {
             const tags = await agent.Tag.list();
             runInAction(() => {

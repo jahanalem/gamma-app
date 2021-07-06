@@ -33,7 +33,6 @@ export default class TagStore {
             return;
         }
 
-        //this.tagInventory.clear();
         try {
             const tags = await agent.Tag.list();
             runInAction(() => {
@@ -49,7 +48,7 @@ export default class TagStore {
     }
 
     setLoadingInitial = (state: boolean) => {
-        this.loadingInitial = state;
+        runInAction(() => this.loadingInitial = state)
     }
 
     selectTag = (id: string) => {

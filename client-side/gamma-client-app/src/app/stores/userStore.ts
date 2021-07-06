@@ -32,7 +32,7 @@ export default class UserStore {
     }
 
     loadUsers = async () => {
-        this.loadingInitial = true;
+        this.setLoadingInitial(true);
         this.userInventory.clear();
         try {
             const Users = await agent.Account.list();
@@ -49,7 +49,7 @@ export default class UserStore {
     }
 
     setLoadingInitial = (state: boolean) => {
-        this.loadingInitial = state;
+        runInAction(() => this.loadingInitial = state)
     }
 
     selectUser = (id: string) => {

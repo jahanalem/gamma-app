@@ -39,7 +39,7 @@ export default class PostStore {
 
 
     postsByTagId = async (tagId: string) => {
-        this.loadingInitial = true;
+        this.setLoadingInitial(true);
         this.postInventory.clear();
         try {
             const posts = await agent.Post.listByTagId(tagId);

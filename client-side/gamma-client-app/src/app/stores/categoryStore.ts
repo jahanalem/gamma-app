@@ -26,7 +26,7 @@ export default class CategoryStore {
     }
 
     loadCategories = async () => {
-        this.loadingInitial = true;
+        this.setLoadingInitial(true);
         this.categoryInventory.clear();
         try {
             const categories = await agent.Category.list();
@@ -43,7 +43,7 @@ export default class CategoryStore {
     }
 
     setLoadingInitial = (state: boolean) => {
-        this.loadingInitial = state;
+        runInAction(() => this.loadingInitial = state)
     }
 
     selectCategory = (id: string) => {

@@ -13,7 +13,16 @@ export const Posts: React.FC = observer(() => {
         <>
             <div className="content col-xs-12 col-lg-9">
                 <div id="articleListComponent" className="row">
-                    {postsByDate.map((post, index) => <Post key={index} article={post} />)}
+                    {(postsByDate)
+                        ?
+                        <>
+                            {postsByDate?.map((post, index) => <Post key={index} article={post} />)}
+                        </>
+                        :
+                        <>
+                            <div>NOT FOUND</div>
+                        </>
+                    }
                 </div>
             </div>
         </>

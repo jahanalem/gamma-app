@@ -93,6 +93,27 @@ export default class PostStore {
         }
     }
 
+
+    searchInPosts = async (expression: string) => {
+        this.loadingInitial = true;
+        this.postInventory.clear();
+        try {
+            console.log("expression:",expression);
+            const posts = await agent.Post.search(expression);
+            runInAction(() => {
+                posts?.forEach(post => {
+                    this.postInventory.set(post.Id, post);
+                })
+            })
+
+            this.setLoadingInitial(false);
+        } catch (error) {
+            console.log(error);
+            this.setLoadingInitial(false);
+        }
+    }
+
+
     setLoadingInitial = (state: boolean) => {
         this.loadingInitial = state;
     }

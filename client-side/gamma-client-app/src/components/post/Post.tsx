@@ -43,7 +43,7 @@ export const Post: React.FC<IProps> = observer((props) => {
                         </p>
                     </div>
                     <div className="tags-in-articles float-right">
-                        {props.article.Tags.map((tag, index) => {
+                        {props.article?.Tags?.map((tag, index) => {
                             return (
                                 <span key={"tag_" + index.toString()}>
                                     {(tag !== null) ?

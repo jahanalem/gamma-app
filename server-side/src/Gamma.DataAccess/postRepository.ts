@@ -1,4 +1,4 @@
-import { injectable } from "inversify";
+import { id, injectable } from "inversify";
 import { v4 } from "uuid";
 import { postTagMapping } from "../Gamma.Common/types/dataTypes";
 import { IPost, Post } from "../Gamma.Models/post";
@@ -18,6 +18,7 @@ export interface IPostRepository {
   GetByCategoryId(catId: string): Promise<IPost[]>
   Delete: (id: string) => Promise<any>;
   Update: (id: string, post: IPost) => Promise<Post>;
+  FindBySearchExpression(expression: string): Promise<Post[]>;
 }
 
 @injectable()
@@ -64,7 +65,10 @@ export class PostRepository extends BaseRepository implements IPostRepository {
 
   public async GetAll(): Promise<Post[]> {
     const results = await ApplicationDbContext.Prisma.post.findMany({
-      include: { Tags: { include: { Tag: true } } },
+      select: {
+        Id: true, Title: true, Summary: true, CreatedDate: true, ModifiedDate: true, CategoryId: true,
+        Tags: { include: { Tag: true } },
+      }
     })
       .finally(async () => {
         await ApplicationDbContext.Prisma.$disconnect();
@@ -142,6 +146,20 @@ export class PostRepository extends BaseRepository implements IPostRepository {
     })
 
     return (result as unknown as IPost[]);
+  }
+
+
+  public async FindBySearchExpression(expression: string): Promise<Post[]> {
+    const results = await ApplicationDbContext.Prisma.post.findMany(
+      {
+        where: { Description: { contains: expression } }
+      }
+    )
+      .finally(async () => {
+        await ApplicationDbContext.Prisma.$disconnect();
+      });
+
+    return results;
   }
 
 

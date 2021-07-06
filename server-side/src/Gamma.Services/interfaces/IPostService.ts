@@ -8,4 +8,5 @@ export interface IPostService {
   Create: (post: IPost) => Promise<IPost>;
   Delete: (id: string) => any;
   Update: (id: string, post: IPost) => Promise<Post>;
+  FindBySearchExpression(expression: string): Promise<Post[]>
 }

@@ -96,6 +96,13 @@ export class PostController extends BaseController {
     res.status(200).json(data);
   }
 
+  @httpGet("/search/:term")
+  private async searchInPosts(@request() req: Request, @response() res: Response) {
+    const { term } = req.body;
+    const data = await this.pService.FindBySearchExpression(term);
+
+    res.status(200).json(data);
+  }
 
   @httpPut("/update/:id")
   private async update(@request() req: Request, @response() res: Response) {

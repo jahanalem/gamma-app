@@ -3,13 +3,14 @@ import { Link } from 'react-router-dom';
 import { observer } from 'mobx-react-lite';
 import { Category } from '../category/Category';
 import { useStore } from '../../app/stores/store';
+import GammaSearch from '../features/searchEngine/GammaSearch';
 
 
 
 export const MainNavbar: React.FC = observer(() => {
     const { userStore } = useStore();
 
-    const logoutHandler = ()=>{
+    const logoutHandler = () => {
         userStore.logout();
     }
     return (
@@ -18,18 +19,7 @@ export const MainNavbar: React.FC = observer(() => {
                 <img src="/images/menu.png" id="button1" alt="menu button" />
                 <div id="cats">
                     <div className="search-section">
-                        <form id="searchForm" className="form-inline" role="search">
-                            <div className="input-group">
-                                <input id="searchBox" type="search" className="form-control" autoComplete="off" placeholder="Search" name="search" />
-                                <div id="search-result-body">
-
-                                    <div id="number-of-search-results"></div>
-                                    <div id="search-results">
-
-                                    </div>
-                                </div>
-                            </div>
-                        </form>
+                        <GammaSearch />
                     </div>
                     <div className="menu-section">
                         <ul id="menu">
@@ -52,7 +42,7 @@ export const MainNavbar: React.FC = observer(() => {
                                 ) : (
                                     <>
                                         <li className="item">
-                                            
+
                                             <Link to='/login' className=""> Login</Link>
                                         </li>
                                     </>

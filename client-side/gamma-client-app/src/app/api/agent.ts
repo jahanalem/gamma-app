@@ -49,6 +49,7 @@ const Post = {
     delete: (id: string) => requests.del<void>(`/posts/delete/${id}`),
     listByTagId: (tagId: string) => requests.get<IPostModel[]>(`/posts/tag/${tagId}`),
     listByCatId: (catId: string) => requests.get<IPostModel[]>(`/posts/category/${catId}`),
+    search: (term: string) => requests.get<IPostModel[]>(`/posts/search/${term}`),
 }
 
 const Account = {

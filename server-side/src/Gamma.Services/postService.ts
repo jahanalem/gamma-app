@@ -34,6 +34,11 @@ export class PostService extends BaseService implements IPostService {
   }
 
 
+  public async FindBySearchExpression(expression: string): Promise<Post[]> {
+    return this.postRepository.FindBySearchExpression(expression);
+  }
+
+
   public async Create(Post: IPost): Promise<IPost> {
     return await this.postRepository.Create(Post);
   }

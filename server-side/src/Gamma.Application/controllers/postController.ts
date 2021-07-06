@@ -98,9 +98,9 @@ export class PostController extends BaseController {
 
   @httpGet("/search/:term")
   private async searchInPosts(@request() req: Request, @response() res: Response) {
-    const { term } = req.body;
+    const term = req.params.term;
     const data = await this.pService.FindBySearchExpression(term);
-
+    
     res.status(200).json(data);
   }
 

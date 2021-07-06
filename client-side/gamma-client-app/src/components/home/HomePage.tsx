@@ -32,8 +32,8 @@ export const HomePage: React.FC = observer((props) => {
 
     }, [tagId, postStore, tagStore,catId]);
 
-    if (tagStore.loadingInitial) return <LoadingComponent content="Loading tags" />
     if (postStore.loadingInitial) return <LoadingComponent content="Loading posts" />
+    if (tagStore.loadingInitial) return <LoadingComponent content="Loading tags" />
 
     return (
         <>

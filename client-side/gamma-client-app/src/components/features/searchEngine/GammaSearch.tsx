@@ -7,13 +7,9 @@ import { LoadingComponent } from "../../../layout/LoadingComponent";
 
 export default observer(function GammaSearch() {
     const { postStore } = useStore();
-    //let { id } = useParams<{ id?: string }>();
-
     const [input, setInput] = useState("");
     const [query, setQuery] = useState("");
-
-    //const history = useHistory();
-
+    postStore.setLoadingInitial(false);
     useEffect(() => {
         console.log("query", query);
         postStore.searchInPosts(query);
@@ -28,7 +24,7 @@ export default observer(function GammaSearch() {
     const enterKeyHandler = (event: React.KeyboardEvent<HTMLDivElement>) => {
         if (event.key === "13") {
             event.preventDefault();
-            event.stopPropagation();
+            //event.stopPropagation();
             console.log(event.key);
             searchActionHandler();
         }
@@ -40,7 +36,7 @@ export default observer(function GammaSearch() {
     }
 
     if (postStore.loadingInitial) {
-        return <LoadingComponent content='Loading post...' />
+        return <LoadingComponent content='Loading posts XXX...' />
     }
 
     return (

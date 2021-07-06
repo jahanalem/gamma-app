@@ -100,6 +100,7 @@ export default class PostStore {
         try {
             console.log("expression:",expression);
             const posts = await agent.Post.search(expression);
+            
             runInAction(() => {
                 posts?.forEach(post => {
                     this.postInventory.set(post.Id, post);

@@ -4,8 +4,8 @@ import { observer } from 'mobx-react-lite';
 import { Category } from '../category/Category';
 import { useStore } from '../../app/stores/store';
 import GammaSearch from '../features/searchEngine/GammaSearch';
-
-
+import "./mainNavbar.css";
+import userStore from '../../app/stores/userStore';
 
 export const MainNavbar: React.FC = observer(() => {
     const { userStore } = useStore();
@@ -35,8 +35,7 @@ export const MainNavbar: React.FC = observer(() => {
                                 userStore.isLoggedIn ? (
                                     <>
                                         <li className="item">
-                                            <Link to='#' onClick={logoutHandler} className=""> LogOut</Link>
-                                            {/* <button onClick={auth.logout}>LOGOUT</button> */}
+                                            <Link to='#' onClick={logoutHandler} className=""><span className="show-username">{userStore.user.UserName}</span> / LogOut</Link>
                                         </li>
                                     </>
                                 ) : (

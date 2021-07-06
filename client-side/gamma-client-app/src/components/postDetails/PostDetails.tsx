@@ -3,7 +3,6 @@ import { useParams } from "react-router-dom";
 import { observer } from "mobx-react-lite";
 import { useStore } from "../../app/stores/store";
 import "./postDetails.css";
-import { toJS } from "mobx";
 import { LoadingComponent } from "../../layout/LoadingComponent";
 
 export default observer(function PostDetails() {

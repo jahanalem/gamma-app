@@ -96,17 +96,21 @@ export default class UserStore {
         store.commonStore.setToken(null);
         window.localStorage.removeItem('jwt');
         this.user = null;
-        history.push('/');
+        history.push('/login');
     }
 
     getCurrentUser = async () => {
         try {
             const user = await agent.Account.current();
-            console.log(user);
+            console.log("getCurrentUser: ",user);
             runInAction(() => this.user = user);
         } catch (error) {
             console.log(error);
         }
+    }
+
+    get currentUser() {
+        return this.user;
     }
 
     updateUser = async (user: IUserModel) => {

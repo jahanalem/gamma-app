@@ -24,7 +24,7 @@ export default class PostStore {
     }
 
     details = async (id: string) => {
-        this.loadingInitial = true;
+        this.setLoadingInitial(true);
         try {
             const detailPost = await agent.Post.details(id);
             runInAction(() => {
@@ -58,7 +58,7 @@ export default class PostStore {
 
 
     postsByCategoryId = async (catId: string) => {
-        this.loadingInitial = true;
+        this.setLoadingInitial(true);
         this.postInventory.clear();
         try {
             const posts = await agent.Post.listByCatId(catId);
@@ -77,7 +77,7 @@ export default class PostStore {
 
 
     loadPosts = async () => {
-        this.loadingInitial = true;
+        this.setLoadingInitial(true);
         try {
             const posts = await agent.Post.list();
             runInAction(() => {
@@ -95,12 +95,11 @@ export default class PostStore {
 
 
     searchInPosts = async (expression: string) => {
-        this.loadingInitial = true;
+        this.setLoadingInitial(true);
         this.postInventory.clear();
         try {
-            console.log("expression:",expression);
             const posts = await agent.Post.search(expression);
-            
+
             runInAction(() => {
                 posts?.forEach(post => {
                     this.postInventory.set(post.Id, post);
@@ -116,7 +115,7 @@ export default class PostStore {
 
 
     setLoadingInitial = (state: boolean) => {
-        this.loadingInitial = state;
+        runInAction(() => this.loadingInitial = state)
     }
 
     selectPost = (id: string) => {

@@ -1,8 +1,6 @@
-import React, { FormEventHandler, KeyboardEventHandler, SyntheticEvent, useEffect, useState } from "react";
-import { useHistory, useParams } from "react-router-dom";
+import React, { SyntheticEvent, useEffect, useState } from "react";
 import { observer } from "mobx-react-lite";
 import { useStore } from "../../../app/stores/store";
-import { toJS } from "mobx";
 import { LoadingComponent } from "../../../layout/LoadingComponent";
 
 export default observer(function GammaSearch() {
@@ -11,7 +9,6 @@ export default observer(function GammaSearch() {
     const [query, setQuery] = useState("");
     postStore.setLoadingInitial(false);
     useEffect(() => {
-        console.log("query", query);
         postStore.searchInPosts(query);
 
     }, [postStore, query]);
@@ -24,7 +21,6 @@ export default observer(function GammaSearch() {
     const enterKeyHandler = (event: React.KeyboardEvent<HTMLDivElement>) => {
         if (event.key === "13") {
             event.preventDefault();
-            //event.stopPropagation();
             console.log(event.key);
             searchActionHandler();
         }

@@ -846,6 +846,10 @@ submitLink:focus {
 /* ------------------------------------------------------------------------------------------------------------------------------- */
 
 @media screen and (min-width: 960px) {
+    #cats .submenu .submenu {
+        background-color: #eee;
+        display: none;
+    }
     #aboutUsContainer {
         margin-top: 1rem;
     }

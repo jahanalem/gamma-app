@@ -1,14 +1,36 @@
+
 import { observer } from "mobx-react-lite";
-import { SyntheticEvent } from "react";
-import { Link, useHistory } from "react-router-dom";
+import { SyntheticEvent, useEffect } from "react";
+import { Link, useHistory, useLocation } from "react-router-dom";
 import { useStore } from "../../app/stores/store";
+import { LoadingComponent } from "../../layout/LoadingComponent";
+
+
+
+interface stateType {
+    tagId: string;
+    catId: string;
+}
 
 export const Tags: React.FC = observer(() => {
+
     const { tagStore } = useStore();
+
+    const location = useLocation<stateType>();
+    const { tagId } = location.state || { tagId: null };
+    useEffect(() => {
+        tagStore.loadTags();
+
+    }, [tagId, tagStore]);
+
+    if (tagStore.loadingInitial) return <LoadingComponent content="Loading tags" />
+
+    
     const history = useHistory();
+
     const tagHandler = (e: SyntheticEvent<HTMLAnchorElement>, tagId: string) => {
         e.preventDefault();
-        tagStore.setSelectedTagId(tagId);
+        //tagStore.setSelectedTagId(tagId);
         history.push(`/posts/tag/${tagId}`);
     }
 

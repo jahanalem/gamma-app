@@ -1,4 +1,4 @@
-import { Route } from "react-router-dom";
+import { Redirect, Route, Switch } from "react-router-dom";
 import { useEffect } from "react";
 import { observer } from "mobx-react-lite";
 import { AboutUs } from "./components/aboutUs/AboutUs";
@@ -12,6 +12,7 @@ import { Signup } from "./components/Account/signup/signup";
 import { PostsByTagId } from "./components/postsByTagId/postsByTagId";
 import { PostsByCategoryId } from "./components/postsByCategoryId/PostsByCategoryId";
 import { useStore } from "./app/stores/store";
+import { ToastContainer } from 'react-toastify';
 //import { LoadingComponent } from "./layout/LoadingComponent";
 import './App.css';
 import { Footer } from "./layout/footer/Footer";
@@ -40,52 +41,61 @@ const App: React.FC = () => {
   //if (!commonStore.appLoaded) return <LoadingComponent content='Loading app...' />
 
   return (
-    <div id="page-container">
-      <MainNavbar />
-      <main className="wrapper">
-        <div>
-          <div id="render_body" className="container-fluid">
+    <>
+      <ToastContainer position='bottom-right' hideProgressBar />
+      <div id="page-container">
+        <MainNavbar />
+        <main className="wrapper">
+          <div>
+            <div id="render_body" className="container-fluid">
 
-            <Route exact path='/' component={HomePage} />
-            <Route
-              path={'/(.+)'}
-              render={() => (
-                <>
-                  <Route path={["/home"]} >
-                    <HomePage />
-                  </Route>
-                  <Route path="/posts/tag/:tagId">
-                    <PostsByTagId />
-                  </Route>
-                  <Route path="/about" >
-                    <AboutUs />
-                  </Route>
-                  <Route path="/contact">
-                    <ContactUs />
-                  </Route>
-                  <Route path="/post/:id">
-                    <PostDetails />
-                  </Route>
-                  <Route path="/posts/:page">
-                    <Posts />
-                  </Route>
-                  <Route path="/posts/category/:catId">
-                    <PostsByCategoryId />
-                  </Route>
-                  <Route path="/login">
-                    <Login />
-                  </Route>
-                  <Route path="/signup">
-                    <Signup />
-                  </Route>
-                </>
-              )}
-            />
+              <Route exact path='/' component={HomePage} />
+              <Route
+                path={'/(.+)'}
+                render={() => (
+                  <>
+                  <Switch>
+
+                    <Route path={["/home"]}  exact>
+                      <HomePage />
+                    </Route>
+                    <Route path="/posts/tag/:tagId" exact>
+                      <HomePage />
+                    </Route>
+                    <Route path="/about"  exact>
+                      <AboutUs />
+                    </Route>
+                    <Route path="/contact" exact>
+                      <ContactUs />
+                    </Route>
+                    <Route path="/post/:id" exact>
+                      <PostDetails />
+                    </Route>
+                    <Route path="/posts/:page" exact>
+                      <Posts />
+                    </Route>
+                    <Route path="/posts/category/:catId" exact>
+                      <HomePage />
+                    </Route>
+                    <Route path="/login" exact>
+                      <Login />
+                    </Route>
+                    <Route path="/signup" exact>
+                      <Signup />
+                    </Route>
+                    <Redirect to="/" />
+
+                  </Switch>
+
+                  </>
+                )}
+              />
+            </div>
           </div>
-        </div>
-      </main>
-      <Footer />
-    </div>
+        </main>
+        <Footer />
+      </div>
+    </>
   );
 }
 

@@ -1,4 +1,5 @@
-import axios, { AxiosResponse } from 'axios';
+import { toast } from 'react-toastify';
+import axios, { AxiosError, AxiosResponse } from 'axios';
 import { ICategoryModel } from '../models/categoryModel';
 import { IPostModel } from '../models/postModel';
 import { ITagModel } from '../models/tagModel';
@@ -6,6 +7,7 @@ import { IUserModel } from '../models/userModel';
 import { ILoginUserViewModel } from '../viewModels/loginUserViewModel';
 import { ISignUpUserViewModel } from '../viewModels/signUpUserViewModel';
 import { store } from '../stores/store';
+import {history} from '../..';
 
 const sleep = (delay: number) => {
     return new Promise((resolve) => {
@@ -22,15 +24,42 @@ axios.interceptors.request.use(config => {
 })
 
 axios.interceptors.response.use(async response => {
-    try {
-        await sleep(1);
-        return response;
+    await sleep(1000);
+    return response;
+}, (error: AxiosError) => {
+    console.log(error);
+    const {data, status, config} = error.response!;
+    switch (status) {
+        case 400:
+            if (config.method === 'get' && data.errors.hasOwnProperty('id')) {
+                history.push('/not-found');
+            }
+            if (data.errors) {
+                const modalStateErrors = [];
+                for (const key in data.errors) {
+                    if (data.errors[key]) {
+                        modalStateErrors.push(data.errors[key])
+                    }
+                }
+                throw modalStateErrors.flat();
+            } else {
+                toast.error(data);
+            }
+            break;
+        case 401:
+            toast.error('unauthorised');
+            break;
+        case 404:
+            history.push('/not-found');
+            break;
+        case 500:
+            store.commonStore.setServerError(data);
+            history.push('/server-error');
+            break;
     }
-    catch (error) {
-        console.log(error);
-        return await Promise.reject(error);
-    }
+    return Promise.reject(error);
 })
+
 
 const responseBody = <T>(response: AxiosResponse<T>) => response.data;
 

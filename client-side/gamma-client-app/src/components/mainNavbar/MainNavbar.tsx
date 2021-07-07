@@ -1,23 +1,60 @@
 
+import React, { SyntheticEvent, useRef } from "react";
 import { Link } from 'react-router-dom';
 import { observer } from 'mobx-react-lite';
 import { Category } from '../category/Category';
 import { useStore } from '../../app/stores/store';
 import GammaSearch from '../features/searchEngine/GammaSearch';
 import "./mainNavbar.css";
+import $ from "jquery";
+
+// $(function () {
+//     $("#button1").click(function () {
+//         if ($("#cats").css("left") === "-300px") {
+//             $("#cats").css("left", "0");
+
+//             $("#topmenu ul").slideUp();
+//         } else {
+//             $("#cats").css("left", "-300px");
+//         }
+//     });
+// });
+
+
+
+$(document).ready(function () {
+    $(".plus").click(function (event) {
+        $(".plus").toggleClass("rotated-plus");
+        $(".plus").parent().siblings("ul").slideToggle();
+        event.preventDefault();
+    });
+});
 
 export const MainNavbar: React.FC = observer(() => {
     const { userStore } = useStore();
+    const categoriesRef = useRef<HTMLAnchorElement>(null);
+    const button1 = useRef<HTMLImageElement>(null);
+    const cats = useRef<HTMLDivElement>();
 
     const logoutHandler = () => {
         userStore.logout();
     }
-    
+
+    const imgClickHandler = (e: SyntheticEvent) => {
+        e.preventDefault();
+        if (cats.current.style.left === "-300px") {
+            cats.current.style.left = "0";
+        }
+        else {
+            cats.current.style.left = "-300px";
+        }
+    }
+
     return (
         <>
             <header className="mainheader">
-                <img src="/images/menu.png" id="button1" alt="menu button" />
-                <div id="cats">
+                <img onClick={imgClickHandler} ref={button1} src="/images/menu.png" id="button1" alt="menu button" />
+                <div ref={cats} id="cats">
                     <div className="search-section">
                         <GammaSearch />
                     </div>
@@ -26,7 +63,7 @@ export const MainNavbar: React.FC = observer(() => {
 
                             <li className="item"><Link to='/home'> Home</Link></li>
                             <li className="item">
-                                <Link to="#">Categories<span className="plus"></span></Link>
+                                <Link ref={categoriesRef} to="#">Categories<span className="plus"></span></Link>
                                 <Category />
                             </li>
                             <li className="item"><Link to='/about'> About</Link></li>

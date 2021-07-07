@@ -21,7 +21,6 @@ export default observer(function GammaSearch() {
     const enterKeyHandler = (event: React.KeyboardEvent<HTMLDivElement>) => {
         if (event.key === "13") {
             event.preventDefault();
-            console.log(event.key);
             searchActionHandler();
         }
     }

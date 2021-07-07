@@ -15,14 +15,13 @@ import { useStore } from "./app/stores/store";
 //import { LoadingComponent } from "./layout/LoadingComponent";
 import './App.css';
 import { Footer } from "./layout/footer/Footer";
-//import $ from "jquery";
+
 
 const App: React.FC = () => {
   const { commonStore, userStore } = useStore();
 
   useEffect(() => {
     if (commonStore.token) {
-      console.log("there is commonStore.token");
       userStore.getCurrentUser().catch((error) => {
         commonStore.setAppLoaded();
         console.log(error);
@@ -34,7 +33,6 @@ const App: React.FC = () => {
       })
         .finally(() => commonStore.setAppLoaded());
     } else {
-      console.log("there is NOT commonStore.token");
       commonStore.setAppLoaded();
     }
   }, [commonStore, userStore])
@@ -92,20 +90,10 @@ const App: React.FC = () => {
 }
 
 export default observer(App);
+
+
+
 /*
-$(function () {
-  $("#button1").click(function () {
-    if ($("#cats").css("left") === "-300px") {
-      $("#cats").css("left", "0");
-
-      $("#topmenu ul").slideUp();
-    } else {
-      $("#cats").css("left", "-300px");
-    }
-  });
-});
-
-
 $(document).ready(function () {
   //console.log("I am .plus");
   $(".plus").click(function (event) {

@@ -4,13 +4,13 @@ import { HttpError } from '../../Gamma.Common/models/httpError';
 //const jwt = require('jsonwebtoken');
 import jwt from "jsonwebtoken";
 import { GammaToken } from '../../global';
-import { accessLevels, ACCESSLEVELS, USERROLES } from '../../Gamma.Constants/roleMembers';
+import { ACCESSLEVELS, USERROLES } from '../../Gamma.Constants/roleMembers';
 
 module.exports = (mandatoryRole: string = USERROLES.CONTRIBUTOR) => {
 
     return (req: Request, res: Response, next: NextFunction) => {
         if (req.method === 'OPTIONS') {
-            next();
+            return next();
         }
 
         try {
@@ -23,7 +23,7 @@ module.exports = (mandatoryRole: string = USERROLES.CONTRIBUTOR) => {
             // roleName === req.userData.roleName || roleName === USERROLES.ADMINISTRATOR
 
             if (ACCESSLEVELS[req.userData.roleName] >= ACCESSLEVELS[mandatoryRole]) {
-                next();
+                return next();
             }
             else {
                 throw (new HttpError('Access denied!', HTTPStatusCodes.ClientError.Forbidden));

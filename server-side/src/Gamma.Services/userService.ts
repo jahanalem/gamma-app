@@ -47,8 +47,6 @@ export class UserService extends BaseService implements IUserService {
       IsActive: true,
     });
 
-    console.log("candidateUser.UserRoleName.trim()", candidateUser.UserRoleName.trim());
-
     if (!candidateUser.UserRoleName.trim())
       candidateUser.UserRoleName = USERROLES.CONTRIBUTOR;
     if (candidateUser.UserRoleName.trim().toUpperCase() !== USERROLES.CONTRIBUTOR &&
@@ -57,7 +55,7 @@ export class UserService extends BaseService implements IUserService {
       throw (new HttpError(`Invalid credentials, could not assign this role to the user because there isn't.`,
         HTTPStatusCodes.ClientError.Forbidden));
     }
-    console.log("candidateUser.UserRoleName", candidateUser.UserRoleName);
+
     const result = await this.userRepository.CreateUser(createdUser,
       candidateUser.Password,
       candidateUser.UserRoleName);
@@ -125,13 +123,6 @@ export class UserService extends BaseService implements IUserService {
 
     if (!isValidPassword)
       throw (new HttpError('Invalid credentials, could not log you in.', HTTPStatusCodes.ClientError.Forbidden));
-
-    //console.log("existingUser", existingUser);
-    const role = existingUser.Roles[0] as any;
-    console.log("existingUser.Roles[0]>>>>>>>>>>>>>>>>>>", role.Role.NormalizedName);
-
-    //const role = await this.roleRepository.GetRoleByRoleName(USERROLES.ADMINISTRATOR);
-    //console.log("roleeeeeeeeeeeeeeeeeeeee", role);
     
     const gammaToken: GammaToken = {
       userId: existingUser.Id,
@@ -144,11 +135,7 @@ export class UserService extends BaseService implements IUserService {
       expiresIn: '24h',
     }
 
-    //console.log("gammaToken", gammaToken);
-
     const token = await this.GenerateToken(gammaToken);
-
-    //console.log("GenerateToken(gammaToken)", token);
 
     existingUser.Token = token;
 

@@ -14,9 +14,8 @@ export default class PostStore {
     }
 
     get postsByDate() {
-        let result = Array.from(this.postInventory.values()).sort((a, b) => (a.CreatedDate.valueOf()) - (b.CreatedDate.valueOf()));
-
-        return result;
+        return Array.from(this.postInventory.values())
+            .sort((a, b) => (a.CreatedDate.valueOf()) - (b.CreatedDate.valueOf()));
     }
 
     get postDetails() {
@@ -85,7 +84,6 @@ export default class PostStore {
                     this.postInventory.set(post.Id, post);
                 })
             })
-            //console.log("loadPosts size", this.postInventory.size);
             this.setLoadingInitial(false);
         } catch (error) {
             console.log(error);
@@ -119,11 +117,9 @@ export default class PostStore {
     }
 
     selectPost = (id: string) => {
-        console.log("this.postInventory.get(id)", this.postInventory.size);
         runInAction(async () => {
             const detailPost = await agent.Post.details(id);
             this.selectedPost = detailPost;
-            console.log("this.selectedPost", this.selectedPost);
         })
     }
 

@@ -10,7 +10,6 @@ export default observer(function PostDetails() {
     let { id } = useParams<{ id?: string }>();
 
     useEffect(() => {
-        console.log("0002 - in useEffect");
         try {
             postStore.details(id);
         }

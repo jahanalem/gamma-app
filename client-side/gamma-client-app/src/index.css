@@ -223,7 +223,7 @@ a {
 
 #cats a {
     color: black;
-    display: block;
+    /* display: block; */
     padding: 0 15px;
     /* border-bottom: 1px solid #bcd; */
 }
@@ -255,7 +255,7 @@ a {
 
 #cats .submenu .submenu {
     background-color: #eee;
-    display: none;
+    display: block;
 }
 
 .plus::before {

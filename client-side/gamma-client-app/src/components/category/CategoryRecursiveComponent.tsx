@@ -5,6 +5,7 @@ import { Link } from "react-router-dom";
 import { ICategoryModel } from "../../app/models/categoryModel";
 import { v4 as uuidv4 } from 'uuid';
 
+
 interface ICategoryRecursive {
     categoryies: ICategoryModel[];
     parentId: string | null;
@@ -28,8 +29,15 @@ export const CategoryRecursiveComponent: React.FC<ICategoryRecursive> = observer
                                             <li className="subitem">
                                                 <Link to={`/posts/category/${child.Id}`}>
                                                     {child.Title}
-                                                    {(props.categoryies.some(c => c.ParentId === child.Id)) ? <> <span className="plus"></span>  </> : null}
                                                 </Link>
+                                                {
+                                                    (props.categoryies.some(c => c.ParentId === child.Id))
+                                                        ? <>
+                                                            <span className="plus"></span>
+                                                        </>
+                                                        : null
+                                                }
+
                                                 <CategoryRecursiveComponent categoryies={props.categoryies} parentId={child.Id} />
 
                                             </li>

@@ -38,6 +38,7 @@ export default class PostStore {
 
 
     postsByTagId = async (tagId: string) => {
+        //this.loadingInitial = true;
         this.setLoadingInitial(true);
         this.postInventory.clear();
         try {
@@ -54,7 +55,6 @@ export default class PostStore {
             this.setLoadingInitial(false);
         }
     }
-
 
     postsByCategoryId = async (catId: string) => {
         this.setLoadingInitial(true);

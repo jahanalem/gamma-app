@@ -25,6 +25,7 @@ export const Posts: React.FC = observer((props) => {
 
     useEffect(() => {
         if (tagId) {
+            console.log("postStore.loadingInitial", postStore.loadingInitial);
             postStore.postsByTagId(tagId);
             //history.push('/');
         }
@@ -37,13 +38,15 @@ export const Posts: React.FC = observer((props) => {
         }
     }, [tagId, postStore, catId]);
 
-    if (postStore.loadingInitial) return <LoadingComponent content="Loading posts" />
+
+    if (postStore.loadingInitial || !postStore.postsByDate   ) return <LoadingComponent content="Loading posts" />
+
 
     return (
         <>
             <div className="content col-xs-12 col-lg-9">
                 <div id="articleListComponent" className="w-100 row">
-                    {((postsByDate && postsByDate.length > 0) || postStore.loadingInitial)
+                    {((postsByDate && postsByDate.length > 0) && !postStore.loadingInitial)
                         ?
                         <>
                             {postsByDate?.map((post, index) => <Post key={index} article={post} />)}
@@ -55,6 +58,7 @@ export const Posts: React.FC = observer((props) => {
                             </div>
                         </>
                     }
+
                 </div>
             </div>
         </>

@@ -16,8 +16,6 @@ export const Tags: React.FC = observer(() => {
     const history = useHistory();
     const { tagStore } = useStore();
 
-    //const location = useLocation<stateType>();
-    //const { tagId } = location.state || { tagId: null };
     useEffect(() => {
         tagStore.loadTags();
 
@@ -28,7 +26,9 @@ export const Tags: React.FC = observer(() => {
         //tagStore.setSelectedTagId(tagId);
         history.push(`/posts/tag/${tagId}`);
     }
-    // if (tagStore.loadingInitial) return <LoadingComponent content="Loading tags" />
+
+    if (tagStore.loadingInitial) return <LoadingComponent content="Loading tags..." />
+
     return (
         <>
             <aside id="sidebar" className="col-xs-12 col-lg-3">

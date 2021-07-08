@@ -16,7 +16,7 @@ export const Posts: React.FC = observer((props) => {
     const { postStore } = useStore();
     const { postsByDate } = postStore;
 
-    const location = useLocation<stateType>();
+    //const location = useLocation<stateType>();
     //const { tagId } = location.state || { tagId: null };
     //const { catId } = location.state || { catId: null };
 
@@ -39,14 +39,14 @@ export const Posts: React.FC = observer((props) => {
     }, [tagId, postStore, catId]);
 
 
-    if (postStore.loadingInitial || !postStore.postsByDate   ) return <LoadingComponent content="Loading posts" />
+   if (postStore.loadingInitial || !postStore.postsByDate) return <LoadingComponent content="Loading posts..." />
 
 
     return (
         <>
             <div className="content col-xs-12 col-lg-9">
                 <div id="articleListComponent" className="w-100 row">
-                    {((postsByDate && postsByDate.length > 0) && !postStore.loadingInitial)
+                {((postsByDate && postsByDate.length > 0) && !postStore.loadingInitial)
                         ?
                         <>
                             {postsByDate?.map((post, index) => <Post key={index} article={post} />)}

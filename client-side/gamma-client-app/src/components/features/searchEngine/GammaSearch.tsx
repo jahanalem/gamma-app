@@ -7,9 +7,9 @@ export default observer(function GammaSearch() {
     const { postStore } = useStore();
     const [input, setInput] = useState("");
     const [query, setQuery] = useState("");
-    postStore.setLoadingInitial(false);
     useEffect(() => {
-        postStore.searchInPosts(query);
+        if(query.trim().length>1)
+            postStore.searchInPosts(query);
 
     }, [postStore, query]);
 
@@ -25,18 +25,14 @@ export default observer(function GammaSearch() {
         }
     }
 
-    const submitHandler = (event:SyntheticEvent<HTMLFormElement>) => {
+    const submitHandler = (event: SyntheticEvent<HTMLFormElement>) => {
         event.preventDefault();
         searchActionHandler();
     }
 
-    if (postStore.loadingInitial) {
-        return <LoadingComponent content='Loading posts XXX...' />
-    }
-
     return (
         <>
-            <form  onSubmit={submitHandler} id="searchForm" className="form-inline" role="search">
+            <form onSubmit={submitHandler} id="searchForm" className="form-inline" role="search">
                 <div className="input-group">
                     <input
                         onKeyDown={enterKeyHandler}

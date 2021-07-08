@@ -12,10 +12,11 @@ import { Signup } from "./components/Account/signup/signup";
 import { PostsByTagId } from "./components/postsByTagId/postsByTagId";
 import { PostsByCategoryId } from "./components/postsByCategoryId/PostsByCategoryId";
 import { useStore } from "./app/stores/store";
-import { ToastContainer } from 'react-toastify';
+//import { ToastContainer } from 'react-toastify';
 //import { LoadingComponent } from "./layout/LoadingComponent";
 import './App.css';
 import { Footer } from "./layout/footer/Footer";
+import AdminPanel from "./components/adminPanel/AdminPanel";
 
 
 const App: React.FC = () => {
@@ -42,7 +43,7 @@ const App: React.FC = () => {
 
   return (
     <>
-      <ToastContainer position='bottom-right' hideProgressBar />
+      {/* <ToastContainer position='bottom-right' hideProgressBar /> */}
       <div id="page-container">
         <MainNavbar />
         <main className="wrapper">
@@ -54,38 +55,39 @@ const App: React.FC = () => {
                 path={'/(.+)'}
                 render={() => (
                   <>
-                  <Switch>
-
-                    <Route path={["/home"]}  exact>
-                      <HomePage />
-                    </Route>
-                    <Route path="/posts/tag/:tagId" exact>
-                      <HomePage />
-                    </Route>
-                    <Route path="/about"  exact>
-                      <AboutUs />
-                    </Route>
-                    <Route path="/contact" exact>
-                      <ContactUs />
-                    </Route>
-                    <Route path="/post/:id" exact>
-                      <PostDetails />
-                    </Route>
-                    <Route path="/posts/:page" exact>
-                      <Posts />
-                    </Route>
-                    <Route path="/posts/category/:catId" exact>
-                      <HomePage />
-                    </Route>
-                    <Route path="/login" exact>
-                      <Login />
-                    </Route>
-                    <Route path="/signup" exact>
-                      <Signup />
-                    </Route>
-                    <Redirect to="/" />
-
-                  </Switch>
+                    <Switch>
+                      <Route path={["/home"]} exact>
+                        <HomePage />
+                      </Route>
+                      <Route path="/posts/tag/:tagId" exact>
+                        <HomePage />
+                      </Route>
+                      <Route path="/posts/category/:catId" exact>
+                        <HomePage />
+                      </Route>
+                      <Route path="/about" exact>
+                        <AboutUs />
+                      </Route>
+                      <Route path="/contact" exact>
+                        <ContactUs />
+                      </Route>
+                      <Route path="/post/:id" exact>
+                        <PostDetails />
+                      </Route>
+                      <Route path="/posts/:page" exact>
+                        <Posts />
+                      </Route>
+                      <Route path="/login" exact>
+                        <Login />
+                      </Route>
+                      <Route path="/signup" exact>
+                        <Signup />
+                      </Route>
+                      <Route path="/admin" exact>
+                        <AdminPanel />
+                      </Route>
+                      <Redirect to="/" />
+                    </Switch>
 
                   </>
                 )}

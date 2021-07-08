@@ -7,7 +7,7 @@ import { IUserModel } from '../models/userModel';
 import { ILoginUserViewModel } from '../viewModels/loginUserViewModel';
 import { ISignUpUserViewModel } from '../viewModels/signUpUserViewModel';
 import { store } from '../stores/store';
-import {history} from '../..';
+import { history } from '../..';
 
 const sleep = (delay: number) => {
     return new Promise((resolve) => {
@@ -28,10 +28,13 @@ axios.interceptors.response.use(async response => {
     return response;
 }, (error: AxiosError) => {
     console.log(error);
-    const {data, status, config} = error.response!;
+    const { data, status, config } = error.response!;
     switch (status) {
         case 400:
-            if (config.method === 'get' && data.errors.hasOwnProperty('id')) {
+            if (config.method === 'get' &&
+                (data.errors.hasOwnProperty('id') ||
+                    data.errors.hasOwnProperty('tagId') ||
+                    data.errors.hasOwnProperty('catId'))) {
                 history.push('/not-found');
             }
             if (data.errors) {

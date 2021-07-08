@@ -56,6 +56,7 @@ export default class PostStore {
         }
     }
 
+
     postsByCategoryId = async (catId: string) => {
         this.setLoadingInitial(true);
         this.postInventory.clear();
@@ -113,7 +114,8 @@ export default class PostStore {
 
 
     setLoadingInitial = (state: boolean) => {
-        runInAction(() => this.loadingInitial = state)
+        runInAction(() => this.loadingInitial = state);
+        //this.loadingInitial = state;
     }
 
     selectPost = (id: string) => {

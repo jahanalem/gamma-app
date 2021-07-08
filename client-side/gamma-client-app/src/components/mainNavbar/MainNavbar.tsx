@@ -7,6 +7,8 @@ import { useStore } from '../../app/stores/store';
 import GammaSearch from '../features/searchEngine/GammaSearch';
 import "./mainNavbar.css";
 import $ from "jquery";
+import { LoadingComponent } from "../../layout/LoadingComponent";
+
 
 // $(function () {
 //     $("#button1").click(function () {
@@ -31,7 +33,7 @@ $(document).ready(function () {
 });
 
 export const MainNavbar: React.FC = observer(() => {
-    const { userStore } = useStore();
+    const { userStore, postStore } = useStore();
     const categoriesRef = useRef<HTMLAnchorElement>(null);
     const button1 = useRef<HTMLImageElement>(null);
     const cats = useRef<HTMLDivElement>();
@@ -50,10 +52,15 @@ export const MainNavbar: React.FC = observer(() => {
         }
     }
 
+    console.log(postStore.loadingInitial);
+    //if (postStore.loadingInitial) return <LoadingComponent content="Loading posts" />
+    
     return (
         <>
             <header className="mainheader">
+
                 <img onClick={imgClickHandler} ref={button1} src="/images/menu.png" id="button1" alt="menu button" />
+
                 <div ref={cats} id="cats">
                     <div className="search-section">
                         <GammaSearch />
@@ -61,7 +68,7 @@ export const MainNavbar: React.FC = observer(() => {
                     <div className="menu-section">
                         <ul id="menu">
 
-                            <li className="item"><Link to='/home'> Home</Link></li>
+                            <li className="item"><Link to='/'> Home</Link></li>
                             <li className="item">
                                 <Link ref={categoriesRef} to="#">Categories<span className="plus"></span></Link>
                                 <Category />
@@ -91,7 +98,9 @@ export const MainNavbar: React.FC = observer(() => {
                     </div>
                 </div>
                 <div id="logo">
-                    <img src="images/greencodes-logo.png" alt="logo" />
+                    <Link to="/">
+                        <img src="images/greencodes-logo.png" alt="logo" />
+                    </Link>
                 </div>
             </header>
         </>

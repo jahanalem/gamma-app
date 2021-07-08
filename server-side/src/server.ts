@@ -1,3 +1,4 @@
+import { HttpError } from './Gamma.Common/models/httpError';
 import { UserController } from './Gamma.Application/controllers/userController';
 import * as express from "express";
 const cors = require("cors");
@@ -39,12 +40,15 @@ const configFn = (app: express.Application) => {
   app.use(express.static("assets"));
   app.use(express.static(__dirname + "/"));
   app.use((req: Request, res: Response, next: NextFunction) => {
-    res.setHeader('Access-Control-Allow-Origin', '*');
-    res.setHeader(
-      'Access-Control-Allow-Headers',
-      'Origin, X-Requested-With, Content-Type, Accept, Authorization'
-    );
-    res.setHeader('Access-Control-Allow-Methods', 'GET, POST, PATCH, DELETE');
+    // res.setHeader('Access-Control-Allow-Origin', '*');
+    // res.setHeader(
+    //   'Access-Control-Allow-Headers',
+    //   'Origin, X-Requested-With, Content-Type, Accept, Authorization'
+    // );
+    // res.setHeader('Access-Control-Allow-Methods', 'GET, POST, PATCH, DELETE');
+
+    res.header('Access-Control-Expose-Headers', 'Content-Range')
+
 
     next();
   });
@@ -54,7 +58,7 @@ const configFn = (app: express.Application) => {
 const errorConfigFn = (app: express.Application) => {
   app.use(
     (
-      err: ErrorRequestHandler,
+      err: ErrorRequestHandler, //HttpError, 
       req: Request,
       res: Response,
       next: NextFunction

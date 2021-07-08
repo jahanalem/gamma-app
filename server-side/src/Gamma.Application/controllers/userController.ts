@@ -69,9 +69,12 @@ export class UserController extends BaseController {
   }
 
 
-  @httpGet("/", checkAuth(USERROLES.ADMINISTRATOR))
+  @httpGet("/") //checkAuth(USERROLES.ADMINISTRATOR)
   private async getUsers(@request() req: Request, @response() res: Response, @next() next: NextFunction) {
+
     await this.userService.GetByCriteria().then(result => {
+      res.set("Content-Range", "1");
+
       res.status(HTTPStatusCodes.Successful.OK).json(result);
     }).catch(error => {
       next(error);

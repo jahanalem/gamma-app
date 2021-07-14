@@ -5,7 +5,7 @@
   "main": "index.js",
   "scripts": {
     "test": "mocha -r ts-node/register src/Gamma.Tests/**/*.ts",
-    "start": "tsc && node ./build/server.js",
+    "start": "tsc && ts-node ./build/server.js",
     "stop-win": "Taskkill /IM node.exe /F"
   },
   "author": "Said Roohullah Allem",

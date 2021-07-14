@@ -1,4 +1,4 @@
-import { id, injectable } from "inversify";
+import { injectable } from "inversify";
 import { v4 } from "uuid";
 import { postTagMapping } from "../Gamma.Common/types/dataTypes";
 import { IPost, Post } from "../Gamma.Models/post";

@@ -1,7 +1,7 @@
 import { IRole, Role } from "../Gamma.Models/role";
 import { BaseRepository } from "./baseRepository";
 import { ApplicationDbContext } from "./applicationDbContext";
-import { id, injectable } from "inversify";
+import { injectable } from "inversify";
 
 export interface IRoleRepository {
     Create: (Role: IRole) => Promise<Role>;
@@ -38,6 +38,7 @@ export class RoleRepository extends BaseRepository implements IRoleRepository {
         return result;
     }
 
+
     public async CreateMany(roles: IRole[]): Promise<number> {
         const result = await ApplicationDbContext.Prisma.role.createMany({
             data: roles,
@@ -64,6 +65,7 @@ export class RoleRepository extends BaseRepository implements IRoleRepository {
         return result;
     }
 
+
     public async GetById(id: string): Promise<Role> {
         const result = await ApplicationDbContext.Prisma.role
             .findFirst({
@@ -76,6 +78,7 @@ export class RoleRepository extends BaseRepository implements IRoleRepository {
         return result;
     }
 
+
     public async GetRoleByRoleName(roleName: string = "Contributor"): Promise<{ Id: string, NormalizedName: string }> {
         const normalizedRoleName = roleName.toUpperCase().trim();
         const role = await ApplicationDbContext.Prisma.role.findFirst({
@@ -85,6 +88,7 @@ export class RoleRepository extends BaseRepository implements IRoleRepository {
 
         return role;
     }
+
 
     public async GetRoleByRoleId(roleId: string): Promise<{ Id: string, NormalizedName: string }> {
 
@@ -115,6 +119,7 @@ export class RoleRepository extends BaseRepository implements IRoleRepository {
 
         return result;
     }
+
 
     //#endregion
 

@@ -1,5 +1,4 @@
-import { ICategory } from './../../Gamma.Models/category';
-import { inject, injectable } from "inversify";
+import { inject } from "inversify";
 import TYPES from "../../Gamma.Constants/types";
 import { ICategoryService } from "../../Gamma.Services/interfaces/ICategoryService";
 import { BaseController } from "./baseController";

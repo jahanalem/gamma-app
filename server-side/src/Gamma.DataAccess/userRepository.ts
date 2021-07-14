@@ -1,6 +1,5 @@
 import { injectable } from "inversify";
 import { ILoginUserViewModel } from "../Gamma.Models/ViewModels/loginUserViewModel";
-import { ISignUpUserViewModel } from "../Gamma.Models/ViewModels/signUpUserViewModel";
 import { BaseRepository } from "./baseRepository";
 import { ApplicationDbContext } from "./applicationDbContext";
 import { IUser, User } from "../Gamma.Models/Identities/user";
@@ -8,7 +7,6 @@ import { HttpError } from "../Gamma.Common/models/httpError";
 import { HTTPStatusCodes } from "../Gamma.Common/constants/HTTPStatusCodes";
 import { v4 } from 'uuid';
 
-import { Prisma } from "@prisma/client";
 import { USERROLES } from "../Gamma.Constants/roleMembers";
 const bcrypt = require("bcryptjs");
 

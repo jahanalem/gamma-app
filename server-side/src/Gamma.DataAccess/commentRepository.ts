@@ -52,6 +52,7 @@ export class CommentRepository extends BaseRepository implements ICommentReposit
     return result;
   }
 
+
   public async GetById(id: string): Promise<Comment> {
     const result = await ApplicationDbContext.Prisma.comment
       .findFirst({
@@ -63,6 +64,7 @@ export class CommentRepository extends BaseRepository implements ICommentReposit
 
     return result;
   }
+
 
   public async GetCommentsByPostId(postId: string): Promise<Comment[]> {
     const result = await ApplicationDbContext.Prisma.comment
@@ -76,6 +78,7 @@ export class CommentRepository extends BaseRepository implements ICommentReposit
     return result;
   }
 
+  
   public async GetCommentsByUserId(userId: string): Promise<Comment[]> {
     const result = await ApplicationDbContext.Prisma.comment
       .findMany({

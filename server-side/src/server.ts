@@ -1,4 +1,3 @@
-import { UserController } from './Gamma.Application/controllers/userController';
 import * as express from "express";
 const cors = require("cors");
 import morgan from "morgan";

@@ -34,6 +34,7 @@ export class TagRepository extends BaseRepository implements ITagRepository {
     return result;
   }
 
+
   public async CreateMany(tags: ITag[]): Promise<number> {
     const result = await ApplicationDbContext.Prisma.tag.createMany({
       data: tags,
@@ -61,6 +62,7 @@ export class TagRepository extends BaseRepository implements ITagRepository {
     return result;
   }
 
+  
   public async GetById(id: string): Promise<Tag> {
     const result = await ApplicationDbContext.Prisma.tag
       .findFirst({

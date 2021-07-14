@@ -1,6 +1,6 @@
 import { BaseController } from "./baseController";
-import { json, Request, Response } from "express";
-import { IPost, Post } from "../../Gamma.Models/post";
+import { Request, Response } from "express";
+import { Post } from "../../Gamma.Models/post";
 import { inject } from "inversify";
 
 import { IPostService } from "../../Gamma.Services/interfaces/IPostService";
@@ -36,8 +36,7 @@ export class PostController extends BaseController {
 
   @httpPost("/create")
   private async create(@request() req: Request, @response() res: Response) {
-    console.log("Object.entries = ",Object.entries(req.body).length);
-    console.log("Object.keys = ",Object.keys(req.body).length);
+
     if (Array.isArray(req.body)) {
       const result = await this.pService.CreateMany(req.body);
 

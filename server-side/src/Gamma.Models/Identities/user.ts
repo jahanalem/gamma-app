@@ -1,10 +1,10 @@
 import { timeStamp } from "console";
-import { Entity } from "../Entity";
+import { Entity, IEntity } from "../Entity";
 import { Post } from "../post";
 import { Profile } from "../profile";
 import { Role } from "./role";
 
-export interface IUser {
+export interface IUser extends IEntity {
   Token?: string;
   Email: string;
   NormalizedEmail: string;

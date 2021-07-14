@@ -44,6 +44,11 @@ export class PostService extends BaseService implements IPostService {
   }
 
 
+  public async CreateMany(posts: IPost[]): Promise<number> {
+    return await this.postRepository.CreateMany(posts);
+  }
+
+
   public async Delete(id: string) {
     return this.postRepository.Delete(id);
   }

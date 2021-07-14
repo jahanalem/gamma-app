@@ -13,7 +13,7 @@ import { TagService } from "./Gamma.Services/tagService";
 import { ITagService } from "./Gamma.Services/interfaces/ITagService";
 import { ITagRepository, TagRepository } from "./Gamma.DataAccess/tagRepository";
 
-import { CategoryService } from "./Gamma.Services/categoryService";
+import { CategoryService } from "./Gamma.Services/CategoryService";
 import { ICategoryService } from "./Gamma.Services/interfaces/ICategoryService";
 
 import { ICommentService } from "./Gamma.Services/interfaces/ICommentService";

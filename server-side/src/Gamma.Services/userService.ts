@@ -40,6 +40,7 @@ export class UserService extends BaseService implements IUserService {
     }
 
     const createdUser = new User({
+      Id: candidateUser.Id,
       Email: candidateUser.Email,
       UserName: candidateUser.UserName,
       FirstName: candidateUser.FirstName,

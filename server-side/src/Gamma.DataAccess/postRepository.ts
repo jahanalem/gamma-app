@@ -19,6 +19,7 @@ export interface IPostRepository {
   Delete: (id: string) => Promise<any>;
   Update: (id: string, post: IPost) => Promise<Post>;
   FindBySearchExpression(expression: string): Promise<Post[]>;
+  CreateMany(posts: IPost[]): Promise<number>;
 }
 
 @injectable()
@@ -60,6 +61,37 @@ export class PostRepository extends BaseRepository implements IPostRepository {
     let result = transResult as unknown as Post;
 
     return result;
+  }
+
+
+  public async CreateMany(posts: IPost[]): Promise<number> {
+
+    let postTagIds: postTagMapping[] = [];
+    posts.map(p => {
+      let postId = (!validate(p.Id)) ? v4() : p.Id;
+      p.Id = postId;
+      p.TagIds.map(tag =>
+        postTagIds.push({ PostId: postId, TagId: tag })
+      )
+    });
+
+    const postsWithoutTagIds = posts.map(({ TagIds, ...keepAttrs }) => keepAttrs);
+
+    const [insertedPosts, postTags] = await ApplicationDbContext.Prisma.$transaction([
+      ApplicationDbContext.Prisma.post.createMany({
+        data: postsWithoutTagIds,
+        skipDuplicates: true
+      }),
+      ApplicationDbContext.Prisma.tagPostMapping.createMany({
+        data: postTagIds
+      })
+
+    ]).finally(async () => {
+      await ApplicationDbContext.Prisma.$disconnect();
+    });
+
+        
+    return insertedPosts.count;
   }
 
 

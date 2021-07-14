@@ -36,7 +36,10 @@ export class UserController extends BaseController {
       return next(new HttpError("Invalid inputs passed, please check your data.", HTTPStatusCodes.ClientError.UnprocessableEntity));
     }
 
-    const { FirstName, LastName, UserName, Email, Password, ConfirmPassword, UserRole } = req.body;
+
+    console.log(req.body);
+
+    const { FirstName, LastName, UserName, Email, Password, ConfirmPassword, UserRole, Id } = req.body;
 
     const candidateUser = new SignUpUserViewModel(
       FirstName,
@@ -45,7 +48,8 @@ export class UserController extends BaseController {
       Email,
       Password,
       ConfirmPassword,
-      UserRole
+      UserRole,
+      Id
     );
 
     await this.userService.Signup(candidateUser).then(result => {

@@ -2,6 +2,7 @@ import { USERROLES } from "../../Gamma.Constants/roleMembers";
 
 
 export interface ISignUpUserViewModel {
+  Id?: string;
   FirstName: string;
   LastName: string;
   UserName: string;
@@ -19,7 +20,8 @@ export class SignUpUserViewModel implements ISignUpUserViewModel {
     email: string,
     password: string,
     confirmPassword: string,
-    userRoleName: string = USERROLES.CONTRIBUTOR
+    userRoleName: string = USERROLES.CONTRIBUTOR,
+    id: string = null
   ) {
     this.FirstName = firstName;
     this.LastName = lastName;
@@ -28,6 +30,7 @@ export class SignUpUserViewModel implements ISignUpUserViewModel {
     this.Password = password;
     this.ConfirmPassword = confirmPassword;
     this.UserRoleName = userRoleName;
+    this.Id = id;
   }
   FirstName: string;
   LastName: string;
@@ -36,4 +39,5 @@ export class SignUpUserViewModel implements ISignUpUserViewModel {
   Password: string;
   ConfirmPassword: string;
   UserRoleName?: string;
+  Id?: string;
 }

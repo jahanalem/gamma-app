@@ -40,7 +40,9 @@ export class UserRepository extends BaseRepository implements IUserRepository {
       select: { Id: true }
     })
 
-    let userId = v4();
+    let userId;
+    (!newUser.Id) ? userId = v4() : userId = newUser.Id;
+
     const transResult = await ApplicationDbContext.Prisma.$transaction([
       ApplicationDbContext.Prisma.user.create({
         data: {

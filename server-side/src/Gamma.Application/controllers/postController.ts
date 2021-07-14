@@ -36,29 +36,38 @@ export class PostController extends BaseController {
 
   @httpPost("/create")
   private async create(@request() req: Request, @response() res: Response) {
-    let title: string = req.body.Title;
-    let summary: string = req.body.Summary;
-    let description: string = req.body.Description;
-    let isActive: boolean = req.body.IsActive;
-    let isPublished: boolean = req.body.IsPublished;
-    let isActiveNewComment: boolean = req.body.IsActiveNewComment;
-    let authorId: string = req.body.AuthorId;
-    let categoryId: string = req.body.CategoryId;
-    let tagIds: string[] = req.body.TagIds;
+    console.log("Object.entries = ",Object.entries(req.body).length);
+    console.log("Object.keys = ",Object.keys(req.body).length);
+    if (Array.isArray(req.body)) {
+      const result = await this.pService.CreateMany(req.body);
 
-    let x = new Post(title,
-      summary,
-      description,
-      isActive,
-      isPublished,
-      isActiveNewComment,
-      authorId,
-      categoryId,
-      tagIds);
+      res.status(200).json(result);
+    }
+    else {
+      let title: string = req.body.Title;
+      let summary: string = req.body.Summary;
+      let description: string = req.body.Description;
+      let isActive: boolean = req.body.IsActive;
+      let isPublished: boolean = req.body.IsPublished;
+      let isActiveNewComment: boolean = req.body.IsActiveNewComment;
+      let authorId: string = req.body.AuthorId;
+      let categoryId: string = req.body.CategoryId;
+      let tagIds: string[] = req.body.TagIds;
 
-    let result = await this.pService.Create(x);
+      let x = new Post(title,
+        summary,
+        description,
+        isActive,
+        isPublished,
+        isActiveNewComment,
+        authorId,
+        categoryId,
+        tagIds);
 
-    res.status(200).json(result);
+      let result = await this.pService.Create(x);
+
+      res.status(200).json(result);
+    }
   }
 
 
@@ -96,13 +105,15 @@ export class PostController extends BaseController {
     res.status(200).json(data);
   }
 
+
   @httpGet("/search/:term")
   private async searchInPosts(@request() req: Request, @response() res: Response) {
     const term = req.params.term;
     const data = await this.pService.FindBySearchExpression(term);
-    
+
     res.status(200).json(data);
   }
+
 
   @httpPut("/update/:id")
   private async update(@request() req: Request, @response() res: Response) {

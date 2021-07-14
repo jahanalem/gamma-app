@@ -50,10 +50,6 @@ export default class CategoryStore {
         this.selectedCategory = this.categoryInventory.get(id);
     }
 
-    cancelSelectedCategory = () => {
-        this.selectedCategory = undefined;
-    }
-
     createCategory = async (category: ICategoryModel) => {
         this.loading = true;
         //Category.id = uuid();
@@ -97,7 +93,6 @@ export default class CategoryStore {
             await agent.Category.delete(id);
             runInAction(() => {
                 this.categoryInventory.delete(id);
-                if (this.selectedCategory?.Id === id) this.cancelSelectedCategory();
                 this.loading = false;
             })
         } catch (error) {

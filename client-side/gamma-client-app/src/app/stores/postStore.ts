@@ -18,9 +18,11 @@ export default class PostStore {
             .sort((a, b) => (a.CreatedDate.valueOf()) - (b.CreatedDate.valueOf()));
     }
 
+
     get postDetails() {
         return this.selectedPost;
     }
+
 
     details = async (id: string) => {
         this.setLoadingInitial(true);
@@ -118,6 +120,7 @@ export default class PostStore {
         //this.loadingInitial = state;
     }
 
+
     selectPost = (id: string) => {
         runInAction(async () => {
             const detailPost = await agent.Post.details(id);
@@ -125,10 +128,7 @@ export default class PostStore {
         })
     }
 
-    cancelSelectedPost = () => {
-        this.selectedPost = undefined;
-    }
-
+   
     createPost = async (post: IPostModel) => {
         this.loading = true;
         //activity.id = uuid();
@@ -148,6 +148,7 @@ export default class PostStore {
         }
     }
 
+    
     updatePost = async (post: IPostModel) => {
         this.loading = true;
         try {
@@ -166,13 +167,13 @@ export default class PostStore {
         }
     }
 
+
     deletePost = async (id: string) => {
         this.loading = true;
         try {
             await agent.Post.delete(id);
             runInAction(() => {
                 this.postInventory.delete(id);
-                if (this.selectedPost?.Id === id) this.cancelSelectedPost();
                 this.loading = false;
             })
         } catch (error) {

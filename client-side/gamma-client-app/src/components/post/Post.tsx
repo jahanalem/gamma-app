@@ -1,9 +1,9 @@
 import React, { SyntheticEvent } from "react";
 import { Link, useHistory } from 'react-router-dom';
-import "./post.css";
 import { IPostModel } from "../../app/models/postModel"
 import { observer } from "mobx-react-lite";
 import { useStore } from "../../app/stores/store";
+import "./post.css";
 
 interface IProps {
     article: IPostModel;

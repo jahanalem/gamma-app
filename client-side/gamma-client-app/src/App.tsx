@@ -9,14 +9,11 @@ import PostDetails from "./components/postDetails/PostDetails";
 import { Posts } from "./components/posts/Posts";
 import { Login } from "./components/Account/login/login";
 import { Signup } from "./components/Account/signup/signup";
-import { PostsByTagId } from "./components/postsByTagId/postsByTagId";
-import { PostsByCategoryId } from "./components/postsByCategoryId/PostsByCategoryId";
 import { useStore } from "./app/stores/store";
-//import { ToastContainer } from 'react-toastify';
-//import { LoadingComponent } from "./layout/LoadingComponent";
-import './App.css';
+import { ToastContainer } from 'react-toastify';
 import { Footer } from "./layout/footer/Footer";
 import AdminPanel from "./components/adminPanel/AdminPanel";
+import './App.css';
 
 
 const App: React.FC = () => {
@@ -43,7 +40,7 @@ const App: React.FC = () => {
 
   return (
     <>
-      {/* <ToastContainer position='bottom-right' hideProgressBar /> */}
+      <ToastContainer position='bottom-right' hideProgressBar />
       <div id="page-container">
         <MainNavbar />
         <main className="wrapper">
@@ -102,17 +99,3 @@ const App: React.FC = () => {
 }
 
 export default observer(App);
-
-
-
-/*
-$(document).ready(function () {
-  //console.log("I am .plus");
-  $(".plus").click(function (event) {
-    console.log(".plus clicked!");
-    $(".plus").toggleClass("rotated-plus");
-    $(".plus").parent().siblings("ul").slideToggle();
-    event.preventDefault();
-  });
-});
-*/

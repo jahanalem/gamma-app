@@ -21,15 +21,18 @@ export default class UserStore {
         makeAutoObservable(this);
     }
 
+
     get isLoggedIn() {
         return !!this.user;
     }
+
 
     get UsersSortedByEmail() {
         let result = Array.from(this.userInventory.values()).sort((a, b) => a.Email.localeCompare(b.Email));
 
         return result;
     }
+
 
     loadUsers = async () => {
         this.setLoadingInitial(true);
@@ -48,17 +51,16 @@ export default class UserStore {
         }
     }
 
+
     setLoadingInitial = (state: boolean) => {
         runInAction(() => this.loadingInitial = state)
     }
+
 
     selectUser = (id: string) => {
         this.selectedUser = this.userInventory.get(id);
     }
 
-    cancelSelectedUser = () => {
-        this.selectedUser = undefined;
-    }
 
     createUser = async (signupViewModel: ISignUpUserViewModel) => {
         this.loading = true;
@@ -79,6 +81,7 @@ export default class UserStore {
         }
     }
 
+
     login = async (creds: ILoginUserViewModel) => {
         try {
             const user = await agent.Account.login(creds);
@@ -92,12 +95,14 @@ export default class UserStore {
         }
     }
 
+
     logout = () => {
         store.commonStore.setToken(null);
         window.localStorage.removeItem('jwt');
         this.user = null;
         history.push('/login');
     }
+
 
     getCurrentUser = async () => {
         try {
@@ -109,9 +114,11 @@ export default class UserStore {
         }
     }
 
+
     get currentUser() {
         return this.user;
     }
+
 
     updateUser = async (user: IUserModel) => {
         /*
@@ -133,13 +140,13 @@ export default class UserStore {
         */
     }
 
+
     deleteUser = async (id: string) => {
         this.loading = true;
         try {
             await agent.Account.delete(id);
             runInAction(() => {
                 this.userInventory.delete(id);
-                if (this.selectedUser?.Id === id) this.cancelSelectedUser();
                 this.loading = false;
             })
         } catch (error) {
@@ -149,6 +156,7 @@ export default class UserStore {
             })
         }
     }
+
 
     refreshToken = async () => {
         this.stopRefreshTokenTimer();
@@ -162,6 +170,7 @@ export default class UserStore {
         }
     }
 
+
     private startRefreshTokenTimer(user: UserModel) {
         const jwtToken = JSON.parse(atob(user.Token.split('.')[1]));
         const expires = new Date(jwtToken.exp * 1000);
@@ -169,8 +178,8 @@ export default class UserStore {
         this.refreshTokenTimeout = setTimeout(this.refreshToken, timeout);
     }
 
+
     private stopRefreshTokenTimer() {
         clearTimeout(this.refreshTokenTimeout);
     }
-
 }

@@ -1,16 +1,9 @@
 
 import { observer } from "mobx-react-lite";
 import { SyntheticEvent, useEffect } from "react";
-import { Link, useHistory, useLocation } from "react-router-dom";
+import { Link, useHistory } from "react-router-dom";
 import { useStore } from "../../app/stores/store";
 import { LoadingComponent } from "../../layout/LoadingComponent";
-
-
-
-interface stateType {
-    tagId: string;
-    catId: string;
-}
 
 export const Tags: React.FC = observer(() => {
     const history = useHistory();

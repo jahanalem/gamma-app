@@ -1,18 +1,7 @@
 import '../contactUs/contactUs.css';
 
 export const ContactUs: React.FC = () => {
-    // const [contactUs, setContactUs] = useState([])
-
-    // useEffect(() => {
-    //     client.getEntries({
-    //         content_type: 'contactMe'
-    //     })
-    //         .then(response => {
-    //             setContactUs(response.items[0].fields);
-    //         })
-    //         .catch(console.error)
-    // }, []);
-
+    
     return (
         <>
             <div className="contactUs row">

@@ -7,7 +7,6 @@ import { useStore } from '../../app/stores/store';
 import GammaSearch from '../features/searchEngine/GammaSearch';
 import "./mainNavbar.css";
 import $ from "jquery";
-import { LoadingComponent } from "../../layout/LoadingComponent";
 
 
 // $(function () {
@@ -52,7 +51,6 @@ export const MainNavbar: React.FC = observer(() => {
         }
     }
 
-    console.log(postStore.loadingInitial);
     //if (postStore.loadingInitial) return <LoadingComponent content="Loading posts" />
     
     return (

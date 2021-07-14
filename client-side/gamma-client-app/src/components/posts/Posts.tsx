@@ -3,7 +3,7 @@ import React, { useEffect } from "react";
 import { Post } from "../post/Post";
 import { useStore } from '../../app/stores/store';
 import './posts.css';
-import { useLocation, useParams } from 'react-router-dom';
+import {useParams } from 'react-router-dom';
 import { LoadingComponent } from '../../layout/LoadingComponent';
 
 interface stateType {
@@ -15,22 +15,15 @@ export const Posts: React.FC = observer((props) => {
 
     const { postStore } = useStore();
     const { postsByDate } = postStore;
-
-    //const location = useLocation<stateType>();
-    //const { tagId } = location.state || { tagId: null };
-    //const { catId } = location.state || { catId: null };
-
     const { tagId } = useParams<stateType>();
     const { catId } = useParams<stateType>();
 
     useEffect(() => {
         if (tagId) {
-            console.log("postStore.loadingInitial", postStore.loadingInitial);
             postStore.postsByTagId(tagId);
             //history.push('/');
         }
         else if (catId) {
-            console.log("pcat items", catId);
             postStore.postsByCategoryId(catId);
         }
         else {

@@ -1,14 +1,13 @@
 import React, { SyntheticEvent, useEffect, useState } from "react";
 import { observer } from "mobx-react-lite";
 import { useStore } from "../../../app/stores/store";
-import { LoadingComponent } from "../../../layout/LoadingComponent";
 
 export default observer(function GammaSearch() {
     const { postStore } = useStore();
     const [input, setInput] = useState("");
     const [query, setQuery] = useState("");
     useEffect(() => {
-        if(query.trim().length>1)
+        if (query.trim().length > 1)
             postStore.searchInPosts(query);
 
     }, [postStore, query]);

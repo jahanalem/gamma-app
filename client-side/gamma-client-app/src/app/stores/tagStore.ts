@@ -19,11 +19,13 @@ export default class TagStore {
         this.selectedTagId = tagId;
     }
 
+
     get tagsSortedByTitle() {
         let result = Array.from(this.tagInventory.values()).sort((a, b) => a.Title.localeCompare(b.Title));
 
         return result;
     }
+
 
     loadTags = async () => {
         this.setLoadingInitial(true);
@@ -47,17 +49,16 @@ export default class TagStore {
         }
     }
 
+
     setLoadingInitial = (state: boolean) => {
         runInAction(() => this.loadingInitial = state)
     }
+
 
     selectTag = (id: string) => {
         this.selectedTag = this.tagInventory.get(id);
     }
 
-    cancelSelectedTag = () => {
-        this.selectedTag = undefined;
-    }
 
     createTag = async (tag: ITagModel) => {
         this.loading = true;
@@ -78,6 +79,7 @@ export default class TagStore {
         }
     }
 
+
     updateTag = async (tag: ITagModel) => {
         this.loading = true;
         try {
@@ -96,13 +98,13 @@ export default class TagStore {
         }
     }
 
+    
     deleteTag = async (id: string) => {
         this.loading = true;
         try {
             await agent.Tag.delete(id);
             runInAction(() => {
                 this.tagInventory.delete(id);
-                if (this.selectedTag?.Id === id) this.cancelSelectedTag();
                 this.loading = false;
             })
         } catch (error) {

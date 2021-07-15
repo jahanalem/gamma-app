@@ -55,6 +55,9 @@ Gamma is a weblog that created by Node.js (Express), React.js, Prisma.js, Mobx a
    > npm start
 
 
+
+## Backend Architecture:
+![Backend Architecture](https://github.com/jahanalem/gamma-app/blob/master/Gamma-backend-architecture.jpg)
    
 
 

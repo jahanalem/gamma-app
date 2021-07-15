@@ -1,6 +1,8 @@
 # gamma-app
 
-Project setup instructions:
+Gamma is a weblog that created by Node.js (Express), React.js, Prisma.js, Mobx and Typescript.
+
+## Installation:
 
 1- go to \gamma-app\server-side> and run:
    - > npm install
@@ -48,6 +50,7 @@ Project setup instructions:
 7- Now you can run the project!
    First, in \gamma-app\server-side> run
    > nodemon
+   
    Second, in \gamma-app\client-side\gamma-client-app> run
    > npm start
 

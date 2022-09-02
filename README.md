@@ -1,6 +1,6 @@
 # gamma-app
 
-Gamma is a weblog that created by Node.js (Express), React.js, Prisma.js, Mobx and Typescript.
+Gamma is a weblog that was created by Node.js (Express), React.js, Prisma.js, Mobx and Typescript.
 
 ## Installation:
 
